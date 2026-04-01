@@ -1,0 +1,47 @@
+{
+  // Zed Settings - Corrected for Your OpenCode Workflow
+  
+  // NOTE: You don't need Zed's built-in AI since you use OpenCode!
+  // Just use Zed for editing, OpenCode terminal for AI agent work
+  
+  "terminal": {
+    "shell": {
+      "program": "bash"
+    },
+    "working_directory": "current_project_directory"
+  },
+  
+  // DISABLE Zed's AI assistant - use OpenCode instead
+  // This avoids confusion about which AI to use
+  "assistant": {
+    "enabled": false
+  },
+  
+  // OR if you want Zed's inline AI for quick help,
+  // you could add OpenRouter or another provider with MiniMax/Kimi
+  // But honestly, just use OpenCode terminal - it's more powerful
+  
+  "file_scan_exclusions": [
+    "**/.git",
+    "**/node_modules",
+    "**/.opencode",
+    "**/.hive",
+    "**/target",
+    "**/dist",
+    "**/build"
+  ],
+  
+  // Auto-save when OpenCode edits files
+  "autosave": {
+    "after_delay": {
+      "milliseconds": 1000
+    }
+  },
+  
+  // Watch for external file changes from OpenCode
+  "file_watcher": true,
+  
+  "project_panel": {
+    "auto_reveal_entries": true
+  }
+}

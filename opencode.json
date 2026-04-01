@@ -1,0 +1,10 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "enabled_providers": [
+    "kimi-for-coding",
+    "opencode-go"
+  ],
+  "plugin": [
+    "oh-my-openagent@latest"
+  ]
+}

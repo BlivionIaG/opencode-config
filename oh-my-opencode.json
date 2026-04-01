@@ -1,0 +1,224 @@
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
+  "agents": {
+    "sisyphus": {
+      "model": "kimi-for-coding/k2p5",
+      "thinking": { "type": "disabled" },
+      "maxTokens": 8192,
+      "fallback_models": ["opencode-go/minimax-m2.5"]
+    },
+    "hephaestus": {
+      "model": "kimi-for-coding/k2p5",
+      "thinking": { "type": "enabled" },
+      "maxTokens": 16384,
+      "fallback_models": ["opencode-go/glm-5"]
+    },
+    "oracle": {
+      "model": "kimi-for-coding/k2p5",
+      "thinking": { "type": "enabled" },
+      "maxTokens": 8192,
+      "fallback_models": ["opencode-go/glm-5"]
+    },
+    "librarian": {
+      "model": "opencode-go/minimax-m2.5",
+      "maxTokens": 4096,
+      "fallback_models": ["opencode-go/glm-5"]
+    },
+    "explore": {
+      "model": "opencode-go/minimax-m2.5",
+      "maxTokens": 4096,
+      "fallback_models": ["opencode-go/minimax-m2.7"]
+    },
+    "multimodal-looker": {
+      "model": "kimi-for-coding/k2p5",
+      "thinking": { "type": "disabled" },
+      "maxTokens": 4096
+    },
+    "prometheus": {
+      "model": "kimi-for-coding/k2p5",
+      "thinking": { "type": "enabled" },
+      "maxTokens": 8192,
+      "fallback_models": ["opencode-go/glm-5"]
+    },
+    "metis": {
+      "model": "kimi-for-coding/k2p5",
+      "thinking": { "type": "enabled" },
+      "maxTokens": 8192,
+      "fallback_models": ["opencode-go/glm-5"]
+    },
+    "momus": {
+      "model": "kimi-for-coding/k2p5",
+      "thinking": { "type": "enabled" },
+      "maxTokens": 4096,
+      "fallback_models": ["opencode-go/glm-5"]
+    },
+    "atlas": {
+      "model": "kimi-for-coding/k2p5",
+      "thinking": { "type": "disabled" },
+      "maxTokens": 8192,
+      "fallback_models": ["opencode-go/minimax-m2.5"]
+    },
+    "sisyphus-junior": {
+      "model": "opencode-go/minimax-m2.5",
+      "maxTokens": 4096,
+      "fallback_models": ["opencode-go/minimax-m2.7"]
+    },
+    "atlas-junior": {
+      "model": "opencode-go/minimax-m2.5",
+      "maxTokens": 4096,
+      "fallback_models": ["opencode-go/minimax-m2.7"]
+    },
+    "librarian-junior": {
+      "model": "opencode-go/minimax-m2.5",
+      "maxTokens": 2048,
+      "fallback_models": ["opencode-go/minimax-m2.7"]
+    },
+    "code-runner": {
+      "model": "opencode-go/minimax-m2.5",
+      "maxTokens": 8192,
+      "fallback_models": ["opencode-go/glm-5"]
+    },
+    "test-engineer": {
+      "model": "opencode-go/minimax-m2.5",
+      "maxTokens": 4096,
+      "fallback_models": ["opencode-go/minimax-m2.7"]
+    },
+    "fixer": {
+      "model": "opencode-go/minimax-m2.5",
+      "maxTokens": 2048,
+      "fallback_models": ["opencode-go/minimax-m2.7"]
+    },
+    "explainer": {
+      "model": "opencode-go/minimax-m2.5",
+      "maxTokens": 4096,
+      "fallback_models": ["opencode-go/glm-5"]
+    }
+  },
+  "categories": {
+    "visual-engineering": {
+      "model": "kimi-for-coding/k2p5",
+      "thinking": { "type": "enabled" },
+      "maxTokens": 8192,
+      "fallback_models": ["opencode-go/glm-5"]
+    },
+    "artistry": {
+      "model": "kimi-for-coding/k2p5",
+      "thinking": { "type": "enabled" },
+      "maxTokens": 8192,
+      "fallback_models": ["opencode-go/glm-5"]
+    },
+    "ultrabrain": {
+      "model": "kimi-for-coding/k2p5",
+      "thinking": { "type": "enabled" },
+      "maxTokens": 16384,
+      "fallback_models": ["opencode-go/glm-5"]
+    },
+    "deep": {
+      "model": "kimi-for-coding/k2p5",
+      "thinking": { "type": "enabled" },
+      "maxTokens": 12288,
+      "fallback_models": ["opencode-go/glm-5"]
+    },
+    "quick": {
+      "model": "opencode-go/minimax-m2.5",
+      "maxTokens": 2048,
+      "fallback_models": ["opencode-go/minimax-m2.7"]
+    },
+    "unspecified-low": {
+      "model": "opencode-go/minimax-m2.5",
+      "maxTokens": 4096,
+      "fallback_models": ["opencode-go/minimax-m2.7"]
+    },
+    "unspecified-high": {
+      "model": "kimi-for-coding/k2p5",
+      "thinking": { "type": "enabled" },
+      "maxTokens": 8192,
+      "fallback_models": ["opencode-go/glm-5"]
+    },
+    "writing": {
+      "model": "opencode-go/minimax-m2.5",
+      "maxTokens": 4096,
+      "fallback_models": ["opencode-go/glm-5"]
+    },
+    "search": {
+      "model": "opencode-go/minimax-m2.5",
+      "maxTokens": 2048,
+      "fallback_models": ["opencode-go/minimax-m2.7"]
+    },
+    "test": {
+      "model": "opencode-go/minimax-m2.5",
+      "maxTokens": 4096,
+      "fallback_models": ["opencode-go/minimax-m2.7"]
+    },
+    "refactor": {
+      "model": "opencode-go/minimax-m2.5",
+      "maxTokens": 8192,
+      "fallback_models": ["opencode-go/glm-5"]
+    },
+    "fix": {
+      "model": "opencode-go/minimax-m2.5",
+      "maxTokens": 2048,
+      "fallback_models": ["opencode-go/minimax-m2.7"]
+    },
+    "explain": {
+      "model": "opencode-go/minimax-m2.5",
+      "maxTokens": 4096,
+      "fallback_models": ["opencode-go/glm-5"]
+    }
+  },
+  "background_agents": {
+    "enabled": true,
+    "max_concurrent": 12,
+    "providers": {
+      "kimi-for-coding": {
+        "max_concurrent": 4,
+        "rate_limit": {
+          "requests_per_minute": 40
+        }
+      },
+      "opencode-go": {
+        "max_concurrent": 10,
+        "rate_limit": {
+          "requests_per_minute": 100
+        }
+      }
+    }
+  },
+  "optimization": {
+    "aggressive_truncation": true,
+    "auto_resume": true,
+    "parallel_execution": true,
+    "max_parallel_agents": 8,
+    "context_management": {
+      "max_context_tokens": 200000,
+      "truncate_threshold": 0.85
+    }
+  },
+  "execution": {
+    "mode": "aggressive",
+    "auto_confirm": {
+      "enabled": true,
+      "safe_operations": ["read", "search", "grep"],
+      "max_cost_per_operation": 0.01
+    },
+    "batch_processing": {
+      "enabled": true,
+      "batch_size": 5,
+      "max_batch_wait_ms": 100
+    }
+  },
+  "routing": {
+    "smart_delegation": {
+      "enabled": true,
+      "task_patterns": {
+        "search|find|grep|locate": "search",
+        "fix.*typo|rename|add import|small": "fix",
+        "explain|what does|how to": "explain",
+        "test|spec|validate": "test",
+        "refactor|cleanup|optimize": "refactor",
+        "architect|design|plan": "ultrabrain",
+        "debug|investigate|analyze": "deep"
+      }
+    }
+  }
+}

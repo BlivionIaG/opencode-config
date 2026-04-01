@@ -1,0 +1,36 @@
+[
+  // OpenCode Workflow Keybindings for Zed
+  {
+    "context": "Workspace",
+    "bindings": {
+      // Quick terminal access for OpenCode
+      "ctrl-alt-o": ["workspace::OpenTerminal", { "working_directory": "current_project_directory" }],
+      
+      // Alternative: Open terminal in current file's directory
+      "ctrl-shift-alt-o": ["workspace::OpenTerminal", { "working_directory": "current_file_directory" }]
+    }
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      // Close terminal and return to editor
+      "ctrl-shift-o": "terminal::Close",
+      
+      // Quick clear terminal (useful when running multiple OpenCode tasks)
+      "ctrl-l": "terminal::Clear"
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      // Copy file path (useful for @mention in OpenCode)
+      "ctrl-shift-c": "editor::CopyPath",
+      
+      // Copy relative path (often more useful for OpenCode)
+      "ctrl-shift-alt-c": "editor::CopyRelativePath",
+      
+      // Select current line (quick copy for OpenCode prompts)
+      "ctrl-l": "editor::SelectLine"
+    }
+  }
+]

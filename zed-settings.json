@@ -1,0 +1,70 @@
+{
+  // OpenCode Integration Settings for Zed
+  
+  // 1. Terminal - Easy access to OpenCode
+  "terminal": {
+    "shell": {
+      "program": "bash"  // or "zsh", "fish"
+    },
+    // Open terminal with Alt+` (backtick)
+    "working_directory": "current_project_directory"
+  },
+  
+  // 2. Key binding to toggle terminal (for quick OpenCode access)
+  // Default: Ctrl+` or Cmd+` 
+  // You can also use: Alt+`
+  
+  // 3. AI Assistant - Use for quick inline help
+  // Keep this for simple questions, use OpenCode for complex tasks
+  "assistant": {
+    "default_model": {
+      "provider": "openai",  // or "anthropic", "google"
+      "model": "gpt-5.4-mini"  // Fast, cheap model for inline help
+    },
+    "version": "2"
+  },
+  
+  // 4. File scanning - Don't conflict with OpenCode
+  "file_scan_exclusions": [
+    "**/.git",
+    "**/node_modules",
+    "**/.opencode",
+    "**/.hive",  // If using swarm
+    "**/target",
+    "**/dist",
+    "**/build"
+  ],
+  
+  // 5. Git - Show status but let OpenCode handle complex git ops
+  "git": {
+    "inline_blame": true,
+    "show_commit_diff": true
+  },
+  
+  // 6. LSP - Zed and OpenCode can share language servers
+  "lsp": {
+    // Zed will auto-detect, OpenCode uses the same via oh-my-opencode
+  },
+  
+  // 7. Tabs - Keep file state when switching
+  "tab_bar": {
+    "show": true,
+    "show_nav_history_buttons": true
+  },
+  
+  // 8. Auto-save (helps when OpenCode edits files)
+  "autosave": {
+    "after_delay": {
+      "milliseconds": 1000
+    }
+  },
+  
+  // 9. Files - Watch for external changes (from OpenCode)
+  "file_watcher": true,
+  
+  // 10. Project Panel - Show all files OpenCode might edit
+  "project_panel": {
+    "auto_reveal_entries": true,
+    "auto_fold_dirs": false
+  }
+}

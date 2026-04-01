@@ -1,0 +1,66 @@
+# Dependencies
+node_modules/
+package.json
+bun.lock
+
+# Secrets and credentials (comprehensive patterns)
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+**/.env
+**/.env.local
+**/.env.*
+
+# API keys and tokens (any file containing these)
+*secret*
+*SECRET*
+*credential*
+*CREDENTIAL*
+*api_key*
+*API_KEY*
+*apikey*
+*APIKEY*
+*auth_token*
+*AUTH_TOKEN*
+*access_token*
+*ACCESS_TOKEN*
+*private_key*
+*PRIVATE_KEY*
+*password*
+*PASSWORD*
+password.txt
+secrets.json
+credentials.json
+*.pem
+*.key
+
+# Session files
+*.session
+.sessions/
+session.json
+
+# Cache and logs
+.cache/
+logs/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/settings.json
+.vscode/*.log
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Git itself (allows tracking this file)
+# .gitignore
