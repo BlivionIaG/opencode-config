@@ -2,7 +2,7 @@
 
 **Version:** 1.0  
 **Last Updated:** 2026-04-01  
-**Subscriptions:** Kimi Code + OpenCode Go
+**Subscriptions:** Kimi Code
 
 ---
 
@@ -37,10 +37,10 @@ opencode "Your task here"
 
 | Command | Description |
 |---------|-------------|
-| `@explore <task>` | Fast search (MiniMax, ~1s) |
+| `@explore <task>` | Fast search (Kimi instant, ~2s) |
 | `@oracle <task>` | Deep analysis (Kimi thinking, ~8s) |
-| `@fixer <task>` | Quick fixes (MiniMax, ~1s) |
-| `@test-engineer <task>` | Write tests (MiniMax, ~3s) |
+| `@librarian <task>` | Docs and external reference lookup (Kimi instant, ~3s) |
+| `@plan <task>` | Implementation planning (Kimi thinking, ~8s) |
 | `agent1 & agent2` | Run agents in parallel |
 | `/status` | Check running agents |
 | `/models` | Switch models manually |
@@ -50,7 +50,6 @@ opencode "Your task here"
 
 | Provider | Requests/min | Concurrent |
 |----------|--------------|------------|
-| OpenCode Go (MiniMax) | 100 | 10 |
 | Kimi Code | 40 | 4 |
 
 ---
@@ -60,7 +59,6 @@ opencode "Your task here"
 ### Enabled Providers
 
 1. **kimi-for-coding** - Kimi K2.6 (powerful reasoning, 256K context)
-2. **opencode-go** - MiniMax M2.5 (fast & cheap, 100K requests/month)
 
 ### Model Characteristics
 
@@ -73,48 +71,34 @@ opencode "Your task here"
 - ⚠️ Leave sampling settings unset; K2.6 rejects non-default `temperature`, `top_p`, `n`, and penalties
 - Use for: complex planning, debugging, visual tasks
 
-**MiniMax M2.5 (opencode-go/minimax-m2.5)**
-- ✅ Very fast (100 tokens/s)
-- ✅ Very cheap (8x cheaper than Kimi)
-- ✅ 100K requests/month on Go plan
-- ⚠️ Less reasoning depth
-- Use for: search, grep, simple fixes, tests
-
----
-
 ## Agents Guide
 
 ### Primary Agents
 
-| Agent | Model | Use For | Fallback |
-|-------|-------|---------|----------|
-| **Sisyphus** | Kimi (instant) | Main orchestrator, delegates tasks | MiniMax |
-| **Oracle** | Kimi (thinking) | Architecture analysis, debugging | GLM-5 |
-| **Hephaestus** | Kimi (thinking) | Deep autonomous work, research | GLM-5 |
-| **Prometheus** | Kimi (thinking) | Strategic planning | GLM-5 |
-| **Metis** | Kimi (thinking) | Plan consulting | GLM-5 |
-| **Momus** | Kimi (thinking) | Plan review | GLM-5 |
+| Agent | Mode | Max Tokens | Use For |
+|-------|------|------------|---------|
+| **Sisyphus** | Kimi instant | 8192 | Main orchestrator, delegates tasks |
+| **Atlas** | Kimi instant | 12288 | Plan orchestration, task coordination |
+| **Hephaestus** | Kimi thinking | 32768 | Deep autonomous work, research |
+| **Prometheus** | Kimi thinking | 16384 | Strategic planning |
 
 ### Utility Agents
 
-| Agent | Model | Use For | Fallback |
-|-------|-------|---------|----------|
-| **Explore** | MiniMax | Fast codebase grep, search | MiniMax M2.7 |
-| **Librarian** | MiniMax | Documentation search | GLM-5 |
-| **Librarian-Junior** | MiniMax | Parallel doc search | MiniMax M2.7 |
-| **Sisyphus-Junior** | MiniMax | Quick task execution | MiniMax M2.7 |
-| **Atlas-Junior** | MiniMax | Parallel execution | MiniMax M2.7 |
-| **Code-Runner** | MiniMax | Syntax validation | GLM-5 |
-| **Test-Engineer** | MiniMax | Write & run tests | MiniMax M2.7 |
-| **Fixer** | MiniMax | Quick fixes, typos | MiniMax M2.7 |
-| **Explainer** | MiniMax | Code explanation | GLM-5 |
+| Agent | Mode | Max Tokens | Use For |
+|-------|------|------------|---------|
+| **Explore** | Kimi instant | 4096 | Fast codebase grep, search |
+| **Librarian** | Kimi instant | 8192 | Documentation and external reference search |
+| **Multimodal-Looker** | Kimi thinking | 8192 | Vision tasks, screenshots, UI analysis |
+| **Sisyphus-Junior** | Category-based | 4096-32768 | Focused delegated task execution |
 
 ### Special Agents
 
-| Agent | Model | Use For |
-|-------|-------|---------|
-| **Atlas** | Kimi (instant) | Plan orchestration, task coordination |
-| **Multimodal-Looker** | Kimi (instant) | Vision tasks, screenshots, UI analysis |
+| Agent | Mode | Max Tokens | Use For |
+|-------|------|------------|---------|
+| **Oracle** | Kimi thinking | 16384 | Architecture analysis, debugging |
+| **Metis** | Kimi thinking | 8192 | Plan consulting |
+| **Momus** | Kimi thinking | 8192 | Plan review |
+| **Plan** | Kimi thinking | 16384 | Work plan generation |
 
 ### How to Use Agents
 
@@ -122,13 +106,13 @@ opencode "Your task here"
 ```bash
 @explore find all TODO comments
 @oracle analyze why tests are failing
-@fixer fix the typo in README.md
+@sisyphus fix the typo in README.md
 ```
 
 **Parallel execution:**
 ```bash
 # Run multiple agents simultaneously
-@explore find auth files & @librarian search auth docs & @test-engineer write auth tests
+@explore find auth files & @librarian search auth docs & @oracle review auth test strategy
 
 # This completes in ~2 seconds instead of ~6 seconds
 ```
@@ -143,27 +127,26 @@ Sisyphus automatically categorizes your requests based on keywords:
 
 | Category | Trigger Keywords | Model | Speed |
 |----------|-----------------|-------|-------|
-| **quick** | fix, typo, rename, add import | MiniMax | ~1s |
-| **search** | find, search, grep, locate | MiniMax | ~1s |
-| **explain** | explain, what does, how to | MiniMax | ~2s |
-| **test** | test, spec, validate | MiniMax | ~3s |
-| **refactor** | refactor, cleanup, optimize | MiniMax | ~4s |
+| **quick** | fix, typo, rename, add import | Kimi instant, 4096 maxTokens | ~2s |
+| **search** | find, search, grep, locate | Kimi instant, 4096 maxTokens | ~2s |
+| **explain** | explain, what does, how to | Kimi instant, 8192 maxTokens | ~3s |
+| **test** | test, spec, validate | Kimi instant, 8192 maxTokens | ~4s |
+| **refactor** | refactor, cleanup, optimize | Kimi thinking, 16384 maxTokens | ~8s |
 | **deep** | debug, investigate, analyze | Kimi thinking | ~8s |
 | **ultrabrain** | architect, design, plan | Kimi thinking | ~10s |
 | **visual-engineering** | UI, frontend, screenshot, design | Kimi thinking | ~8s |
-| **writing** | write, document, describe | MiniMax | ~2s |
-| **fix** | fix, correct, repair | MiniMax | ~1s |
+| **writing** | write, document, describe | Kimi instant, 8192 maxTokens | ~3s |
+| **fix** | fix, correct, repair | Kimi instant, 4096 maxTokens | ~2s |
 
 ### Examples
 
-**Automatic MiniMax routing (fast & cheap):**
+**Automatic instant routing (fast Kimi, thinking disabled):**
 ```bash
 "Find all console.log statements"           → @explore
 "Add import for lodash"                      → @sisyphus-junior
-"Fix typo in variable name"                  → @fixer
-"Explain what this regex does"               → @explainer
-"Run tests for auth module"                  → @test-engineer
-"Refactor this function"                     → @code-runner
+"Fix typo in variable name"                  → quick/fix category
+"Explain what this regex does"               → explain category
+"Run tests for auth module"                  → test category
 ```
 
 **Automatic Kimi routing (deep reasoning):**
@@ -194,7 +177,7 @@ Use `&` to run agents simultaneously:
 
 ```bash
 # 3 agents working in parallel
-@explore find utils & @librarian search docs & @test-engineer validate
+@explore find utils & @librarian search docs & @oracle validate approach
 
 # Time: ~2 seconds total (vs ~6 seconds sequential)
 ```
@@ -208,7 +191,7 @@ Use `&` to run agents simultaneously:
 
 **Pattern 2: Code Review**
 ```bash
-@code-runner check syntax & @test-engineer validate tests & @fixer check for issues & @explainer review logic
+@explore find touched code & @oracle review architecture & @momus review plan quality
 ```
 
 **Pattern 3: Research & Planning**
@@ -218,14 +201,12 @@ Use `&` to run agents simultaneously:
 
 **Pattern 4: Testing**
 ```bash
-@test-engineer write unit tests & @test-engineer write integration tests & @code-runner check coverage
+@explore find related tests & @librarian check framework docs & @oracle review risky design
 ```
 
 ### Background Agents
 
-Your config supports **12 concurrent background agents**:
-- 10 from OpenCode Go (MiniMax)
-- 4 from Kimi Code
+Your config uses the Kimi provider with explicit instant/thinking settings per agent and category.
 
 **Check status:**
 ```bash
@@ -233,7 +214,6 @@ Your config supports **12 concurrent background agents**:
 ```
 
 **Max parallel per provider:**
-- MiniMax: up to 10 agents simultaneously
 - Kimi: up to 4 agents simultaneously
 
 ---
@@ -244,37 +224,31 @@ Your config supports **12 concurrent background agents**:
 
 | Operation | Model | Cost | Time |
 |-----------|-------|------|------|
-| Simple search | MiniMax | ~$0.0001 | ~1s |
-| Quick fix | MiniMax | ~$0.0001 | ~1s |
-| Code explanation | MiniMax | ~$0.0002 | ~2s |
-| Test generation | MiniMax | ~$0.0003 | ~3s |
-| Refactoring | MiniMax | ~$0.0005 | ~4s |
+| Simple search | Kimi instant | Lower | ~2s |
+| Quick fix | Kimi instant | Lower | ~2s |
+| Code explanation | Kimi instant | Lower | ~3s |
+| Test generation | Kimi instant | Medium | ~4s |
+| Refactoring | Kimi thinking | Higher | ~8s |
 | Deep analysis | Kimi | ~$0.005 | ~8s |
 | Architecture planning | Kimi | ~$0.006 | ~10s |
 
 ### Your Monthly Budget
-
-**OpenCode Go ($10/month):**
-- 100,000 MiniMax requests
-- Rate limit: 100 req/min
 
 **Kimi Code Subscription:**
 - ~9,250 Kimi requests (typical usage)
 - Rate limit: 40 req/min
 
 **Typical Monthly Usage:**
-- 70% MiniMax (70,000 requests) = ~$3-4
-- 25% Kimi (2,300 requests) = ~$5-8
-- 5% GLM-5 fallback = ~$1
-- **Total: ~$10-15/month**
+- Instant-mode Kimi for search, quick fixes, explanations, tests, and writing
+- Thinking-mode Kimi for planning, architecture, refactors, visual reasoning, and hard debugging
 
 ### Cost-Saving Tips
 
 ✅ **DO:**
-- Use simple language for simple tasks ("find X" → MiniMax)
+- Use simple language for simple tasks ("find X" → Kimi instant)
 - Run independent tasks in parallel with `&`
 - Trust automatic routing (it's optimized)
-- Use `@explore`, `@librarian`, `@fixer` for utility work
+- Use `@explore` and `@librarian` for utility work
 - Batch small operations (automatic batching enabled)
 
 ❌ **DON'T:**
@@ -312,20 +286,18 @@ Your config supports **12 concurrent background agents**:
 
 **Issue: Task fails**
 ```bash
-# Check fallback chain in config
-# Agent automatically tries fallback models:
-# MiniMax → MiniMax M2.7 → GLM-5 (for utility agents)
-# Kimi → GLM-5 (for reasoning agents)
+# Confirm the resolved Kimi K2.6 config:
+opencode debug config
 
-# Check with:
-bunx oh-my-opencode doctor
+# Check available Kimi models:
+opencode models kimi-for-coding
 ```
 
 **Issue: Wrong model selected**
 ```bash
 # Override manually:
 /models
-# Select: kimi-for-coding/k2p6 or opencode-go/minimax-m2.5
+# Select: kimi-for-coding/k2p6
 
 # Or toggle thinking mode:
 /acp thinking enabled   # Deep reasoning
@@ -376,8 +348,9 @@ Add to `oh-my-openagent.json`:
 ```json
 "categories": {
   "my-custom-category": {
-    "model": "opencode-go/minimax-m2.5",
-    "maxTokens": 2048
+    "model": "kimi-for-coding/k2p6",
+    "thinking": { "type": "disabled" },
+    "maxTokens": 4096
   }
 }
 ```
@@ -435,14 +408,14 @@ Or configure per-agent in `oh-my-openagent.json`:
 # 1. Plan (Kimi - ~10s)
 @prometheus plan how to add user profiles
 
-# 2. Research (Parallel MiniMax - ~2s)
+# 2. Research (Parallel Kimi instant - ~3s)
 @librarian find similar implementations & @explore find user-related code
 
 # 3. Implement (Kimi - ~60s)
 @hephaestus implement the user profile feature
 
-# 4. Validate (Parallel MiniMax - ~5s)
-@test-engineer write tests & @code-runner check syntax & @fixer review
+# 4. Validate (Parallel Kimi agents - ~8s)
+@explore find related tests & @oracle review risk areas & @momus review plan gaps
 ```
 
 **Total time:** ~80 seconds  
@@ -457,15 +430,15 @@ Or configure per-agent in `oh-my-openagent.json`:
 # Sisyphus automatically:
 # 1. Routes to @oracle for analysis (deep)
 # 2. Spawns @explore to find login code (parallel)
-# 3. Delegates @fixer to apply fix (parallel)
-# 4. Calls @test-engineer to validate (parallel)
+# 3. Delegates focused Kimi category tasks to apply the fix
+# 4. Uses Kimi instant/thinking categories to validate
 ```
 
 ### Workflow 3: Code Review
 
 ```bash
 # Parallel review (4 agents simultaneously)
-@explore check for unused imports & @test-engineer validate edge cases & @oracle review architecture & @code-runner check for errors
+@explore check for unused imports & @librarian check framework guidance & @oracle review architecture & @momus review plan gaps
 
 # Or simple version:
 "Review this PR for issues"
@@ -476,7 +449,7 @@ Or configure per-agent in `oh-my-openagent.json`:
 
 ```bash
 # Parallel documentation generation
-@explore find public APIs & @explainer document functions & @librarian find examples & @code-runner generate code snippets
+@explore find public APIs & @librarian find examples & @sisyphus draft documentation
 ```
 
 ---
@@ -571,8 +544,8 @@ Check your consumption:
 
 **Your setup is optimized for:**
 - ✅ Speed through parallelization (12 concurrent agents)
-- ✅ Cost through smart routing (70% MiniMax, 30% Kimi)
-- ✅ Reliability through fallback chains
+- ✅ Cost control through Kimi instant mode for utility work
+- ✅ Deep reasoning through Kimi thinking mode where it matters
 - ✅ Zero configuration needed
 
 **Just remember:**
@@ -589,7 +562,6 @@ Check your consumption:
 
 - **OpenCode Docs:** https://opencode.ai/docs
 - **Oh My OpenAgent:** https://github.com/code-yeongyu/oh-my-openagent
-- **OpenCode Go:** https://opencode.ai/go
 - **Kimi Code:** https://www.kimi.com/code
 
 **Configuration Location:**

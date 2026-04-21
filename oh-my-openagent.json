@@ -9,30 +9,32 @@
     "hephaestus": {
       "model": "kimi-for-coding/k2p6",
       "thinking": { "type": "enabled" },
-      "maxTokens": 16384
+      "maxTokens": 32768
     },
     "oracle": {
       "model": "kimi-for-coding/k2p6",
       "thinking": { "type": "enabled" },
-      "maxTokens": 8192
+      "maxTokens": 16384
     },
     "librarian": {
       "model": "kimi-for-coding/k2p6",
-      "maxTokens": 4096
+      "thinking": { "type": "disabled" },
+      "maxTokens": 8192
     },
     "explore": {
-      "model": "kimi-for-coding/k2p6",
-      "maxTokens": 4096
-    },
-    "multimodal-looker": {
       "model": "kimi-for-coding/k2p6",
       "thinking": { "type": "disabled" },
       "maxTokens": 4096
     },
-    "prometheus": {
+    "multimodal-looker": {
       "model": "kimi-for-coding/k2p6",
       "thinking": { "type": "enabled" },
       "maxTokens": 8192
+    },
+    "prometheus": {
+      "model": "kimi-for-coding/k2p6",
+      "thinking": { "type": "enabled" },
+      "maxTokens": 16384
     },
     "metis": {
       "model": "kimi-for-coding/k2p6",
@@ -42,40 +44,84 @@
     "momus": {
       "model": "kimi-for-coding/k2p6",
       "thinking": { "type": "enabled" },
-      "maxTokens": 4096
+      "maxTokens": 8192
     },
     "atlas": {
       "model": "kimi-for-coding/k2p6",
       "thinking": { "type": "disabled" },
+      "maxTokens": 12288
+    },
+    "plan": {
+      "model": "kimi-for-coding/k2p6",
+      "thinking": { "type": "enabled" },
+      "maxTokens": 16384
+    }
+  },
+  "categories": {
+    "quick": {
+      "model": "kimi-for-coding/k2p6",
+      "thinking": { "type": "disabled" },
+      "maxTokens": 4096
+    },
+    "fix": {
+      "model": "kimi-for-coding/k2p6",
+      "thinking": { "type": "disabled" },
+      "maxTokens": 4096
+    },
+    "search": {
+      "model": "kimi-for-coding/k2p6",
+      "thinking": { "type": "disabled" },
+      "maxTokens": 4096
+    },
+    "test": {
+      "model": "kimi-for-coding/k2p6",
+      "thinking": { "type": "disabled" },
       "maxTokens": 8192
     },
-    "sisyphus-junior": {
+    "writing": {
       "model": "kimi-for-coding/k2p6",
-      "maxTokens": 4096
-    },
-    "atlas-junior": {
-      "model": "kimi-for-coding/k2p6",
-      "maxTokens": 4096
-    },
-    "librarian-junior": {
-      "model": "kimi-for-coding/k2p6",
-      "maxTokens": 2048
-    },
-    "code-runner": {
-      "model": "kimi-for-coding/k2p6",
+      "thinking": { "type": "disabled" },
       "maxTokens": 8192
     },
-    "test-engineer": {
+    "explain": {
       "model": "kimi-for-coding/k2p6",
-      "maxTokens": 4096
+      "thinking": { "type": "disabled" },
+      "maxTokens": 8192
     },
-    "fixer": {
+    "refactor": {
       "model": "kimi-for-coding/k2p6",
-      "maxTokens": 2048
+      "thinking": { "type": "enabled" },
+      "maxTokens": 16384
     },
-    "explainer": {
+    "deep": {
       "model": "kimi-for-coding/k2p6",
-      "maxTokens": 4096
+      "thinking": { "type": "enabled" },
+      "maxTokens": 32768
+    },
+    "ultrabrain": {
+      "model": "kimi-for-coding/k2p6",
+      "thinking": { "type": "enabled" },
+      "maxTokens": 32768
+    },
+    "visual-engineering": {
+      "model": "kimi-for-coding/k2p6",
+      "thinking": { "type": "enabled" },
+      "maxTokens": 32768
+    },
+    "artistry": {
+      "model": "kimi-for-coding/k2p6",
+      "thinking": { "type": "enabled" },
+      "maxTokens": 32768
+    },
+    "unspecified-low": {
+      "model": "kimi-for-coding/k2p6",
+      "thinking": { "type": "disabled" },
+      "maxTokens": 8192
+    },
+    "unspecified-high": {
+      "model": "kimi-for-coding/k2p6",
+      "thinking": { "type": "enabled" },
+      "maxTokens": 16384
     }
   }
 }

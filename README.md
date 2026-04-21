@@ -29,9 +29,6 @@ ln -s ~/your-repo-path ~/.config/opencode
 Create `~/.config/opencode/.env.local`:
 
 ```bash
-# OpenCode Go
-OPENCODE_GO_API_KEY=your_actual_key_here
-
 # Kimi (if needed)
 KIMI_API_KEY=your_actual_key_here
 ```
@@ -39,7 +36,6 @@ KIMI_API_KEY=your_actual_key_here
 Or use environment variables:
 
 ```bash
-export OPENCODE_GO_API_KEY="your_key"
 export KIMI_API_KEY="your_key"
 ```
 
@@ -62,16 +58,16 @@ opencode
 
 | Task Type | Agent | Model | Speed |
 |-----------|-------|-------|-------|
-| Search/Grep | `@explore` | MiniMax | ~1s |
-| Quick fixes | `@fixer` | MiniMax | ~1s |
-| Deep analysis | `@oracle` | Kimi | ~8s |
-| Architecture | `@prometheus` | Kimi | ~10s |
+| Search/Grep | `@explore` | Kimi instant | ~2s |
+| Quick fixes | quick/fix category | Kimi instant | ~2s |
+| Deep analysis | `@oracle` | Kimi thinking | ~8s |
+| Architecture | `@prometheus` | Kimi thinking | ~10s |
 
 ### Cost Optimization
 
-- 70% MiniMax (fast & cheap) - 100K req/month
-- 25% Kimi (powerful) - 9K req/month typical
-- Parallel execution enabled (12 concurrent agents)
+- Kimi instant mode for utility tasks
+- Kimi thinking mode for planning, refactors, visual reasoning, and hard debugging
+- Category routing sets per-task `thinking` and `maxTokens` budgets
 
 ## Customization
 

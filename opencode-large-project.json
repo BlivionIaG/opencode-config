@@ -10,15 +10,14 @@
   },
   "agents": {
     "explore": {
-      "model": "opencode-go/glm-5",
-      "maxTokens": 8192,
-      "fallback_models": ["opencode-go/minimax-m2.5"]
+      "model": "kimi-for-coding/k2p6",
+      "thinking": { "type": "disabled" },
+      "maxTokens": 8192
     },
     "sisyphus": {
       "model": "kimi-for-coding/k2p6",
       "thinking": { "type": "enabled" },
-      "maxTokens": 12288,
-      "fallback_models": ["opencode-go/glm-5"]
+      "maxTokens": 16384
     }
   }
 }
