@@ -6,8 +6,8 @@ This repository contains OpenCode AI agent configurations optimized for speed an
 
 | File | Purpose |
 |------|---------|
-| `oh-my-opencode.json` | Main agent configuration (16 agents, categories, routing) |
-| `opencode.json` | Core provider settings (Kimi + OpenCode Go) |
+| `oh-my-openagent.json` | Main agent configuration (16 agents, categories, routing) |
+| `opencode.json` | Core provider settings and default Kimi K2.6 model |
 | `opencode-large-project.json` | Extended config for large projects |
 | `zed-*.json` | Zed editor integration configs |
 | `OPENCODE_MANUAL.md` | Complete usage guide |
@@ -75,7 +75,7 @@ opencode
 
 ## Customization
 
-Edit `oh-my-opencode.json` to adjust:
+Edit `oh-my-openagent.json` to adjust:
 - Agent models and token limits
 - Category routing rules
 - Parallel execution limits

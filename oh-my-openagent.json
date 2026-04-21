@@ -1,0 +1,81 @@
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
+  "agents": {
+    "sisyphus": {
+      "model": "kimi-for-coding/k2p6",
+      "thinking": { "type": "disabled" },
+      "maxTokens": 8192
+    },
+    "hephaestus": {
+      "model": "kimi-for-coding/k2p6",
+      "thinking": { "type": "enabled" },
+      "maxTokens": 16384
+    },
+    "oracle": {
+      "model": "kimi-for-coding/k2p6",
+      "thinking": { "type": "enabled" },
+      "maxTokens": 8192
+    },
+    "librarian": {
+      "model": "kimi-for-coding/k2p6",
+      "maxTokens": 4096
+    },
+    "explore": {
+      "model": "kimi-for-coding/k2p6",
+      "maxTokens": 4096
+    },
+    "multimodal-looker": {
+      "model": "kimi-for-coding/k2p6",
+      "thinking": { "type": "disabled" },
+      "maxTokens": 4096
+    },
+    "prometheus": {
+      "model": "kimi-for-coding/k2p6",
+      "thinking": { "type": "enabled" },
+      "maxTokens": 8192
+    },
+    "metis": {
+      "model": "kimi-for-coding/k2p6",
+      "thinking": { "type": "enabled" },
+      "maxTokens": 8192
+    },
+    "momus": {
+      "model": "kimi-for-coding/k2p6",
+      "thinking": { "type": "enabled" },
+      "maxTokens": 4096
+    },
+    "atlas": {
+      "model": "kimi-for-coding/k2p6",
+      "thinking": { "type": "disabled" },
+      "maxTokens": 8192
+    },
+    "sisyphus-junior": {
+      "model": "kimi-for-coding/k2p6",
+      "maxTokens": 4096
+    },
+    "atlas-junior": {
+      "model": "kimi-for-coding/k2p6",
+      "maxTokens": 4096
+    },
+    "librarian-junior": {
+      "model": "kimi-for-coding/k2p6",
+      "maxTokens": 2048
+    },
+    "code-runner": {
+      "model": "kimi-for-coding/k2p6",
+      "maxTokens": 8192
+    },
+    "test-engineer": {
+      "model": "kimi-for-coding/k2p6",
+      "maxTokens": 4096
+    },
+    "fixer": {
+      "model": "kimi-for-coding/k2p6",
+      "maxTokens": 2048
+    },
+    "explainer": {
+      "model": "kimi-for-coding/k2p6",
+      "maxTokens": 4096
+    }
+  }
+}

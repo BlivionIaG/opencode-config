@@ -1,6 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "extends": "./oh-my-opencode.json",
+  "extends": "./oh-my-openagent.json",
   "optimization": {
     "context_management": {
       "max_context_tokens": 200000,
@@ -15,7 +15,7 @@
       "fallback_models": ["opencode-go/minimax-m2.5"]
     },
     "sisyphus": {
-      "model": "kimi-for-coding/k2p5",
+      "model": "kimi-for-coding/k2p6",
       "thinking": { "type": "enabled" },
       "maxTokens": 12288,
       "fallback_models": ["opencode-go/glm-5"]

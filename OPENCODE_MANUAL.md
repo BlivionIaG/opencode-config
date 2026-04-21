@@ -59,16 +59,18 @@ opencode "Your task here"
 
 ### Enabled Providers
 
-1. **kimi-for-coding** - Kimi K2.5 (powerful reasoning, 256K context)
+1. **kimi-for-coding** - Kimi K2.6 (powerful reasoning, 256K context)
 2. **opencode-go** - MiniMax M2.5 (fast & cheap, 100K requests/month)
 
 ### Model Characteristics
 
-**Kimi K2.5 (kimi-for-coding/k2p5)**
+**Kimi K2.6 (kimi-for-coding/k2p6)**
 - ✅ Deep reasoning, architecture, debugging
 - ✅ Multimodal (vision + text)
 - ✅ 256K context window
+- ✅ Thinking and instant modes via `thinking.type`
 - ⚠️ Slower, more expensive
+- ⚠️ Leave sampling settings unset; K2.6 rejects non-default `temperature`, `top_p`, `n`, and penalties
 - Use for: complex planning, debugging, visual tasks
 
 **MiniMax M2.5 (opencode-go/minimax-m2.5)**
@@ -302,7 +304,7 @@ Your config supports **12 concurrent background agents**:
 # Wait 1 minute - limits reset automatically
 # Or reduce concurrent agents in config from 12 to 8
 
-# Edit oh-my-opencode.json:
+# Edit oh-my-openagent.json:
 "background_agents": {
   "max_concurrent": 8  # Reduced from 12
 }
@@ -323,7 +325,7 @@ bunx oh-my-opencode doctor
 ```bash
 # Override manually:
 /models
-# Select: kimi-for-coding/k2p5 or opencode-go/minimax-m2.5
+# Select: kimi-for-coding/k2p6 or opencode-go/minimax-m2.5
 
 # Or toggle thinking mode:
 /acp thinking enabled   # Deep reasoning
@@ -351,14 +353,14 @@ bunx oh-my-opencode doctor
 | File | Location | Purpose |
 |------|----------|---------|
 | `opencode.json` | `~/.config/opencode/` | Provider settings |
-| `oh-my-opencode.json` | `~/.config/opencode/` | Agent & category config |
+| `oh-my-openagent.json` | `~/.config/opencode/` | Agent & category config |
 
 ### Reset Everything
 
 ```bash
 # If you need to start fresh:
-rm ~/.config/opencode/oh-my-opencode.json
-cp ~/your-backup/oh-my-opencode.json ~/.config/opencode/
+rm ~/.config/opencode/oh-my-openagent.json
+cp ~/your-backup/oh-my-openagent.json ~/.config/opencode/
 
 # Or regenerate:
 bunx oh-my-opencode@latest install
@@ -370,7 +372,7 @@ bunx oh-my-opencode@latest install
 
 ### Custom Categories
 
-Add to `oh-my-opencode.json`:
+Add to `oh-my-openagent.json`:
 ```json
 "categories": {
   "my-custom-category": {
@@ -415,10 +417,10 @@ For Kimi agents, you can control reasoning:
 /acp thinking disabled
 ```
 
-Or configure per-agent in `oh-my-opencode.json`:
+Or configure per-agent in `oh-my-openagent.json`:
 ```json
 "oracle": {
-  "model": "kimi-for-coding/k2p5",
+  "model": "kimi-for-coding/k2p6",
   "thinking": { "type": "enabled" }  // or "disabled"
 }
 ```
@@ -593,7 +595,7 @@ Check your consumption:
 **Configuration Location:**
 ```
 ~/.config/opencode/opencode.json
-~/.config/opencode/oh-my-opencode.json
+~/.config/opencode/oh-my-openagent.json
 ```
 
 ---
