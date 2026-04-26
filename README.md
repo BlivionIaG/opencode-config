@@ -7,7 +7,7 @@ This repository contains OpenCode AI agent configurations optimized for speed an
 | File | Purpose |
 |------|---------|
 | `oh-my-openagent.json` | Main agent configuration (16 agents, categories, routing) |
-| `opencode.json` | Core provider settings and default Kimi K2.6 model |
+| `opencode.json` | Core provider settings, default Kimi K2.6 model, and MiniMax fast model |
 | `opencode-large-project.json` | Extended config for large projects |
 | `zed-*.json` | Zed editor integration configs |
 | `OPENCODE_MANUAL.md` | Complete usage guide |
@@ -31,12 +31,16 @@ Create `~/.config/opencode/.env.local`:
 ```bash
 # Kimi (if needed)
 KIMI_API_KEY=your_actual_key_here
+
+# MiniMax fast model
+MINIMAX_API_KEY=your_actual_key_here
 ```
 
 Or use environment variables:
 
 ```bash
 export KIMI_API_KEY="your_key"
+export MINIMAX_API_KEY="your_key"
 ```
 
 ### 3. Start using
@@ -65,6 +69,8 @@ opencode
 
 ### Cost Optimization
 
+- Kimi K2.6 remains the main model for primary coding work
+- MiniMax M2.7 Highspeed is configured as OpenCode's fast/small model
 - Kimi instant mode for utility tasks
 - Kimi thinking mode for planning, refactors, visual reasoning, and hard debugging
 - Category routing sets per-task `thinking` and `maxTokens` budgets

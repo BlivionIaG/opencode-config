@@ -51,6 +51,7 @@ opencode "Your task here"
 | Provider | Requests/min | Concurrent |
 |----------|--------------|------------|
 | Kimi Code | 40 | 4 |
+| MiniMax | Account-dependent | Account-dependent |
 
 ---
 
@@ -59,6 +60,7 @@ opencode "Your task here"
 ### Enabled Providers
 
 1. **kimi-for-coding** - Kimi K2.6 (powerful reasoning, 256K context)
+2. **minimax** - MiniMax M2.7 Highspeed (fast/small model, 200K context, 131K output)
 
 ### Model Characteristics
 
@@ -70,6 +72,14 @@ opencode "Your task here"
 - ⚠️ Slower, more expensive
 - ⚠️ Leave sampling settings unset; K2.6 rejects non-default `temperature`, `top_p`, `n`, and penalties
 - Use for: complex planning, debugging, visual tasks
+
+**MiniMax M2.7 Highspeed (minimax/MiniMax-M2.7-highspeed)**
+- ✅ Fast model configured as OpenCode `small_model`
+- ✅ 204,800 context limit
+- ✅ 131,072 output limit
+- ✅ Tool-call capable in OpenCode's provider metadata
+- ⚠️ Higher highspeed pricing than standard MiniMax M2.7
+- Use for: quick/simple responses where latency matters
 
 ## Agents Guide
 
@@ -291,6 +301,9 @@ opencode debug config
 
 # Check available Kimi models:
 opencode models kimi-for-coding
+
+# Check MiniMax fast model metadata:
+opencode models minimax --verbose
 ```
 
 **Issue: Wrong model selected**
@@ -298,6 +311,9 @@ opencode models kimi-for-coding
 # Override manually:
 /models
 # Select: kimi-for-coding/k2p6
+
+# Fast/small model is configured as:
+# minimax/MiniMax-M2.7-highspeed
 
 # Or toggle thinking mode:
 /acp thinking enabled   # Deep reasoning
