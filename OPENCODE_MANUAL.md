@@ -88,9 +88,9 @@ opencode "Your task here"
 | Agent | Mode | Max Tokens | Use For |
 |-------|------|------------|---------|
 | **Sisyphus** | Kimi instant | 16384 | Main orchestrator, delegates tasks |
-| **Atlas** | MiniMax instant | 16384 | Plan orchestration, task coordination |
+| **Atlas** | MiniMax instant | 16384 | Plan orchestration, task coordination with Kimi fallback |
 | **Hephaestus** | Kimi thinking | 32768 | Deep autonomous work, research |
-| **Prometheus** | MiniMax thinking | 32768 | Strategic planning with Kimi fallback |
+| **Prometheus** | Kimi thinking | 32768 | Strategic planning with MiniMax fallback |
 
 ### Utility Agents
 
@@ -108,7 +108,7 @@ opencode "Your task here"
 | **Oracle** | Kimi thinking | 32768 | Architecture analysis, debugging |
 | **Metis** | Kimi thinking | 32768 | Plan consulting |
 | **Momus** | Kimi thinking | 32768 | Plan review |
-| **Plan** | MiniMax thinking | 32768 | Work plan generation with Kimi fallback |
+| **Plan** | MiniMax thinking | 32768 | Work plan drafting with Kimi fallback |
 
 ### How to Use Agents
 
@@ -159,7 +159,7 @@ Sisyphus automatically categorizes your requests based on keywords:
 "Run tests for auth module"                  → test category
 ```
 
-**Automatic quality routing (Kimi for hard/visual work, MiniMax for fast planning):**
+**Automatic quality routing (Kimi for strategic planning, hard debugging, and visual work):**
 ```bash
 "Design a new authentication system"         → @prometheus
 "Debug why the server crashes"               → @oracle
@@ -241,7 +241,7 @@ Your config uses Kimi for quality-critical reasoning and MiniMax for fast utilit
 | Test generation | MiniMax instant | Lower Kimi quota use | ~3-4s |
 | Refactoring | Kimi thinking | Higher | ~8s |
 | Deep analysis | Kimi | ~$0.005 | ~8s |
-| Architecture planning | MiniMax/Kimi fallback | Mixed | ~5-10s |
+| Architecture planning | Kimi/MiniMax fallback | Higher | ~8-10s |
 
 ### Your Monthly Budget
 
@@ -250,8 +250,8 @@ Your config uses Kimi for quality-critical reasoning and MiniMax for fast utilit
 - Rate limit: 40 req/min
 
 **Typical Monthly Usage:**
-- MiniMax for search, quick fixes, explanations, tests, writing, and lightweight planning
-- Thinking-mode Kimi for architecture, refactors, visual reasoning, critique, and hard debugging
+- MiniMax for search, quick fixes, explanations, tests, writing, and lightweight plan coordination
+- Thinking-mode Kimi for strategic planning, architecture, refactors, visual reasoning, critique, and hard debugging
 
 ### Cost-Saving Tips
 

@@ -65,14 +65,14 @@ opencode
 | Search/Grep | `@explore` | MiniMax instant | ~1-2s |
 | Quick fixes | quick/fix category | MiniMax instant | ~1-2s |
 | Deep analysis | `@oracle` | Kimi thinking | ~8s |
-| Architecture | `@prometheus` | MiniMax thinking with Kimi fallback | ~5-10s |
+| Architecture | `@prometheus` | Kimi thinking with MiniMax fallback | ~8-10s |
 
 ### Cost Optimization
 
 - Kimi K2.6 remains the main model for primary coding work
 - MiniMax M2.7 Highspeed is configured as OpenCode's fast/small model
-- MiniMax handles utility tasks and selected planning flows
-- Kimi thinking mode remains reserved for deep refactors, visual reasoning, critique, and hard debugging
+- MiniMax handles utility tasks and lightweight plan coordination
+- Kimi thinking mode remains reserved for strategic planning, deep refactors, visual reasoning, critique, and hard debugging
 - Category routing sets per-task `thinking` and `maxTokens` budgets
 
 ## Customization

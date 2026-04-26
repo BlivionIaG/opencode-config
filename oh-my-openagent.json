@@ -48,12 +48,12 @@
       "maxTokens": 32768
     },
     "prometheus": {
-      "model": "minimax/MiniMax-M2.7-highspeed",
+      "model": "kimi-for-coding/k2p6",
       "thinking": { "type": "enabled" },
       "maxTokens": 32768,
       "fallback_models": [
         {
-          "model": "kimi-for-coding/k2p6",
+          "model": "minimax/MiniMax-M2.7-highspeed",
           "thinking": { "type": "enabled" },
           "maxTokens": 32768
         }
