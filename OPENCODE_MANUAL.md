@@ -87,28 +87,28 @@ opencode "Your task here"
 
 | Agent | Mode | Max Tokens | Use For |
 |-------|------|------------|---------|
-| **Sisyphus** | Kimi instant | 8192 | Main orchestrator, delegates tasks |
-| **Atlas** | Kimi instant | 12288 | Plan orchestration, task coordination |
+| **Sisyphus** | Kimi instant | 16384 | Main orchestrator, delegates tasks |
+| **Atlas** | MiniMax instant | 16384 | Plan orchestration, task coordination |
 | **Hephaestus** | Kimi thinking | 32768 | Deep autonomous work, research |
-| **Prometheus** | Kimi thinking | 16384 | Strategic planning |
+| **Prometheus** | MiniMax thinking | 32768 | Strategic planning with Kimi fallback |
 
 ### Utility Agents
 
 | Agent | Mode | Max Tokens | Use For |
 |-------|------|------------|---------|
-| **Explore** | Kimi instant | 4096 | Fast codebase grep, search |
-| **Librarian** | Kimi instant | 8192 | Documentation and external reference search |
-| **Multimodal-Looker** | Kimi thinking | 8192 | Vision tasks, screenshots, UI analysis |
+| **Explore** | MiniMax instant | 8192 | Fast codebase grep, search |
+| **Librarian** | MiniMax instant | 16384 | Documentation and external reference search |
+| **Multimodal-Looker** | Kimi thinking | 32768 | Vision tasks, screenshots, UI analysis |
 | **Sisyphus-Junior** | Category-based | 4096-32768 | Focused delegated task execution |
 
 ### Special Agents
 
 | Agent | Mode | Max Tokens | Use For |
 |-------|------|------------|---------|
-| **Oracle** | Kimi thinking | 16384 | Architecture analysis, debugging |
-| **Metis** | Kimi thinking | 8192 | Plan consulting |
-| **Momus** | Kimi thinking | 8192 | Plan review |
-| **Plan** | Kimi thinking | 16384 | Work plan generation |
+| **Oracle** | Kimi thinking | 32768 | Architecture analysis, debugging |
+| **Metis** | Kimi thinking | 32768 | Plan consulting |
+| **Momus** | Kimi thinking | 32768 | Plan review |
+| **Plan** | MiniMax thinking | 32768 | Work plan generation with Kimi fallback |
 
 ### How to Use Agents
 
@@ -137,20 +137,20 @@ Sisyphus automatically categorizes your requests based on keywords:
 
 | Category | Trigger Keywords | Model | Speed |
 |----------|-----------------|-------|-------|
-| **quick** | fix, typo, rename, add import | Kimi instant, 4096 maxTokens | ~2s |
-| **search** | find, search, grep, locate | Kimi instant, 4096 maxTokens | ~2s |
-| **explain** | explain, what does, how to | Kimi instant, 8192 maxTokens | ~3s |
-| **test** | test, spec, validate | Kimi instant, 8192 maxTokens | ~4s |
-| **refactor** | refactor, cleanup, optimize | Kimi thinking, 16384 maxTokens | ~8s |
+| **quick** | fix, typo, rename, add import | MiniMax instant, 4096 maxTokens | ~1-2s |
+| **search** | find, search, grep, locate | MiniMax instant, 4096 maxTokens | ~1-2s |
+| **explain** | explain, what does, how to | MiniMax instant, 8192 maxTokens | ~2-3s |
+| **test** | test, spec, validate | MiniMax instant, 8192 maxTokens | ~3-4s |
+| **refactor** | refactor, cleanup, optimize | Kimi thinking, 32768 maxTokens | ~8s |
 | **deep** | debug, investigate, analyze | Kimi thinking | ~8s |
 | **ultrabrain** | architect, design, plan | Kimi thinking | ~10s |
 | **visual-engineering** | UI, frontend, screenshot, design | Kimi thinking | ~8s |
-| **writing** | write, document, describe | Kimi instant, 8192 maxTokens | ~3s |
-| **fix** | fix, correct, repair | Kimi instant, 4096 maxTokens | ~2s |
+| **writing** | write, document, describe | MiniMax instant, 8192 maxTokens | ~2-3s |
+| **fix** | fix, correct, repair | MiniMax instant, 4096 maxTokens | ~1-2s |
 
 ### Examples
 
-**Automatic instant routing (fast Kimi, thinking disabled):**
+**Automatic instant routing (fast MiniMax, thinking disabled):**
 ```bash
 "Find all console.log statements"           → @explore
 "Add import for lodash"                      → @sisyphus-junior
@@ -159,7 +159,7 @@ Sisyphus automatically categorizes your requests based on keywords:
 "Run tests for auth module"                  → test category
 ```
 
-**Automatic Kimi routing (deep reasoning):**
+**Automatic quality routing (Kimi for hard/visual work, MiniMax for fast planning):**
 ```bash
 "Design a new authentication system"         → @prometheus
 "Debug why the server crashes"               → @oracle
@@ -216,7 +216,7 @@ Use `&` to run agents simultaneously:
 
 ### Background Agents
 
-Your config uses the Kimi provider with explicit instant/thinking settings per agent and category.
+Your config uses Kimi for quality-critical reasoning and MiniMax for fast utility work, with explicit instant/thinking settings per agent and category.
 
 **Check status:**
 ```bash
@@ -225,6 +225,7 @@ Your config uses the Kimi provider with explicit instant/thinking settings per a
 
 **Max parallel per provider:**
 - Kimi: up to 4 agents simultaneously
+- MiniMax: account-dependent
 
 ---
 
@@ -234,13 +235,13 @@ Your config uses the Kimi provider with explicit instant/thinking settings per a
 
 | Operation | Model | Cost | Time |
 |-----------|-------|------|------|
-| Simple search | Kimi instant | Lower | ~2s |
-| Quick fix | Kimi instant | Lower | ~2s |
-| Code explanation | Kimi instant | Lower | ~3s |
-| Test generation | Kimi instant | Medium | ~4s |
+| Simple search | MiniMax instant | Lower Kimi quota use | ~1-2s |
+| Quick fix | MiniMax instant | Lower Kimi quota use | ~1-2s |
+| Code explanation | MiniMax instant | Lower Kimi quota use | ~2-3s |
+| Test generation | MiniMax instant | Lower Kimi quota use | ~3-4s |
 | Refactoring | Kimi thinking | Higher | ~8s |
 | Deep analysis | Kimi | ~$0.005 | ~8s |
-| Architecture planning | Kimi | ~$0.006 | ~10s |
+| Architecture planning | MiniMax/Kimi fallback | Mixed | ~5-10s |
 
 ### Your Monthly Budget
 
@@ -249,8 +250,8 @@ Your config uses the Kimi provider with explicit instant/thinking settings per a
 - Rate limit: 40 req/min
 
 **Typical Monthly Usage:**
-- Instant-mode Kimi for search, quick fixes, explanations, tests, and writing
-- Thinking-mode Kimi for planning, architecture, refactors, visual reasoning, and hard debugging
+- MiniMax for search, quick fixes, explanations, tests, writing, and lightweight planning
+- Thinking-mode Kimi for architecture, refactors, visual reasoning, critique, and hard debugging
 
 ### Cost-Saving Tips
 
