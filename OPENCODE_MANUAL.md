@@ -62,7 +62,7 @@ opencode "Your task here"
 
 1. **kimi-for-coding** - Kimi K2.6 (powerful reasoning, 256K context)
 2. **minimax** - MiniMax M2.7 Highspeed (fast/small model, 200K context, 131K output)
-3. **chenco** - Chenco OpenAI-compatible endpoint (`llm` model)
+3. **chenco** - Chenco OpenAI-compatible endpoint (Qwen3.6 model family)
 
 ### Model Characteristics
 
@@ -83,11 +83,12 @@ opencode "Your task here"
 - ⚠️ Higher highspeed pricing than standard MiniMax M2.7
 - Use for: quick/simple responses where latency matters
 
-**Chenco LLM (chenco/llm)**
+**Chenco Qwen3.6 Models**
 - ✅ OpenAI-compatible LiteLLM endpoint
 - ✅ API key loaded from `CHENCO_API_KEY`
+- ✅ Available models: `chenco/qwen3.6-instruct`, `chenco/qwen3.6-coding`, `chenco/qwen3.6-agent`, `chenco/qwen3.6-vision`
 - ⚠️ Limits and model capabilities depend on the Chenco gateway configuration
-- Use for: manually selected Chenco-backed model runs
+- Use for: manually selected Chenco-backed Qwen3.6 model runs
 
 ## Agents Guide
 

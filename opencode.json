@@ -9,8 +9,17 @@
         "apiKey": "{env:CHENCO_API_KEY}"
       },
       "models": {
-        "llm": {
-          "name": "LLM"
+        "qwen3.6-instruct": {
+          "name": "Qwen3.6 Instruct"
+        },
+        "qwen3.6-coding": {
+          "name": "Qwen3.6 Coding"
+        },
+        "qwen3.6-agent": {
+          "name": "Qwen3.6 Agent"
+        },
+        "qwen3.6-vision": {
+          "name": "Qwen3.6 Vision"
         }
       }
     },
