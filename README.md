@@ -82,6 +82,7 @@ opencode
 - MiniMax PayGo is exposed as `minimax-paygo/MiniMax-M2.7-highspeed` and is only used after token-plan MiniMax fails
 - MiniMax token-plan routing handles utility tasks and lightweight plan coordination
 - Kimi thinking mode remains reserved for strategic planning, deep refactors, visual reasoning, critique, and hard debugging
+- Runtime fallback escalates stalled or quota-limited Kimi requests after 30 seconds
 - Category routing sets per-task `thinking` and `maxTokens` budgets
 
 ## Customization

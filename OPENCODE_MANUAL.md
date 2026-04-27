@@ -273,6 +273,7 @@ Your config uses Kimi for quality-critical reasoning and MiniMax token-plan rout
 - MiniMax token plan for search, quick fixes, explanations, tests, writing, and lightweight plan coordination
 - MiniMax PayGo only after token-plan MiniMax in fallback order
 - Thinking-mode Kimi for strategic planning, architecture, refactors, visual reasoning, critique, and hard debugging
+- Runtime fallback retries quota, timeout, and provider errors, and escalates stalled primary requests after 30 seconds
 
 ### Cost-Saving Tips
 

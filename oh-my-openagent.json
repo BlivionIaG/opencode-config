@@ -1,7 +1,24 @@
 {
   "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
   "model_fallback": true,
-  "runtime_fallback": true,
+  "runtime_fallback": {
+    "enabled": true,
+    "retry_on_errors": [
+      400,
+      402,
+      408,
+      429,
+      500,
+      502,
+      503,
+      504,
+      529
+    ],
+    "max_fallback_attempts": 3,
+    "cooldown_seconds": 60,
+    "timeout_seconds": 30,
+    "notify_on_fallback": true
+  },
   "agents": {
     "sisyphus": {
       "model": "kimi-for-coding/k2p6",
