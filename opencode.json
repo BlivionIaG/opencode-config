@@ -1,6 +1,19 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "provider": {
+    "chenco": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Chenco",
+      "options": {
+        "baseURL": "https://litellm.chenco.dev/v1",
+        "apiKey": "{env:CHENCO_API_KEY}"
+      },
+      "models": {
+        "llm": {
+          "name": "LLM"
+        }
+      }
+    },
     "minimax": {
       "options": {
         "apiKey": "{env:MINIMAX_API_KEY}"
@@ -10,6 +23,7 @@
   "model": "kimi-for-coding/k2p6",
   "small_model": "minimax/MiniMax-M2.7-highspeed",
   "enabled_providers": [
+    "chenco",
     "minimax",
     "kimi-for-coding"
   ],

@@ -52,6 +52,7 @@ opencode "Your task here"
 |----------|--------------|------------|
 | Kimi Code | 40 | 4 |
 | MiniMax | Account-dependent | Account-dependent |
+| Chenco | Account-dependent | Account-dependent |
 
 ---
 
@@ -61,6 +62,7 @@ opencode "Your task here"
 
 1. **kimi-for-coding** - Kimi K2.6 (powerful reasoning, 256K context)
 2. **minimax** - MiniMax M2.7 Highspeed (fast/small model, 200K context, 131K output)
+3. **chenco** - Chenco OpenAI-compatible endpoint (`llm` model)
 
 ### Model Characteristics
 
@@ -80,6 +82,12 @@ opencode "Your task here"
 - ✅ Tool-call capable in OpenCode's provider metadata
 - ⚠️ Higher highspeed pricing than standard MiniMax M2.7
 - Use for: quick/simple responses where latency matters
+
+**Chenco LLM (chenco/llm)**
+- ✅ OpenAI-compatible LiteLLM endpoint
+- ✅ API key loaded from `CHENCO_API_KEY`
+- ⚠️ Limits and model capabilities depend on the Chenco gateway configuration
+- Use for: manually selected Chenco-backed model runs
 
 ## Agents Guide
 
