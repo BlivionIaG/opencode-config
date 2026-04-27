@@ -7,7 +7,7 @@ This repository contains OpenCode AI agent configurations optimized for speed an
 | File | Purpose |
 |------|---------|
 | `oh-my-openagent.json` | Main agent configuration (16 agents, categories, routing) |
-| `opencode.json` | Core provider settings, default Kimi K2.6 model, Chenco Qwen3.6 models, and MiniMax fast model |
+| `opencode.json` | Core provider settings, default Kimi K2.6 model, Chenco Qwen3.6 models, MiniMax token-plan model, and MiniMax PayGo fallback |
 | `opencode-large-project.json` | Extended config for large projects |
 | `zed-*.json` | Zed editor integration configs |
 | `OPENCODE_MANUAL.md` | Complete usage guide |
@@ -32,8 +32,11 @@ Create `~/.config/opencode/.env.local`:
 # Kimi (if needed)
 KIMI_API_KEY=your_actual_key_here
 
-# MiniMax fast model
+# MiniMax token plan
 MINIMAX_API_KEY=your_actual_key_here
+
+# MiniMax PayGo fallback
+MINIMAX_PAYGO_API_KEY=your_actual_key_here
 
 # Chenco OpenAI-compatible endpoint
 CHENCO_API_KEY=your_actual_key_here
@@ -44,6 +47,7 @@ Or use environment variables:
 ```bash
 export KIMI_API_KEY="your_key"
 export MINIMAX_API_KEY="your_key"
+export MINIMAX_PAYGO_API_KEY="your_key"
 export CHENCO_API_KEY="your_key"
 ```
 
@@ -74,8 +78,9 @@ opencode
 ### Cost Optimization
 
 - Kimi K2.6 remains the main model for primary coding work
-- MiniMax M2.7 Highspeed is configured as OpenCode's fast/small model
-- MiniMax handles utility tasks and lightweight plan coordination
+- MiniMax M2.7 Highspeed uses the token-plan key and is configured as OpenCode's fast/small model
+- MiniMax PayGo is exposed as `minimax-paygo/MiniMax-M2.7-highspeed` and is only used after token-plan MiniMax fails
+- MiniMax token-plan routing handles utility tasks and lightweight plan coordination
 - Kimi thinking mode remains reserved for strategic planning, deep refactors, visual reasoning, critique, and hard debugging
 - Category routing sets per-task `thinking` and `maxTokens` budgets
 

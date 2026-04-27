@@ -27,6 +27,43 @@
       "options": {
         "apiKey": "{env:MINIMAX_API_KEY}"
       }
+    },
+    "minimax-paygo": {
+      "npm": "@ai-sdk/anthropic",
+      "name": "MiniMax PayGo",
+      "options": {
+        "baseURL": "https://api.minimax.io/anthropic/v1",
+        "apiKey": "{env:MINIMAX_PAYGO_API_KEY}"
+      },
+      "models": {
+        "MiniMax-M2.7-highspeed": {
+          "name": "MiniMax M2.7 Highspeed PayGo",
+          "family": "minimax",
+          "attachment": false,
+          "reasoning": true,
+          "tool_call": true,
+          "temperature": true,
+          "release_date": "2026-03-18",
+          "modalities": {
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "cost": {
+            "input": 0.6,
+            "output": 2.4,
+            "cache_read": 0.06,
+            "cache_write": 0.375
+          },
+          "limit": {
+            "context": 204800,
+            "output": 131072
+          }
+        }
+      }
     }
   },
   "model": "kimi-for-coding/k2p6",
@@ -34,6 +71,7 @@
   "enabled_providers": [
     "chenco",
     "minimax",
+    "minimax-paygo",
     "kimi-for-coding"
   ],
   "plugin": [

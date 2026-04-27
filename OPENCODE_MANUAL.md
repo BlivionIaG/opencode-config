@@ -51,7 +51,8 @@ opencode "Your task here"
 | Provider | Requests/min | Concurrent |
 |----------|--------------|------------|
 | Kimi Code | 40 | 4 |
-| MiniMax | Account-dependent | Account-dependent |
+| MiniMax token plan | Account-dependent | Account-dependent |
+| MiniMax PayGo | Account-dependent | Account-dependent |
 | Chenco | Account-dependent | Account-dependent |
 
 ---
@@ -61,8 +62,9 @@ opencode "Your task here"
 ### Enabled Providers
 
 1. **kimi-for-coding** - Kimi K2.6 (powerful reasoning, 256K context)
-2. **minimax** - MiniMax M2.7 Highspeed (fast/small model, 200K context, 131K output)
-3. **chenco** - Chenco OpenAI-compatible endpoint (Qwen3.6 model family)
+2. **minimax** - MiniMax M2.7 Highspeed token plan (fast/small model, 200K context, 131K output)
+3. **minimax-paygo** - MiniMax M2.7 Highspeed PayGo fallback using the same MiniMax Anthropic-compatible endpoint
+4. **chenco** - Chenco OpenAI-compatible endpoint (Qwen3.6 model family)
 
 ### Model Characteristics
 
@@ -75,13 +77,21 @@ opencode "Your task here"
 - ⚠️ Leave sampling settings unset; K2.6 rejects non-default `temperature`, `top_p`, `n`, and penalties
 - Use for: complex planning, debugging, visual tasks
 
-**MiniMax M2.7 Highspeed (minimax/MiniMax-M2.7-highspeed)**
+**MiniMax M2.7 Highspeed Token Plan (minimax/MiniMax-M2.7-highspeed)**
 - ✅ Fast model configured as OpenCode `small_model`
+- ✅ API key loaded from `MINIMAX_API_KEY`
 - ✅ 204,800 context limit
 - ✅ 131,072 output limit
 - ✅ Tool-call capable in OpenCode's provider metadata
 - ⚠️ Higher highspeed pricing than standard MiniMax M2.7
 - Use for: quick/simple responses where latency matters
+
+**MiniMax M2.7 Highspeed PayGo (minimax-paygo/MiniMax-M2.7-highspeed)**
+- ✅ Backup provider for the same MiniMax M2.7 Highspeed model
+- ✅ API key loaded from `MINIMAX_PAYGO_API_KEY`
+- ✅ Used after token-plan MiniMax in `fallback_models`
+- ⚠️ Intended as overflow only; keep it behind token-plan MiniMax in fallback order
+- Use for: automatic recovery when the token-plan MiniMax key is rate-limited or full
 
 **Chenco Qwen3.6 Models**
 - ✅ OpenAI-compatible LiteLLM endpoint
@@ -97,9 +107,9 @@ opencode "Your task here"
 | Agent | Mode | Max Tokens | Use For |
 |-------|------|------------|---------|
 | **Sisyphus** | Kimi instant | 16384 | Main orchestrator, delegates tasks |
-| **Atlas** | MiniMax instant | 16384 | Plan orchestration, task coordination with Kimi fallback |
+| **Atlas** | MiniMax instant | 16384 | Plan orchestration, task coordination with PayGo then Kimi fallback |
 | **Hephaestus** | Kimi thinking | 32768 | Deep autonomous work, research |
-| **Prometheus** | Kimi thinking | 32768 | Strategic planning with MiniMax fallback |
+| **Prometheus** | Kimi thinking | 32768 | Strategic planning with MiniMax token-plan then PayGo fallback |
 
 ### Utility Agents
 
@@ -117,7 +127,7 @@ opencode "Your task here"
 | **Oracle** | Kimi thinking | 32768 | Architecture analysis, debugging |
 | **Metis** | Kimi thinking | 32768 | Plan consulting |
 | **Momus** | Kimi thinking | 32768 | Plan review |
-| **Plan** | MiniMax thinking | 32768 | Work plan drafting with Kimi fallback |
+| **Plan** | MiniMax thinking | 32768 | Work plan drafting with PayGo then Kimi fallback |
 
 ### How to Use Agents
 
@@ -225,7 +235,7 @@ Use `&` to run agents simultaneously:
 
 ### Background Agents
 
-Your config uses Kimi for quality-critical reasoning and MiniMax for fast utility work, with explicit instant/thinking settings per agent and category.
+Your config uses Kimi for quality-critical reasoning and MiniMax token-plan routing for fast utility work, with MiniMax PayGo kept as overflow fallback and explicit instant/thinking settings per agent and category.
 
 **Check status:**
 ```bash
@@ -234,7 +244,8 @@ Your config uses Kimi for quality-critical reasoning and MiniMax for fast utilit
 
 **Max parallel per provider:**
 - Kimi: up to 4 agents simultaneously
-- MiniMax: account-dependent
+- MiniMax token plan: account-dependent
+- MiniMax PayGo: account-dependent, used after token-plan MiniMax
 
 ---
 
@@ -250,7 +261,7 @@ Your config uses Kimi for quality-critical reasoning and MiniMax for fast utilit
 | Test generation | MiniMax instant | Lower Kimi quota use | ~3-4s |
 | Refactoring | Kimi thinking | Higher | ~8s |
 | Deep analysis | Kimi | ~$0.005 | ~8s |
-| Architecture planning | Kimi/MiniMax fallback | Higher | ~8-10s |
+| Architecture planning | Kimi/MiniMax token-plan/PayGo fallback | Higher | ~8-10s |
 
 ### Your Monthly Budget
 
@@ -259,7 +270,8 @@ Your config uses Kimi for quality-critical reasoning and MiniMax for fast utilit
 - Rate limit: 40 req/min
 
 **Typical Monthly Usage:**
-- MiniMax for search, quick fixes, explanations, tests, writing, and lightweight plan coordination
+- MiniMax token plan for search, quick fixes, explanations, tests, writing, and lightweight plan coordination
+- MiniMax PayGo only after token-plan MiniMax in fallback order
 - Thinking-mode Kimi for strategic planning, architecture, refactors, visual reasoning, critique, and hard debugging
 
 ### Cost-Saving Tips
@@ -314,6 +326,9 @@ opencode models kimi-for-coding
 
 # Check MiniMax fast model metadata:
 opencode models minimax --verbose
+
+# Check MiniMax PayGo fallback metadata:
+opencode models minimax-paygo --verbose
 ```
 
 **Issue: Wrong model selected**
@@ -324,6 +339,9 @@ opencode models minimax --verbose
 
 # Fast/small model is configured as:
 # minimax/MiniMax-M2.7-highspeed
+
+# PayGo fallback is configured as:
+# minimax-paygo/MiniMax-M2.7-highspeed
 
 # Or toggle thinking mode:
 /acp thinking enabled   # Deep reasoning

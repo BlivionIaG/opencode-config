@@ -5,90 +5,253 @@
   "agents": {
     "sisyphus": {
       "model": "kimi-for-coding/k2p6",
-      "thinking": { "type": "disabled" },
-      "maxTokens": 16384
-    },
-    "hephaestus": {
-      "model": "kimi-for-coding/k2p6",
-      "thinking": { "type": "enabled" },
-      "maxTokens": 32768
-    },
-    "oracle": {
-      "model": "kimi-for-coding/k2p6",
-      "thinking": { "type": "enabled" },
-      "maxTokens": 32768
-    },
-    "librarian": {
-      "model": "minimax/MiniMax-M2.7-highspeed",
-      "thinking": { "type": "disabled" },
+      "thinking": {
+        "type": "disabled"
+      },
       "maxTokens": 16384,
       "fallback_models": [
         {
+          "model": "minimax/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "disabled"
+          },
+          "maxTokens": 16384
+        },
+        {
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "disabled"
+          },
+          "maxTokens": 16384
+        }
+      ]
+    },
+    "hephaestus": {
+      "model": "kimi-for-coding/k2p6",
+      "thinking": {
+        "type": "enabled"
+      },
+      "maxTokens": 32768,
+      "fallback_models": [
+        {
+          "model": "minimax/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "enabled"
+          },
+          "maxTokens": 32768
+        },
+        {
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "enabled"
+          },
+          "maxTokens": 32768
+        }
+      ]
+    },
+    "oracle": {
+      "model": "kimi-for-coding/k2p6",
+      "thinking": {
+        "type": "enabled"
+      },
+      "maxTokens": 32768,
+      "fallback_models": [
+        {
+          "model": "minimax/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "enabled"
+          },
+          "maxTokens": 32768
+        },
+        {
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "enabled"
+          },
+          "maxTokens": 32768
+        }
+      ]
+    },
+    "librarian": {
+      "model": "minimax/MiniMax-M2.7-highspeed",
+      "thinking": {
+        "type": "disabled"
+      },
+      "maxTokens": 16384,
+      "fallback_models": [
+        {
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "disabled"
+          },
+          "maxTokens": 16384
+        },
+        {
           "model": "kimi-for-coding/k2p6",
-          "thinking": { "type": "disabled" },
+          "thinking": {
+            "type": "disabled"
+          },
           "maxTokens": 16384
         }
       ]
     },
     "explore": {
       "model": "minimax/MiniMax-M2.7-highspeed",
-      "thinking": { "type": "disabled" },
+      "thinking": {
+        "type": "disabled"
+      },
       "maxTokens": 8192,
       "fallback_models": [
         {
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "disabled"
+          },
+          "maxTokens": 8192
+        },
+        {
           "model": "kimi-for-coding/k2p6",
-          "thinking": { "type": "disabled" },
+          "thinking": {
+            "type": "disabled"
+          },
           "maxTokens": 8192
         }
       ]
     },
     "multimodal-looker": {
       "model": "kimi-for-coding/k2p6",
-      "thinking": { "type": "enabled" },
-      "maxTokens": 32768
-    },
-    "prometheus": {
-      "model": "kimi-for-coding/k2p6",
-      "thinking": { "type": "enabled" },
+      "thinking": {
+        "type": "enabled"
+      },
       "maxTokens": 32768,
       "fallback_models": [
         {
           "model": "minimax/MiniMax-M2.7-highspeed",
-          "thinking": { "type": "enabled" },
+          "thinking": {
+            "type": "enabled"
+          },
+          "maxTokens": 32768
+        },
+        {
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "enabled"
+          },
+          "maxTokens": 32768
+        }
+      ]
+    },
+    "prometheus": {
+      "model": "kimi-for-coding/k2p6",
+      "thinking": {
+        "type": "enabled"
+      },
+      "maxTokens": 32768,
+      "fallback_models": [
+        {
+          "model": "minimax/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "enabled"
+          },
+          "maxTokens": 32768
+        },
+        {
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "enabled"
+          },
           "maxTokens": 32768
         }
       ]
     },
     "metis": {
       "model": "kimi-for-coding/k2p6",
-      "thinking": { "type": "enabled" },
-      "maxTokens": 32768
+      "thinking": {
+        "type": "enabled"
+      },
+      "maxTokens": 32768,
+      "fallback_models": [
+        {
+          "model": "minimax/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "enabled"
+          },
+          "maxTokens": 32768
+        },
+        {
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "enabled"
+          },
+          "maxTokens": 32768
+        }
+      ]
     },
     "momus": {
       "model": "kimi-for-coding/k2p6",
-      "thinking": { "type": "enabled" },
-      "maxTokens": 32768
+      "thinking": {
+        "type": "enabled"
+      },
+      "maxTokens": 32768,
+      "fallback_models": [
+        {
+          "model": "minimax/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "enabled"
+          },
+          "maxTokens": 32768
+        },
+        {
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "enabled"
+          },
+          "maxTokens": 32768
+        }
+      ]
     },
     "atlas": {
       "model": "minimax/MiniMax-M2.7-highspeed",
-      "thinking": { "type": "disabled" },
+      "thinking": {
+        "type": "disabled"
+      },
       "maxTokens": 16384,
       "fallback_models": [
         {
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "disabled"
+          },
+          "maxTokens": 16384
+        },
+        {
           "model": "kimi-for-coding/k2p6",
-          "thinking": { "type": "disabled" },
+          "thinking": {
+            "type": "disabled"
+          },
           "maxTokens": 16384
         }
       ]
     },
     "plan": {
       "model": "minimax/MiniMax-M2.7-highspeed",
-      "thinking": { "type": "enabled" },
+      "thinking": {
+        "type": "enabled"
+      },
       "maxTokens": 32768,
       "fallback_models": [
         {
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "enabled"
+          },
+          "maxTokens": 32768
+        },
+        {
           "model": "kimi-for-coding/k2p6",
-          "thinking": { "type": "enabled" },
+          "thinking": {
+            "type": "enabled"
+          },
           "maxTokens": 32768
         }
       ]
@@ -97,117 +260,302 @@
   "categories": {
     "quick": {
       "model": "minimax/MiniMax-M2.7-highspeed",
-      "thinking": { "type": "disabled" },
+      "thinking": {
+        "type": "disabled"
+      },
       "maxTokens": 4096,
       "fallback_models": [
         {
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "disabled"
+          },
+          "maxTokens": 4096
+        },
+        {
           "model": "kimi-for-coding/k2p6",
-          "thinking": { "type": "disabled" },
+          "thinking": {
+            "type": "disabled"
+          },
           "maxTokens": 4096
         }
       ]
     },
     "fix": {
       "model": "minimax/MiniMax-M2.7-highspeed",
-      "thinking": { "type": "disabled" },
+      "thinking": {
+        "type": "disabled"
+      },
       "maxTokens": 4096,
       "fallback_models": [
         {
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "disabled"
+          },
+          "maxTokens": 4096
+        },
+        {
           "model": "kimi-for-coding/k2p6",
-          "thinking": { "type": "disabled" },
+          "thinking": {
+            "type": "disabled"
+          },
           "maxTokens": 4096
         }
       ]
     },
     "search": {
       "model": "minimax/MiniMax-M2.7-highspeed",
-      "thinking": { "type": "disabled" },
+      "thinking": {
+        "type": "disabled"
+      },
       "maxTokens": 4096,
       "fallback_models": [
         {
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "disabled"
+          },
+          "maxTokens": 4096
+        },
+        {
           "model": "kimi-for-coding/k2p6",
-          "thinking": { "type": "disabled" },
+          "thinking": {
+            "type": "disabled"
+          },
           "maxTokens": 4096
         }
       ]
     },
     "test": {
       "model": "minimax/MiniMax-M2.7-highspeed",
-      "thinking": { "type": "disabled" },
+      "thinking": {
+        "type": "disabled"
+      },
       "maxTokens": 8192,
       "fallback_models": [
         {
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "disabled"
+          },
+          "maxTokens": 8192
+        },
+        {
           "model": "kimi-for-coding/k2p6",
-          "thinking": { "type": "disabled" },
+          "thinking": {
+            "type": "disabled"
+          },
           "maxTokens": 8192
         }
       ]
     },
     "writing": {
       "model": "minimax/MiniMax-M2.7-highspeed",
-      "thinking": { "type": "disabled" },
+      "thinking": {
+        "type": "disabled"
+      },
       "maxTokens": 8192,
       "fallback_models": [
         {
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "disabled"
+          },
+          "maxTokens": 8192
+        },
+        {
           "model": "kimi-for-coding/k2p6",
-          "thinking": { "type": "disabled" },
+          "thinking": {
+            "type": "disabled"
+          },
           "maxTokens": 8192
         }
       ]
     },
     "explain": {
       "model": "minimax/MiniMax-M2.7-highspeed",
-      "thinking": { "type": "disabled" },
+      "thinking": {
+        "type": "disabled"
+      },
       "maxTokens": 8192,
       "fallback_models": [
         {
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "disabled"
+          },
+          "maxTokens": 8192
+        },
+        {
           "model": "kimi-for-coding/k2p6",
-          "thinking": { "type": "disabled" },
+          "thinking": {
+            "type": "disabled"
+          },
           "maxTokens": 8192
         }
       ]
     },
     "refactor": {
       "model": "kimi-for-coding/k2p6",
-      "thinking": { "type": "enabled" },
-      "maxTokens": 32768
+      "thinking": {
+        "type": "enabled"
+      },
+      "maxTokens": 32768,
+      "fallback_models": [
+        {
+          "model": "minimax/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "enabled"
+          },
+          "maxTokens": 32768
+        },
+        {
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "enabled"
+          },
+          "maxTokens": 32768
+        }
+      ]
     },
     "deep": {
       "model": "kimi-for-coding/k2p6",
-      "thinking": { "type": "enabled" },
-      "maxTokens": 32768
+      "thinking": {
+        "type": "enabled"
+      },
+      "maxTokens": 32768,
+      "fallback_models": [
+        {
+          "model": "minimax/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "enabled"
+          },
+          "maxTokens": 32768
+        },
+        {
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "enabled"
+          },
+          "maxTokens": 32768
+        }
+      ]
     },
     "ultrabrain": {
       "model": "kimi-for-coding/k2p6",
-      "thinking": { "type": "enabled" },
-      "maxTokens": 32768
+      "thinking": {
+        "type": "enabled"
+      },
+      "maxTokens": 32768,
+      "fallback_models": [
+        {
+          "model": "minimax/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "enabled"
+          },
+          "maxTokens": 32768
+        },
+        {
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "enabled"
+          },
+          "maxTokens": 32768
+        }
+      ]
     },
     "visual-engineering": {
       "model": "kimi-for-coding/k2p6",
-      "thinking": { "type": "enabled" },
-      "maxTokens": 32768
+      "thinking": {
+        "type": "enabled"
+      },
+      "maxTokens": 32768,
+      "fallback_models": [
+        {
+          "model": "minimax/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "enabled"
+          },
+          "maxTokens": 32768
+        },
+        {
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "enabled"
+          },
+          "maxTokens": 32768
+        }
+      ]
     },
     "artistry": {
       "model": "kimi-for-coding/k2p6",
-      "thinking": { "type": "enabled" },
-      "maxTokens": 32768
+      "thinking": {
+        "type": "enabled"
+      },
+      "maxTokens": 32768,
+      "fallback_models": [
+        {
+          "model": "minimax/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "enabled"
+          },
+          "maxTokens": 32768
+        },
+        {
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "enabled"
+          },
+          "maxTokens": 32768
+        }
+      ]
     },
     "unspecified-low": {
       "model": "minimax/MiniMax-M2.7-highspeed",
-      "thinking": { "type": "disabled" },
+      "thinking": {
+        "type": "disabled"
+      },
       "maxTokens": 8192,
       "fallback_models": [
         {
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "disabled"
+          },
+          "maxTokens": 8192
+        },
+        {
           "model": "kimi-for-coding/k2p6",
-          "thinking": { "type": "disabled" },
+          "thinking": {
+            "type": "disabled"
+          },
           "maxTokens": 8192
         }
       ]
     },
     "unspecified-high": {
       "model": "kimi-for-coding/k2p6",
-      "thinking": { "type": "enabled" },
-      "maxTokens": 32768
+      "thinking": {
+        "type": "enabled"
+      },
+      "maxTokens": 32768,
+      "fallback_models": [
+        {
+          "model": "minimax/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "enabled"
+          },
+          "maxTokens": 32768
+        },
+        {
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
+          "thinking": {
+            "type": "enabled"
+          },
+          "maxTokens": 32768
+        }
+      ]
     }
   }
 }
