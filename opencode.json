@@ -26,6 +26,35 @@
     "minimax": {
       "options": {
         "apiKey": "{env:MINIMAX_API_KEY}"
+      },
+      "models": {
+        "MiniMax-M2.7-highspeed": {
+          "name": "MiniMax M2.7 Highspeed",
+          "family": "minimax",
+          "attachment": false,
+          "reasoning": true,
+          "tool_call": true,
+          "temperature": true,
+          "release_date": "2026-03-18",
+          "modalities": {
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "cost": {
+            "input": 0.0000006,
+            "output": 0.0000024,
+            "cache_read": 0.00000006,
+            "cache_write": 0.000000375
+          },
+          "limit": {
+            "context": 204800,
+            "output": 131072
+          }
+        }
       }
     },
     "minimax-paygo": {
@@ -53,10 +82,10 @@
             ]
           },
           "cost": {
-            "input": 0.6,
-            "output": 2.4,
-            "cache_read": 0.06,
-            "cache_write": 0.375
+            "input": 0.0000006,
+            "output": 0.0000024,
+            "cache_read": 0.00000006,
+            "cache_write": 0.000000375
           },
           "limit": {
             "context": 204800,
