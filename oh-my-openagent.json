@@ -23,22 +23,17 @@
     "sisyphus": {
       "model": "kimi-for-coding/k2p6",
       "thinking": {
-        "type": "disabled"
+        "type": "enabled",
+        "budgetTokens": 32000
       },
-      "maxTokens": 16384,
+      "maxTokens": 32768,
       "fallback_models": [
         {
           "model": "minimax/MiniMax-M2.7-highspeed",
-          "thinking": {
-            "type": "disabled"
-          },
           "maxTokens": 16384
         },
         {
           "model": "minimax-paygo/MiniMax-M2.7-highspeed",
-          "thinking": {
-            "type": "disabled"
-          },
           "maxTokens": 16384
         }
       ]
