@@ -94,6 +94,6 @@
     "kimi-for-coding"
   ],
   "plugin": [
-    "oh-my-openagent@latest"
+    "oh-my-openagent@4.7.5"
   ]
 }
