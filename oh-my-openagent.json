@@ -250,26 +250,26 @@
         }
       ]
     },
-    "plan": {
+    "sisyphus-junior": {
       "model": "minimax/MiniMax-M2.7-highspeed",
       "thinking": {
-        "type": "enabled"
+        "type": "disabled"
       },
-      "maxTokens": 32768,
+      "maxTokens": 16384,
       "fallback_models": [
         {
           "model": "minimax-paygo/MiniMax-M2.7-highspeed",
           "thinking": {
-            "type": "enabled"
+            "type": "disabled"
           },
-          "maxTokens": 32768
+          "maxTokens": 16384
         },
         {
           "model": "kimi-for-coding/k2p6",
           "thinking": {
-            "type": "enabled"
+            "type": "disabled"
           },
-          "maxTokens": 32768
+          "maxTokens": 16384
         }
       ]
     }
