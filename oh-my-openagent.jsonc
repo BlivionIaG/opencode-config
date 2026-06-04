@@ -24,13 +24,13 @@
   "agents": {
     // Main orchestrator: handles delegation and drives tasks to completion
     "sisyphus": {
-      "model": "kimi-for-coding/k2p6",
+      "model": "minimax/MiniMax-M3",
       "thinking": {
         "type": "enabled",
         "budgetTokens": 32000
       },
       "fallback_models": [
-        "minimax/MiniMax-M2.7-highspeed",
+        "kimi-for-coding/k2p6",
       ]
     },
     // Deep autonomous worker: end-to-end implementation
@@ -69,9 +69,9 @@
     },
     // Visual tasks: UI/UX, images, diagrams
     "multimodal-looker": {
-      "model": "kimi-for-coding/k2p6",
+      "model": "minimax/MiniMax-M3",
       "fallback_models": [
-        "minimax/MiniMax-M2.7-highspeed",
+        "kimi-for-coding/k2p6",
       ]
     },
     // Strategic planner: interview mode before execution
