@@ -1,0 +1,221 @@
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
+  // Kimi K2.6 + MiniMax M2.7/M3 optimized configuration
+  // Fast utility tasks via MiniMax, deep work via Kimi
+  "model_fallback": true,
+  "runtime_fallback": {
+    "enabled": true,
+    "retry_on_errors": [
+      400,
+      402,
+      408,
+      429,
+      500,
+      502,
+      503,
+      504,
+      529
+    ],
+    "max_fallback_attempts": 3,
+    "cooldown_seconds": 60,
+    "timeout_seconds": 30,
+    "notify_on_fallback": true
+  },
+  "agents": {
+    // Main orchestrator: handles delegation and drives tasks to completion
+    "sisyphus": {
+      "model": "kimi-for-coding/k2p6",
+      "thinking": {
+        "type": "enabled",
+        "budgetTokens": 32000
+      },
+      "fallback_models": [
+        "minimax/MiniMax-M2.7-highspeed",
+      ]
+    },
+    // Deep autonomous worker: end-to-end implementation
+    "hephaestus": {
+      "model": "kimi-for-coding/k2p6",
+      "fallback_models": [
+        "minimax/MiniMax-M2.7-highspeed",
+      ]
+    },
+    // Architecture consultant: complex design and debugging
+    "oracle": {
+      "model": "kimi-for-coding/k2p6",
+      "fallback_models": [
+        "minimax/MiniMax-M2.7-highspeed",
+      ]
+    },
+    // Documentation and code search
+    "librarian": {
+      "model": "minimax/MiniMax-M2.7-highspeed",
+      "thinking": {
+        "type": "disabled"
+      },
+      "fallback_models": [
+        "kimi-for-coding/k2p6"
+      ]
+    },
+    // Fast codebase exploration
+    "explore": {
+      "model": "minimax/MiniMax-M2.7-highspeed",
+      "thinking": {
+        "type": "disabled"
+      },
+      "fallback_models": [
+        "kimi-for-coding/k2p6"
+      ]
+    },
+    // Visual tasks: UI/UX, images, diagrams
+    "multimodal-looker": {
+      "model": "kimi-for-coding/k2p6",
+      "fallback_models": [
+        "minimax/MiniMax-M2.7-highspeed",
+      ]
+    },
+    // Strategic planner: interview mode before execution
+    "prometheus": {
+      "model": "kimi-for-coding/k2p6",
+      "fallback_models": [
+        "minimax/MiniMax-M2.7-highspeed",
+      ]
+    },
+    // Plan consultant: reviews and improves plans
+    "metis": {
+      "model": "kimi-for-coding/k2p6",
+      "fallback_models": [
+        "minimax/MiniMax-M2.7-highspeed",
+      ]
+    },
+    // Critic and reviewer
+    "momus": {
+      "model": "kimi-for-coding/k2p6",
+      "fallback_models": [
+        "minimax/MiniMax-M2.7-highspeed",
+      ]
+    },
+    // Continuation and long-running task handler
+    "atlas": {
+      "model": "minimax/MiniMax-M3",
+      "fallback_models": [
+        "kimi-for-coding/k2p6"
+      ]
+    },
+    // Lightweight task executor for simple jobs
+    "sisyphus-junior": {
+      "model": "minimax/MiniMax-M2.7-highspeed",
+      "thinking": {
+        "type": "disabled"
+      },
+      "fallback_models": [
+        "kimi-for-coding/k2p6"
+      ]
+    }
+  },
+  "categories": {
+    // Fast utility tasks
+    "quick": {
+      "model": "minimax/MiniMax-M2.7-highspeed",
+      "thinking": {
+        "type": "disabled"
+      },
+      "fallback_models": [
+        "kimi-for-coding/k2p6"
+      ]
+    },
+    "fix": {
+      "model": "minimax/MiniMax-M2.7-highspeed",
+      "thinking": {
+        "type": "disabled"
+      },
+      "fallback_models": [
+        "kimi-for-coding/k2p6"
+      ]
+    },
+    "search": {
+      "model": "minimax/MiniMax-M2.7-highspeed",
+      "thinking": {
+        "type": "disabled"
+      },
+      "fallback_models": [
+        "kimi-for-coding/k2p6"
+      ]
+    },
+    "test": {
+      "model": "minimax/MiniMax-M2.7-highspeed",
+      "thinking": {
+        "type": "disabled"
+      },
+      "fallback_models": [
+        "kimi-for-coding/k2p6"
+      ]
+    },
+    // Documentation and prose
+    "writing": {
+      "model": "minimax/MiniMax-M2.7-highspeed",
+      "thinking": {
+        "type": "disabled"
+      },
+      "fallback_models": [
+        "kimi-for-coding/k2p6"
+      ]
+    },
+    "explain": {
+      "model": "minimax/MiniMax-M2.7-highspeed",
+      "thinking": {
+        "type": "disabled"
+      },
+      "fallback_models": [
+        "kimi-for-coding/k2p6"
+      ]
+    },
+    // Deep reasoning tasks
+    "refactor": {
+      "model": "kimi-for-coding/k2p6",
+      "fallback_models": [
+        "minimax/MiniMax-M2.7-highspeed",
+      ]
+    },
+    "deep": {
+      "model": "kimi-for-coding/k2p6",
+      "fallback_models": [
+        "minimax/MiniMax-M2.7-highspeed",
+      ]
+    },
+    "ultrabrain": {
+      "model": "kimi-for-coding/k2p6",
+      "fallback_models": [
+        "minimax/MiniMax-M2.7-highspeed",
+      ]
+    },
+    "visual-engineering": {
+      "model": "kimi-for-coding/k2p6",
+      "fallback_models": [
+        "minimax/MiniMax-M2.7-highspeed",
+      ]
+    },
+    "artistry": {
+      "model": "kimi-for-coding/k2p6",
+      "fallback_models": [
+        "minimax/MiniMax-M2.7-highspeed",
+      ]
+    },
+    // Fallback categories
+    "unspecified-low": {
+      "model": "minimax/MiniMax-M2.7-highspeed",
+      "thinking": {
+        "type": "disabled"
+      },
+      "fallback_models": [
+        "kimi-for-coding/k2p6"
+      ]
+    },
+    "unspecified-high": {
+      "model": "kimi-for-coding/k2p6",
+      "fallback_models": [
+        "minimax/MiniMax-M2.7-highspeed",
+      ]
+    }
+  }
+}
