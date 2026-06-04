@@ -24,6 +24,7 @@
   "agents": {
     // Main orchestrator: handles delegation and drives tasks to completion
     "sisyphus": {
+      "displayName": "Ultraworker - Sisyphus",
       "model": "minimax/MiniMax-M3",
       "thinking": {
         "type": "enabled",
@@ -35,6 +36,7 @@
     },
     // Deep autonomous worker: end-to-end implementation
     "hephaestus": {
+      "displayName": "Legitimate Craftsman - Hephaestus",
       "model": "kimi-for-coding/k2p6",
       "fallback_models": [
         "minimax/MiniMax-M2.7-highspeed",
@@ -76,6 +78,7 @@
     },
     // Strategic planner: interview mode before execution
     "prometheus": {
+      "displayName": "Strategic Planner - Prometheus",
       "model": "kimi-for-coding/k2p6",
       "fallback_models": [
         "minimax/MiniMax-M2.7-highspeed",
@@ -97,6 +100,7 @@
     },
     // Continuation and long-running task handler
     "atlas": {
+      "displayName": "Task Executor - Atlas",
       "model": "minimax/MiniMax-M3",
       "fallback_models": [
         "kimi-for-coding/k2p6"
