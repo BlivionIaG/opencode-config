@@ -26,43 +26,34 @@
         "type": "enabled",
         "budgetTokens": 32000
       },
-      "maxTokens": 32768,
       "fallback_models": [
         {
-          "model": "minimax/MiniMax-M2.7-highspeed",
-          "maxTokens": 16384
+          "model": "minimax/MiniMax-M2.7-highspeed"
         },
         {
-          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
-          "maxTokens": 16384
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed"
         }
       ]
     },
     "hephaestus": {
       "model": "kimi-for-coding/k2p6",
-      "maxTokens": 32768,
       "fallback_models": [
         {
-          "model": "minimax/MiniMax-M2.7-highspeed",
-          "maxTokens": 32768
+          "model": "minimax/MiniMax-M2.7-highspeed"
         },
         {
-          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
-          "maxTokens": 32768
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed"
         }
       ]
     },
     "oracle": {
       "model": "kimi-for-coding/k2p6",
-      "maxTokens": 32768,
       "fallback_models": [
         {
-          "model": "minimax/MiniMax-M2.7-highspeed",
-          "maxTokens": 32768
+          "model": "minimax/MiniMax-M2.7-highspeed"
         },
         {
-          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
-          "maxTokens": 32768
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed"
         }
       ]
     },
@@ -71,21 +62,18 @@
       "thinking": {
         "type": "disabled"
       },
-      "maxTokens": 16384,
       "fallback_models": [
         {
           "model": "minimax-paygo/MiniMax-M2.7-highspeed",
           "thinking": {
             "type": "disabled"
-          },
-          "maxTokens": 16384
+          }
         },
         {
           "model": "kimi-for-coding/k2p6",
           "thinking": {
             "type": "disabled"
-          },
-          "maxTokens": 16384
+          }
         }
       ]
     },
@@ -94,87 +82,70 @@
       "thinking": {
         "type": "disabled"
       },
-      "maxTokens": 8192,
       "fallback_models": [
         {
           "model": "minimax-paygo/MiniMax-M2.7-highspeed",
           "thinking": {
             "type": "disabled"
-          },
-          "maxTokens": 8192
+          }
         },
         {
           "model": "kimi-for-coding/k2p6",
           "thinking": {
             "type": "disabled"
-          },
-          "maxTokens": 8192
+          }
         }
       ]
     },
     "multimodal-looker": {
       "model": "kimi-for-coding/k2p6",
-      "maxTokens": 32768,
       "fallback_models": [
         {
-          "model": "minimax/MiniMax-M2.7-highspeed",
-          "maxTokens": 32768
+          "model": "minimax/MiniMax-M2.7-highspeed"
         },
         {
-          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
-          "maxTokens": 32768
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed"
         }
       ]
     },
     "prometheus": {
       "model": "kimi-for-coding/k2p6",
-      "maxTokens": 32768,
       "fallback_models": [
         {
-          "model": "minimax/MiniMax-M2.7-highspeed",
-          "maxTokens": 32768
+          "model": "minimax/MiniMax-M2.7-highspeed"
         },
         {
-          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
-          "maxTokens": 32768
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed"
         }
       ]
     },
     "metis": {
       "model": "kimi-for-coding/k2p6",
-      "maxTokens": 32768,
       "fallback_models": [
         {
-          "model": "minimax/MiniMax-M2.7-highspeed",
-          "maxTokens": 32768
+          "model": "minimax/MiniMax-M2.7-highspeed"
         },
         {
-          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
-          "maxTokens": 32768
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed"
         }
       ]
     },
     "momus": {
       "model": "kimi-for-coding/k2p6",
-      "maxTokens": 32768,
       "fallback_models": [
         {
-          "model": "minimax/MiniMax-M2.7-highspeed",
-          "maxTokens": 32768
+          "model": "minimax/MiniMax-M2.7-highspeed"
         },
         {
-          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
-          "maxTokens": 32768
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed"
         }
       ]
     },
     "atlas": {
       "model": "minimax/MiniMax-M3",
-      "maxTokens": 32768,
       "fallback_models": [
         {
-          "model": "kimi-for-coding/k2p6",
-          "maxTokens": 32768
+          "model": "kimi-for-coding/k2p6"
         }
       ]
     },
@@ -183,21 +154,18 @@
       "thinking": {
         "type": "disabled"
       },
-      "maxTokens": 16384,
       "fallback_models": [
         {
           "model": "minimax-paygo/MiniMax-M2.7-highspeed",
           "thinking": {
             "type": "disabled"
-          },
-          "maxTokens": 16384
+          }
         },
         {
           "model": "kimi-for-coding/k2p6",
           "thinking": {
             "type": "disabled"
-          },
-          "maxTokens": 16384
+          }
         }
       ]
     }
@@ -208,21 +176,18 @@
       "thinking": {
         "type": "disabled"
       },
-      "maxTokens": 4096,
       "fallback_models": [
         {
           "model": "minimax-paygo/MiniMax-M2.7-highspeed",
           "thinking": {
             "type": "disabled"
-          },
-          "maxTokens": 4096
+          }
         },
         {
           "model": "kimi-for-coding/k2p6",
           "thinking": {
             "type": "disabled"
-          },
-          "maxTokens": 4096
+          }
         }
       ]
     },
@@ -231,21 +196,18 @@
       "thinking": {
         "type": "disabled"
       },
-      "maxTokens": 4096,
       "fallback_models": [
         {
           "model": "minimax-paygo/MiniMax-M2.7-highspeed",
           "thinking": {
             "type": "disabled"
-          },
-          "maxTokens": 4096
+          }
         },
         {
           "model": "kimi-for-coding/k2p6",
           "thinking": {
             "type": "disabled"
-          },
-          "maxTokens": 4096
+          }
         }
       ]
     },
@@ -254,21 +216,18 @@
       "thinking": {
         "type": "disabled"
       },
-      "maxTokens": 4096,
       "fallback_models": [
         {
           "model": "minimax-paygo/MiniMax-M2.7-highspeed",
           "thinking": {
             "type": "disabled"
-          },
-          "maxTokens": 4096
+          }
         },
         {
           "model": "kimi-for-coding/k2p6",
           "thinking": {
             "type": "disabled"
-          },
-          "maxTokens": 4096
+          }
         }
       ]
     },
@@ -277,21 +236,18 @@
       "thinking": {
         "type": "disabled"
       },
-      "maxTokens": 8192,
       "fallback_models": [
         {
           "model": "minimax-paygo/MiniMax-M2.7-highspeed",
           "thinking": {
             "type": "disabled"
-          },
-          "maxTokens": 8192
+          }
         },
         {
           "model": "kimi-for-coding/k2p6",
           "thinking": {
             "type": "disabled"
-          },
-          "maxTokens": 8192
+          }
         }
       ]
     },
@@ -300,21 +256,18 @@
       "thinking": {
         "type": "disabled"
       },
-      "maxTokens": 8192,
       "fallback_models": [
         {
           "model": "minimax-paygo/MiniMax-M2.7-highspeed",
           "thinking": {
             "type": "disabled"
-          },
-          "maxTokens": 8192
+          }
         },
         {
           "model": "kimi-for-coding/k2p6",
           "thinking": {
             "type": "disabled"
-          },
-          "maxTokens": 8192
+          }
         }
       ]
     },
@@ -323,91 +276,73 @@
       "thinking": {
         "type": "disabled"
       },
-      "maxTokens": 8192,
       "fallback_models": [
         {
           "model": "minimax-paygo/MiniMax-M2.7-highspeed",
           "thinking": {
             "type": "disabled"
-          },
-          "maxTokens": 8192
+          }
         },
         {
           "model": "kimi-for-coding/k2p6",
           "thinking": {
             "type": "disabled"
-          },
-          "maxTokens": 8192
+          }
         }
       ]
     },
     "refactor": {
       "model": "kimi-for-coding/k2p6",
-      "maxTokens": 32768,
       "fallback_models": [
         {
-          "model": "minimax/MiniMax-M2.7-highspeed",
-          "maxTokens": 32768
+          "model": "minimax/MiniMax-M2.7-highspeed"
         },
         {
-          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
-          "maxTokens": 32768
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed"
         }
       ]
     },
     "deep": {
       "model": "kimi-for-coding/k2p6",
-      "maxTokens": 32768,
       "fallback_models": [
         {
-          "model": "minimax/MiniMax-M2.7-highspeed",
-          "maxTokens": 32768
+          "model": "minimax/MiniMax-M2.7-highspeed"
         },
         {
-          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
-          "maxTokens": 32768
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed"
         }
       ]
     },
     "ultrabrain": {
       "model": "kimi-for-coding/k2p6",
-      "maxTokens": 32768,
       "fallback_models": [
         {
-          "model": "minimax/MiniMax-M2.7-highspeed",
-          "maxTokens": 32768
+          "model": "minimax/MiniMax-M2.7-highspeed"
         },
         {
-          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
-          "maxTokens": 32768
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed"
         }
       ]
     },
     "visual-engineering": {
       "model": "kimi-for-coding/k2p6",
-      "maxTokens": 32768,
       "fallback_models": [
         {
-          "model": "minimax/MiniMax-M2.7-highspeed",
-          "maxTokens": 32768
+          "model": "minimax/MiniMax-M2.7-highspeed"
         },
         {
-          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
-          "maxTokens": 32768
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed"
         }
       ]
     },
     "artistry": {
       "model": "kimi-for-coding/k2p6",
-      "maxTokens": 32768,
       "fallback_models": [
         {
-          "model": "minimax/MiniMax-M2.7-highspeed",
-          "maxTokens": 32768
+          "model": "minimax/MiniMax-M2.7-highspeed"
         },
         {
-          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
-          "maxTokens": 32768
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed"
         }
       ]
     },
@@ -416,35 +351,29 @@
       "thinking": {
         "type": "disabled"
       },
-      "maxTokens": 8192,
       "fallback_models": [
         {
           "model": "minimax-paygo/MiniMax-M2.7-highspeed",
           "thinking": {
             "type": "disabled"
-          },
-          "maxTokens": 8192
+          }
         },
         {
           "model": "kimi-for-coding/k2p6",
           "thinking": {
             "type": "disabled"
-          },
-          "maxTokens": 8192
+          }
         }
       ]
     },
     "unspecified-high": {
       "model": "kimi-for-coding/k2p6",
-      "maxTokens": 32768,
       "fallback_models": [
         {
-          "model": "minimax/MiniMax-M2.7-highspeed",
-          "maxTokens": 32768
+          "model": "minimax/MiniMax-M2.7-highspeed"
         },
         {
-          "model": "minimax-paygo/MiniMax-M2.7-highspeed",
-          "maxTokens": 32768
+          "model": "minimax-paygo/MiniMax-M2.7-highspeed"
         }
       ]
     }
