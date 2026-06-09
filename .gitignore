@@ -3,6 +3,9 @@ node_modules/
 package.json
 bun.lock
 
+# Local data directories (e.g. n8n-mcp node DB cache)
+data/
+
 # Secrets and credentials (comprehensive patterns)
 .env
 .env.local

@@ -14,7 +14,8 @@
 4. [Categories & Smart Routing](#categories--smart-routing)
 5. [Parallel Workflows](#parallel-workflows)
 6. [Cost Optimization](#cost-optimization)
-7. [Troubleshooting](#troubleshooting)
+7. [MCP Servers](#mcp-servers)
+8. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -289,6 +290,65 @@ Your config uses Kimi for quality-critical reasoning and MiniMax token-plan rout
 - Run everything sequentially (parallel is 3-4x faster)
 - Force thinking mode for trivial tasks
 - Request long outputs when short ones suffice
+
+---
+
+## MCP Servers
+
+External tools exposed via the [Model Context Protocol](https://modelcontextprotocol.io). Each MCP server adds to the context budget, so enable sparingly.
+
+### n8n-mcp (czlonkowski/n8n-mcp)
+
+Gives agents full knowledge of the 1,851 n8n nodes + read/write access to your n8n instance workflows, executions, and credentials.
+
+**Configuration** (`opencode.json` → `mcp.n8n-mcp`):
+
+| Field | Value | Notes |
+|---|---|---|
+| `type` | `local` | stdio transport |
+| `command` | `["npx", "-y", "n8n-mcp"]` | First run downloads the package |
+| `enabled` | `false` (toggle to `true` to use) | Disabled by default to keep context lean |
+| `timeout` | `30000` (ms) | Cold start loads a ~540MB node DB |
+| `N8N_API_URL` | `{env:N8N_API_URL}` | e.g. `https://n8n.chenco.dev` |
+| `N8N_API_KEY` | `{env:N8N_API_KEY}` | From n8n → Settings → API |
+| `NODE_DB_PATH` | `~/.config/opencode/data/n8n-nodes.db` | Cached node documentation DB (gitignored) |
+
+**Setup:**
+
+1. Add to `~/.config/opencode/.env.local`:
+   ```bash
+   N8N_API_URL=https://your-n8n-instance.example.com
+   N8N_API_KEY=your_n8n_api_key
+   ```
+2. In `opencode.json`, flip `"enabled": false` → `true` under `mcp.n8n-mcp`.
+3. In a prompt, explicitly opt in: *"use n8n-mcp to list my failing workflows"*.
+
+**Tools exposed (~20):**
+
+- **Core / docs (7):** `tools_documentation`, `search_nodes`, `get_node`, `validate_node`, `validate_workflow`, `search_templates`, `get_template`
+- **Workflow mgmt (10):** `n8n_create_workflow`, `n8n_get_workflow`, `n8n_list_workflows`, `n8n_update_full_workflow`, `n8n_update_partial_workflow`, `n8n_delete_workflow`, `n8n_validate_workflow`, `n8n_autofix_workflow`, `n8n_workflow_versions`, `n8n_deploy_template`
+- **Execution (2):** `n8n_test_workflow`, `n8n_executions`
+- **Credentials / system (4):** `n8n_manage_credentials`, `n8n_audit_instance`, `n8n_health_check`, plus diagnostic helpers
+
+All prefixed with `n8n-mcp_` in tool listings (e.g. `n8n-mcp_n8n_list_workflows`).
+
+**Safety notes** (from upstream README):
+
+- Never edit production workflows directly — duplicate, edit, validate, then promote.
+- AI-generated configs can be unpredictable; always validate with `n8n_validate_workflow` after deploy.
+- The `N8N_API_KEY` is a powerful credential (full workflow R/W, credentials R/W, executions R/W). Rotate if exposed.
+
+**Disabling per-agent:**
+
+To keep it off globally but enable for a specific agent, add to `oh-my-openagent.jsonc`:
+
+```jsonc
+"tools": {
+  "n8n-mcp_*": false
+}
+```
+
+Then opt in per agent via the agent's `tools` block.
 
 ---
 

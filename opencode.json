@@ -93,6 +93,21 @@
     "minimax",
     "kimi-for-coding"
   ],
+  "mcp": {
+    "n8n-mcp": {
+      "type": "local",
+      "command": ["npx", "-y", "n8n-mcp"],
+      "enabled": false,
+      "timeout": 30000,
+      "environment": {
+        "MCP_MODE": "stdio",
+        "NODE_DB_PATH": "{env:HOME}/.config/opencode/data/n8n-nodes.db",
+        "MCP_LOG_LEVEL": "info",
+        "N8N_API_URL": "{env:N8N_API_URL}",
+        "N8N_API_KEY": "{env:N8N_API_KEY}"
+      }
+    }
+  },
   "plugin": [
     "oh-my-openagent@4.7.5"
   ]

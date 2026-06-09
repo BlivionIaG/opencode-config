@@ -40,6 +40,10 @@ MINIMAX_PAYGO_API_KEY=your_actual_key_here
 
 # Chenco OpenAI-compatible endpoint
 CHENCO_API_KEY=your_actual_key_here
+
+# n8n-mcp (optional, only if you use the n8n MCP server)
+N8N_API_URL=https://your-n8n-instance.example.com
+N8N_API_KEY=your_n8n_api_key_here
 ```
 
 Or use environment variables:
@@ -49,7 +53,19 @@ export KIMI_API_KEY="your_key"
 export MINIMAX_API_KEY="your_key"
 export MINIMAX_PAYGO_API_KEY="your_key"
 export CHENCO_API_KEY="your_key"
+export N8N_API_URL="https://your-n8n-instance.example.com"
+export N8N_API_KEY="your_key"
 ```
+
+### 2b. n8n-mcp (optional)
+
+The `n8n-mcp` MCP server is configured in `opencode.json` but **disabled by default** to keep context lean. To enable:
+
+1. Set `N8N_API_URL` and `N8N_API_KEY` in `.env.local` (see above).
+2. In `opencode.json`, change `"enabled": false` to `"enabled": true` under `mcp.n8n-mcp`.
+3. Reference its tools in prompts with the `n8n-mcp_*` prefix, e.g. *"use n8n-mcp to list my workflows"*.
+
+Adds ~20 tools (workflow mgmt, executions, node docs, templates) plus a ~540MB node DB cache in `~/.config/opencode/data/`.
 
 ### 3. Start using
 
