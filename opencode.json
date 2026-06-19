@@ -106,6 +106,15 @@
         "N8N_API_URL": "{env:N8N_API_URL}",
         "N8N_API_KEY": "{env:N8N_API_KEY}"
       }
+    },
+    "koyeb": {
+      "type": "local",
+      "command": ["npx", "-y", "@koyeb/mcp-server"],
+      "enabled": false,
+      "timeout": 30000,
+      "environment": {
+        "KOYEB_TOKEN": "{env:KOYEB_TOKEN}"
+      }
     }
   },
   "plugin": [
