@@ -37,7 +37,7 @@
     // Deep autonomous worker: end-to-end implementation
     "hephaestus": {
       "displayName": "Legitimate Craftsman - Hephaestus",
-      "model": "kimi-for-coding/k2p6",
+      "model": "kimi-for-coding/k2p7",
       "fallback_models": [
         "minimax/MiniMax-M2.7-highspeed",
       ]
