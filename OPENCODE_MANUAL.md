@@ -148,6 +148,18 @@ opencode "Your task here"
 - ⚠️ Limits and model capabilities depend on the Chenco gateway configuration
 - Use for: manually selected Chenco-backed Qwen3.6 model runs
 
+### Model Usage & Routing
+
+| Model | Where it is used | Why it was chosen |
+|-------|------------------|-------------------|
+| **Kimi K3** | Agents: `hephaestus`, `oracle`, `prometheus`, `multimodal-looker`<br>Categories: `deep`, `ultrabrain`, `visual-engineering` | Highest intelligence in the stack; native visual understanding; best for long-horizon coding, architecture, hard debugging, and strategic planning. Up to 1M context on Allegro+ plans. |
+| **Kimi K2.7 Code** | Agents: `metis`, `momus`<br>Categories: `refactor`, `artistry`, `unspecified-high` | Balanced intelligence above MiniMax M3; cheaper and slower than K3. Good for deliberative review, plan consulting, creative tasks, and complex refactoring where you are not in a hurry. |
+| **Kimi K2.7 Highspeed** | Not assigned by default; available via `/models` manual override | Same capability as K2.7 but ~5–6× faster output. Use when speed matters more than quota efficiency; remember it costs 3× the K2.7 quota. |
+| **MiniMax M3** | Agents: `sisyphus`, `atlas` | Best speed/intelligence/cost balance for orchestration, continuation, and everyday coding. Keeps the main loop and long-running handlers fast and cheap. |
+| **MiniMax M2.7 Highspeed** | Agents: `librarian`, `explore`, `sisyphus-junior`<br>Categories: `quick`, `fix`, `search`, `test`, `explain`, `writing`, `unspecified-low` | Fastest, cheapest model for high-volume utility work: search, docs, quick fixes, tests, and writing. Configured as the OpenCode `small_model`. |
+
+**Fallback logic:** K3 primary falls back to K2.7, then to MiniMax M3. MiniMax M3 primary falls back to K3, then K2.7. MiniMax M2.7 highspeed primary falls back to M3, then K2.7. This keeps the most capable Kimi models behind the cheaper MiniMax options for cost control, while ensuring a reasoning model is always available if a provider fails.
+
 ## Agents Guide
 
 ### Primary Agents
