@@ -72,8 +72,8 @@ opencode "Your task here"
 | Model | OpenCode ID | Coding (score) | Agentic (score) | Context | Visual | Speed | Efficiency | Best for |
 |-------|-------------|----------------|-----------------|---------|--------|-------|------------|----------|
 | **Kimi K3** | `kimi-for-coding/k3` | KCB v2 72.9% | Terminal-Bench 2.1 88.3% | 1M | 5 | 2 | 2 | Visual tasks, architecture, hard debugging, strategic planning, long-horizon work |
-| **Kimi K2.7 Code** | `kimi-for-coding/kimi-for-coding` | KCB v2 62.0% | MCP Atlas 76.0% | 256K | 3 | 2 | 3 | Balanced deep work; more intelligence than M3 when not rushed |
-| **Kimi K2.7 Highspeed** | `kimi-for-coding/kimi-for-coding-highspeed` | same as K2.7 | same as K2.7 | 256K | 3 | 5 | 2 | Speed-sensitive K2.7-level tasks (Allegro+) |
+| **Kimi K2.7 Code** | `kimi-for-coding/k2p7` | KCB v2 62.0% | MCP Atlas 76.0% | 256K | 3 | 2 | 3 | Balanced deep work; more intelligence than M3 when not rushed |
+| **Kimi K2.7 Highspeed** | `kimi-for-coding/k2p7-highspeed` | same as K2.7 | same as K2.7 | 256K | 3 | 5 | 2 | Speed-sensitive K2.7-level tasks (Allegro+) |
 | **MiniMax M3** | `minimax/MiniMax-M3` | SWE-Bench Pro 59.0% | MCP Atlas 74.2% | 400K | 4 | 4 | 5 | Everyday coding, orchestration, continuation, cost-efficient deep work |
 | **MiniMax M2.7 HS** | `minimax/MiniMax-M2.7-highspeed` | SWE-Bench Pro 56.2% | MCP Atlas ~70% | 200K | 2 | 5 | 5 | Search, docs, quick fixes, tests, writing, fast utility work |
 
@@ -107,14 +107,14 @@ opencode "Your task here"
 - ⚠️ Leave sampling settings unset; Kimi rejects non-default `temperature`, `top_p`, `n`, and penalties
 - Use for: architecture, hard debugging, strategic planning, visual tasks, long engineering tasks
 
-**Kimi K2.7 Code (`kimi-for-coding/kimi-for-coding`)**
+**Kimi K2.7 Code (`kimi-for-coding/k2p7`)**
 - ✅ Mature, stable coding model with Thinking ON (always enabled)
 - ✅ 256K context
 - ✅ Strong MCP tool use and multi-file coding
 - ⚠️ Slower than MiniMax; more expensive than M3 per token
 - Use for: balanced deep work, refactoring, plan review, creative tasks
 
-**Kimi K2.7 Code Highspeed (`kimi-for-coding/kimi-for-coding-highspeed`)**
+**Kimi K2.7 Code Highspeed (`kimi-for-coding/k2p7-highspeed`)**
 - ✅ Same coding ability as K2.7, ~5–6× faster output
 - ✅ 256K context, Thinking ON
 - ⚠️ 3× K2.7 quota usage; Allegretto/Allegro+ only
@@ -199,8 +199,8 @@ opencode "Your task here"
 | Agent | Model | Mode / Variant | Max Tokens | Use For |
 |-------|-------|----------------|------------|---------|
 | **Oracle** | `kimi-for-coding/k3` | `variant: max` | 32768 | Architecture analysis, debugging |
-| **Metis** | `kimi-for-coding/kimi-for-coding` | thinking enabled | 32768 | Plan consulting |
-| **Momus** | `kimi-for-coding/kimi-for-coding` | thinking enabled | 32768 | Plan review |
+| **Metis** | `kimi-for-coding/k2p7` | thinking enabled | 32768 | Plan consulting |
+| **Momus** | `kimi-for-coding/k2p7` | thinking enabled | 32768 | Plan review |
 
 ### How to Use Agents
 
