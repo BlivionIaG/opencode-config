@@ -62,32 +62,79 @@ opencode "Your task here"
 
 ### Enabled Providers
 
-1. **kimi-for-coding** - Kimi K2.6 (powerful reasoning, 256K context)
-2. **minimax** - MiniMax M2.7 Highspeed token plan (fast/small model, 200K context, 131K output)
+1. **kimi-for-coding** - Kimi K3, K2.7 Code, and K2.7 Code Highspeed (Kimi Code Plan; K3 up to 1M context on Allegro+)
+2. **minimax** - MiniMax M3 and M2.7 Highspeed token plan (fast models, up to 1M context)
 3. **minimax-paygo** - MiniMax M2.7 Highspeed PayGo fallback using the same MiniMax Anthropic-compatible endpoint
 4. **chenco** - Chenco OpenAI-compatible endpoint (Qwen3.6 model family)
 
+### Model Selection Matrix
+
+| Model | OpenCode ID | Coding (score) | Agentic (score) | Context | Visual | Speed | Efficiency | Best for |
+|-------|-------------|----------------|-----------------|---------|--------|-------|------------|----------|
+| **Kimi K3** | `kimi-for-coding/k3` | KCB v2 72.9% | Terminal-Bench 2.1 88.3% | 1M | 5 | 2 | 2 | Visual tasks, architecture, hard debugging, strategic planning, long-horizon work |
+| **Kimi K2.7 Code** | `kimi-for-coding/kimi-for-coding` | KCB v2 62.0% | MCP Atlas 76.0% | 256K | 3 | 2 | 3 | Balanced deep work; more intelligence than M3 when not rushed |
+| **Kimi K2.7 Highspeed** | `kimi-for-coding/kimi-for-coding-highspeed` | same as K2.7 | same as K2.7 | 256K | 3 | 5 | 2 | Speed-sensitive K2.7-level tasks (Allegro+) |
+| **MiniMax M3** | `minimax/MiniMax-M3` | SWE-Bench Pro 59.0% | MCP Atlas 74.2% | 400K | 4 | 4 | 5 | Everyday coding, orchestration, continuation, cost-efficient deep work |
+| **MiniMax M2.7 HS** | `minimax/MiniMax-M2.7-highspeed` | SWE-Bench Pro 56.2% | MCP Atlas ~70% | 200K | 2 | 5 | 5 | Search, docs, quick fixes, tests, writing, fast utility work |
+
+*Scores are the best published benchmark available for each model. Coding and agentic benchmarks differ across vendors, so treat them as directional rather than strictly comparable. Visual, speed, and efficiency use 1-5 relative ratings.*
+
+### Published Benchmark Snapshots
+
+| Model | Key benchmark | Score | Notes |
+|-------|---------------|-------|-------|
+| Kimi K3 | Kimi Code Bench v2 | 72.9% | Moonshot-reported, agentic end-to-end coding |
+| Kimi K3 | DeepSWE | 67.5% (KimiCode) / 67.3% (mini-SWE-agent) | Long-horizon real repo issues |
+| Kimi K3 | Terminal-Bench 2.1 | 88.3% | CLI/agentic terminal tasks |
+| Kimi K3 | FrontierSWE | 81.2% | Frontier implementation/research tasks |
+| Kimi K2.7 Code | Kimi Code Bench v2 | 62.0% | Moonshot-reported |
+| Kimi K2.7 Code | Program Bench | 53.6% | Full-program reconstruction |
+| Kimi K2.7 Code | MCP Atlas | 76.0% | MCP tool-use tasks |
+| MiniMax M3 | SWE-Bench Pro | 59.0% | MiniMax-reported real-world SE |
+| MiniMax M3 | SWE-Bench Verified | 80.5% | MiniMax-reported |
+| MiniMax M3 | Terminal-Bench 2.1 | 66.0% | MiniMax-reported |
+| MiniMax M3 | MCP Atlas | 74.2% | MiniMax-reported |
+| MiniMax M2.7 | SWE-Bench Pro | 56.2% | From M3 comparison table |
+| MiniMax M2.7 | SWE-Bench Verified | 80.2% | From M3 comparison table |
+
 ### Model Characteristics
 
-**Kimi K2.6 (kimi-for-coding/k2p6)**
-- ✅ Deep reasoning, architecture, debugging
-- ✅ Multimodal (vision + text)
-- ✅ 256K context window
-- ✅ Thinking and instant modes via `thinking.type`
-- ⚠️ Slower, more expensive
-- ⚠️ Leave sampling settings unset; K2.6 rejects non-default `temperature`, `top_p`, `n`, and penalties
-- Use for: complex planning, debugging, visual tasks
+**Kimi K3 (`kimi-for-coding/k3`)**
+- ✅ Flagship intelligence; best for visual understanding and long-horizon coding
+- ✅ Up to 1M context on Allegro+ plans
+- ✅ `reasoning_effort: low / high / max` (default `max`)
+- ⚠️ Slowest Kimi model; highest Kimi quota use
+- ⚠️ Leave sampling settings unset; Kimi rejects non-default `temperature`, `top_p`, `n`, and penalties
+- Use for: architecture, hard debugging, strategic planning, visual tasks, long engineering tasks
 
-**MiniMax M2.7 Highspeed Token Plan (minimax/MiniMax-M2.7-highspeed)**
-- ✅ Fast model configured as OpenCode `small_model`
-- ✅ API key loaded from `MINIMAX_API_KEY`
-- ✅ 204,800 context limit
-- ✅ 131,072 output limit
-- ✅ Tool-call capable in OpenCode's provider metadata
-- ⚠️ Higher highspeed pricing than standard MiniMax M2.7
-- Use for: quick/simple responses where latency matters
+**Kimi K2.7 Code (`kimi-for-coding/kimi-for-coding`)**
+- ✅ Mature, stable coding model with Thinking ON
+- ✅ 256K context
+- ✅ Strong MCP tool use and multi-file coding
+- ⚠️ Slower than MiniMax; more expensive than M3 per token
+- Use for: balanced deep work, refactoring, plan review, creative tasks
 
-**MiniMax M2.7 Highspeed PayGo (minimax-paygo/MiniMax-M2.7-highspeed)**
+**Kimi K2.7 Code Highspeed (`kimi-for-coding/kimi-for-coding-highspeed`)**
+- ✅ Same coding ability as K2.7, ~5–6× faster output
+- ✅ 256K context
+- ⚠️ 3× K2.7 quota usage; Allegretto/Allegro+ only
+- ⚠️ Highspeed only speeds model output; tool/script time is unchanged
+- Use for: speed-sensitive K2.7-level tasks; manual override when K2.7 is too slow
+
+**MiniMax M3 (`minimax/MiniMax-M3`)**
+- ✅ Best speed/intelligence balance in the MiniMax family
+- ✅ 400K context, multimodal (text/image/video input), tool-call capable
+- ✅ Cheap MiniMax quota use
+- Use for: orchestration, continuation, everyday coding, cost-efficient deep work
+
+**MiniMax M2.7 Highspeed (`minimax/MiniMax-M2.7-highspeed`)**
+- ✅ Fastest, cheapest model in the stack
+- ✅ 200K context, 131K output, tool-call capable
+- ✅ Configured as OpenCode `small_model`
+- ⚠️ Lower reasoning ceiling than M3 or Kimi
+- Use for: search, docs, quick fixes, tests, writing, simple responses
+
+**MiniMax M2.7 Highspeed PayGo (`minimax-paygo/MiniMax-M2.7-highspeed`)**
 - ✅ Backup provider for the same MiniMax M2.7 Highspeed model
 - ✅ API key loaded from `MINIMAX_PAYGO_API_KEY`
 - ✅ Used after token-plan MiniMax in `fallback_models`
@@ -105,30 +152,30 @@ opencode "Your task here"
 
 ### Primary Agents
 
-| Agent | Mode | Max Tokens | Use For |
-|-------|------|------------|---------|
-| **Sisyphus** | Kimi instant | 16384 | Main orchestrator, delegates tasks |
-| **Atlas** | MiniMax instant | 16384 | Plan orchestration, task coordination with PayGo then Kimi fallback |
-| **Hephaestus** | Kimi thinking | 32768 | Deep autonomous work, research |
-| **Prometheus** | Kimi thinking | 32768 | Strategic planning with MiniMax token-plan then PayGo fallback |
+| Agent | Model | Mode | Max Tokens | Use For |
+|-------|-------|------|------------|---------|
+| **Sisyphus** | `minimax/MiniMax-M3` | thinking | 16384 | Main orchestrator, delegates tasks (K3/K2.7 fallback) |
+| **Atlas** | `minimax/MiniMax-M3` | instant | 16384 | Plan orchestration, task coordination, continuation |
+| **Hephaestus** | `kimi-for-coding/k3` | reasoning | 32768 | Deep autonomous work, research |
+| **Prometheus** | `kimi-for-coding/k3` | reasoning | 32768 | Strategic planning |
 
 ### Utility Agents
 
-| Agent | Mode | Max Tokens | Use For |
-|-------|------|------------|---------|
-| **Explore** | MiniMax instant | 8192 | Fast codebase grep, search |
-| **Librarian** | MiniMax instant | 16384 | Documentation and external reference search |
-| **Multimodal-Looker** | Kimi thinking | 32768 | Vision tasks, screenshots, UI analysis |
-| **Sisyphus-Junior** | Category-based | 4096-32768 | Focused delegated task execution |
+| Agent | Model | Mode | Max Tokens | Use For |
+|-------|-------|------|------------|---------|
+| **Explore** | `minimax/MiniMax-M2.7-highspeed` | instant | 8192 | Fast codebase grep, search |
+| **Librarian** | `minimax/MiniMax-M2.7-highspeed` | instant | 16384 | Documentation and external reference search |
+| **Multimodal-Looker** | `kimi-for-coding/k3` | reasoning | 32768 | Vision tasks, screenshots, UI analysis |
+| **Sisyphus-Junior** | category-based | instant | 4096-32768 | Focused delegated task execution |
 
 ### Special Agents
 
-| Agent | Mode | Max Tokens | Use For |
-|-------|------|------------|---------|
-| **Oracle** | Kimi thinking | 32768 | Architecture analysis, debugging |
-| **Metis** | Kimi thinking | 32768 | Plan consulting |
-| **Momus** | Kimi thinking | 32768 | Plan review |
-| **Plan** | MiniMax thinking | 32768 | Work plan drafting with PayGo then Kimi fallback |
+| Agent | Model | Mode | Max Tokens | Use For |
+|-------|-------|------|------------|---------|
+| **Oracle** | `kimi-for-coding/k3` | reasoning | 32768 | Architecture analysis, debugging |
+| **Metis** | `kimi-for-coding/kimi-for-coding` | reasoning | 32768 | Plan consulting |
+| **Momus** | `kimi-for-coding/kimi-for-coding` | reasoning | 32768 | Plan review |
+| **Plan** | `minimax/MiniMax-M3` | thinking | 32768 | Work plan drafting |
 
 ### How to Use Agents
 
@@ -379,7 +426,7 @@ Then opt in per agent via the agent's `tools` block.
 
 **Issue: Task fails**
 ```bash
-# Confirm the resolved Kimi K2.6 config:
+# Confirm the resolved Kimi for Coding config:
 opencode debug config
 
 # Check available Kimi models:
@@ -396,7 +443,7 @@ opencode models minimax-paygo --verbose
 ```bash
 # Override manually:
 /models
-# Select: kimi-for-coding/k2p6
+# Select: kimi-for-coding/k2p7
 
 # Fast/small model is configured as:
 # minimax/MiniMax-M2.7-highspeed
@@ -453,7 +500,7 @@ Add to `oh-my-openagent.json`:
 ```json
 "categories": {
   "my-custom-category": {
-    "model": "kimi-for-coding/k2p6",
+    "model": "kimi-for-coding/k2p7",
     "thinking": { "type": "disabled" },
     "maxTokens": 4096
   }
@@ -498,7 +545,7 @@ For Kimi agents, you can control reasoning:
 Or configure per-agent in `oh-my-openagent.json`:
 ```json
 "oracle": {
-  "model": "kimi-for-coding/k2p6",
+  "model": "kimi-for-coding/k2p7",
   "thinking": { "type": "enabled" }  // or "disabled"
 }
 ```

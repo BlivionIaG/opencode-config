@@ -79,14 +79,14 @@
             "cache_read": 0.00000012
           },
           "limit": {
-            "context": 512000,
-            "output": 65536
+            "context": 400000,
+            "output": 32768
           }
         }
       }
     }
   },
-  "model": "kimi-for-coding/k2p6",
+  "model": "kimi-for-coding/k3",
   "small_model": "minimax/MiniMax-M2.7-highspeed",
   "enabled_providers": [
     "chenco",
@@ -105,6 +105,15 @@
         "MCP_LOG_LEVEL": "info",
         "N8N_API_URL": "{env:N8N_API_URL}",
         "N8N_API_KEY": "{env:N8N_API_KEY}"
+      }
+    },
+    "github": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-github"],
+      "enabled": false,
+      "timeout": 30000,
+      "environment": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "{env:GITHUB_TOKEN}"
       }
     },
     "koyeb": {
