@@ -1,13 +1,13 @@
 # OpenCode Configuration
 
-This repository contains OpenCode AI agent configurations optimized for speed and cost efficiency.
+This repository contains OpenCode AI agent configurations optimized for speed, reasoning quality, and cost efficiency.
 
 ## Files
 
 | File | Purpose |
 |------|---------|
-| `oh-my-openagent.json` | Main agent configuration (16 agents, categories, routing) |
-| `opencode.json` | Core provider settings, default Kimi K2.6 model, Chenco Qwen3.6 models, MiniMax token-plan model, and MiniMax PayGo fallback |
+| `oh-my-openagent.jsonc` | Main agent configuration (16 agents, categories, routing) |
+| `opencode.json` | Core provider settings, default Kimi K3 model, Chenco Qwen3.6 models, MiniMax token-plan models, and MiniMax PayGo fallback |
 | `opencode-large-project.json` | Extended config for large projects |
 | `zed-*.json` | Zed editor integration configs |
 | `OPENCODE_MANUAL.md` | Complete usage guide |
@@ -86,24 +86,26 @@ opencode
 
 | Task Type | Agent | Model | Speed |
 |-----------|-------|-------|-------|
-| Search/Grep | `@explore` | MiniMax instant | ~1-2s |
-| Quick fixes | quick/fix category | MiniMax instant | ~1-2s |
-| Deep analysis | `@oracle` | Kimi thinking | ~8s |
-| Architecture | `@prometheus` | Kimi thinking with MiniMax fallback | ~8-10s |
+| Search/Grep | `@explore` | MiniMax M2.7 highspeed | ~1-2s |
+| Quick fixes | quick/fix category | MiniMax M2.7 highspeed | ~1-2s |
+| Deep analysis | `@oracle` | Kimi K3 | ~8s |
+| Architecture | `@prometheus` | Kimi K3 with MiniMax fallback | ~8-10s |
 
 ### Cost Optimization
 
-- Kimi K2.6 remains the main model for primary coding work
+- Kimi K3 is the default model for primary coding work and deep reasoning
+- Kimi K2.7 provides a balanced, high-speed reasoning option
 - MiniMax M2.7 Highspeed uses the token-plan key and is configured as OpenCode's fast/small model
+- MiniMax M3 is the multi-modal fallback and orchestration model
 - MiniMax PayGo is exposed as `minimax-paygo/MiniMax-M2.7-highspeed` and is only used after token-plan MiniMax fails
 - MiniMax token-plan routing handles utility tasks and lightweight plan coordination
-- Kimi thinking mode remains reserved for strategic planning, deep refactors, visual reasoning, critique, and hard debugging
+- Kimi K3/K2.7 reasoning remains reserved for strategic planning, deep refactors, visual reasoning, critique, and hard debugging
 - Runtime fallback escalates stalled or quota-limited Kimi requests after 30 seconds
-- Category routing sets per-task `thinking` and `maxTokens` budgets
+- Category routing sets per-task `variant`/`thinking` and `maxTokens` budgets
 
 ## Customization
 
-Edit `oh-my-openagent.json` to adjust:
+Edit `oh-my-openagent.jsonc` to adjust:
 - Agent models and token limits
 - Category routing rules
 - Parallel execution limits

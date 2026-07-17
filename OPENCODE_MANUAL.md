@@ -448,9 +448,11 @@ Then opt in per agent via the agent's `tools` block.
 # Wait 1 minute - limits reset automatically
 # Or reduce concurrent agents in config from 12 to 8
 
-# Edit oh-my-openagent.json:
-"background_agents": {
-  "max_concurrent": 8  # Reduced from 12
+# Edit oh-my-openagent.jsonc:
+"agents": {
+  "defaults": {
+    "maxConcurrent": 8  # Reduced from 12
+  }
 }
 ```
 
@@ -507,14 +509,14 @@ bunx oh-my-opencode doctor
 | File | Location | Purpose |
 |------|----------|---------|
 | `opencode.json` | `~/.config/opencode/` | Provider settings |
-| `oh-my-openagent.json` | `~/.config/opencode/` | Agent & category config |
+| `oh-my-openagent.jsonc` | `~/.config/opencode/` | Agent & category config |
 
 ### Reset Everything
 
 ```bash
 # If you need to start fresh:
-rm ~/.config/opencode/oh-my-openagent.json
-cp ~/your-backup/oh-my-openagent.json ~/.config/opencode/
+rm ~/.config/opencode/oh-my-openagent.jsonc
+cp ~/your-backup/oh-my-openagent.jsonc ~/.config/opencode/
 
 # Or regenerate:
 bunx oh-my-opencode@latest install
@@ -613,7 +615,7 @@ Or configure per-agent in `oh-my-openagent.jsonc`:
 # 1. Routes to @oracle for analysis (deep)
 # 2. Spawns @explore to find login code (parallel)
 # 3. Delegates focused Kimi category tasks to apply the fix
-# 4. Uses Kimi instant/thinking categories to validate
+# 4. Uses fast MiniMax categories to validate and Kimi reasoning categories to deep-check
 ```
 
 ### Workflow 3: Code Review
@@ -725,9 +727,9 @@ Check your consumption:
 ## Summary
 
 **Your setup is optimized for:**
-- ✅ Speed through parallelization (12 concurrent agents)
-- ✅ Cost control through Kimi instant mode for utility work
-- ✅ Deep reasoning through Kimi thinking mode where it matters
+- ✅ Speed through parallel agent execution
+- ✅ Cost control through MiniMax M2.7 highspeed for utility work
+- ✅ Deep reasoning through Kimi K3 / K2.7 where it matters
 - ✅ Zero configuration needed
 
 **Just remember:**
@@ -736,7 +738,7 @@ Check your consumption:
 3. Use `&` for parallel work
 4. Trust the categories
 
-**Monthly budget:** ~$10-15 for heavy usage
+**Monthly budget:** You have a Kimi Code Allegro €100 plan and a MiniMax token plan €50; actual spend depends on usage mix.
 
 ---
 
@@ -749,7 +751,7 @@ Check your consumption:
 **Configuration Location:**
 ```
 ~/.config/opencode/opencode.json
-~/.config/opencode/oh-my-openagent.json
+~/.config/opencode/oh-my-openagent.jsonc
 ```
 
 ---
