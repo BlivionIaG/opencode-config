@@ -154,8 +154,8 @@ opencode "Your task here"
 |-------|------------------|-----|
 | **Kimi K3** | `"variant": "max"` | K3 uses the top-level `reasoning_effort` field; at launch only `max` is supported and it is the default. Setting `variant: max` makes the intent explicit. |
 | **Kimi K2.7 Code / Highspeed** | `"thinking": { "type": "enabled" }` | K2.7 always reasons; `thinking.type` must be `enabled`. Passing `disabled` errors. |
-| **MiniMax M3** | `"thinking": { "type": "enabled", "budgetTokens": 32000 }` | MiniMax M3 supports Anthropic-style extended thinking. `32000` is a good budget for orchestration; disable for purely fast tasks. |
-| **MiniMax M2.7 Highspeed** | `"thinking": { "type": "disabled" }` | Keep reasoning off for the fastest, cheapest utility responses. |
+| **MiniMax M3** | `"thinking": { "type": "adaptive" }` (or `disabled`) | M3 uses `adaptive` to enable thinking; it does **not** support `budgetTokens`. `disabled` skips thinking for faster responses. |
+| **MiniMax M2.7 Highspeed** | `"thinking": { "type": "disabled" }` (accepted but ignored) | M2.7 models always reason; passing `disabled` is accepted but thinking remains on. Kept here to document intent. |
 
 **Runtime control:**
 - Use `/acp thinking enabled` or `/acp thinking disabled` to toggle thinking in the current session.
@@ -180,7 +180,7 @@ opencode "Your task here"
 
 | Agent | Model | Mode / Variant | Max Tokens | Use For |
 |-------|-------|----------------|------------|---------|
-| **Sisyphus** | `minimax/MiniMax-M3` | thinking enabled (budget 32K) | 16384 | Main orchestrator, delegates tasks (K3/K2.7 fallback) |
+| **Sisyphus** | `minimax/MiniMax-M3` | thinking adaptive | 16384 | Main orchestrator, delegates tasks (K3/K2.7 fallback) |
 | **Atlas** | `minimax/MiniMax-M3` | thinking disabled / instant | 16384 | Plan orchestration, task coordination, continuation |
 | **Hephaestus** | `kimi-for-coding/k3` | `variant: max` | 32768 | Deep autonomous work, research |
 | **Prometheus** | `kimi-for-coding/k3` | `variant: max` | 32768 | Strategic planning |

@@ -25,9 +25,10 @@
     // Main orchestrator: fast, smart, cheap delegation
     "sisyphus": {
       "model": "minimax/MiniMax-M3",
+      "mode": "primary",
+      "displayName": "Sisyphus - ultraworker",
       "thinking": {
-        "type": "enabled",
-        "budgetTokens": 32000
+        "type": "adaptive"
       },
       "fallback_models": [
         "kimi-for-coding/k3",
