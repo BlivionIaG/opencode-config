@@ -180,10 +180,8 @@
         "models": [
           {
             "model": "kimi-for-coding/k2p7",
-            "provider_options": {
-              "thinking": {
-                "type": "enabled"
-              }
+            "thinking": {
+              "type": "enabled"
             }
           },
           "kimi-for-coding/k3-256k",
@@ -224,10 +222,8 @@
         "models": [
           {
             "model": "kimi-for-coding/k2p7",
-            "provider_options": {
-              "thinking": {
-                "type": "enabled"
-              }
+            "thinking": {
+              "type": "enabled"
             }
           },
           "kimi-for-coding/k3-256k",
@@ -248,10 +244,8 @@
         "models": [
           {
             "model": "kimi-for-coding/k2p7",
-            "provider_options": {
-              "thinking": {
-                "type": "enabled"
-              }
+            "thinking": {
+              "type": "enabled"
             }
           },
           "kimi-for-coding/k3-256k",
