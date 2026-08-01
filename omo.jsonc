@@ -25,115 +25,91 @@
       "sisyphus": {
         "mode": "primary",
         "displayName": "Sisyphus - ultraworker",
-        "models": [
-          {
-            "model": "minimax/MiniMax-M3"
-          },
+        "model": "minimax/MiniMax-M3",
+        "fallback_models": [
           "kimi-for-coding/k3-256k",
           "kimi-for-coding/k2p7"
         ]
       },
       "hephaestus": {
-        "models": [
-          {
-            "model": "kimi-for-coding/k3",
-            "reasoning": "max"
-          },
+        "model": "kimi-for-coding/k3",
+        "reasoning": "max",
+        "fallback_models": [
           "kimi-for-coding/k2p7",
           "minimax/MiniMax-M3"
         ]
       },
       "oracle": {
-        "models": [
-          {
-            "model": "kimi-for-coding/k3-256k",
-            "reasoning": "max"
-          },
+        "model": "kimi-for-coding/k3-256k",
+        "reasoning": "max",
+        "fallback_models": [
           "kimi-for-coding/k2p7",
           "minimax/MiniMax-M3"
         ]
       },
       "librarian": {
-        "models": [
-          {
-            "model": "minimax/MiniMax-M2.7-highspeed",
-            "reasoning": "off"
-          },
+        "model": "minimax/MiniMax-M2.7-highspeed",
+        "reasoning": "off",
+        "fallback_models": [
           "kimi-for-coding/k2p7",
           "minimax/MiniMax-M3"
         ]
       },
       "explore": {
-        "models": [
-          {
-            "model": "minimax/MiniMax-M2.7-highspeed",
-            "reasoning": "off"
-          },
+        "model": "minimax/MiniMax-M2.7-highspeed",
+        "reasoning": "off",
+        "fallback_models": [
           "kimi-for-coding/k2p7",
           "minimax/MiniMax-M3"
         ]
       },
       "multimodal-looker": {
-        "models": [
-          {
-            "model": "kimi-for-coding/k3",
-            "reasoning": "max"
-          },
+        "model": "kimi-for-coding/k3",
+        "reasoning": "max",
+        "fallback_models": [
           "kimi-for-coding/k2p7",
           "minimax/MiniMax-M3"
         ]
       },
       "prometheus": {
-        "models": [
-          {
-            "model": "kimi-for-coding/k3-256k",
-            "reasoning": "max"
-          },
+        "model": "kimi-for-coding/k3-256k",
+        "reasoning": "max",
+        "fallback_models": [
           "kimi-for-coding/k2p7",
           "minimax/MiniMax-M3"
         ]
       },
       "metis": {
-        "models": [
-          {
-            "model": "kimi-for-coding/k2p7",
-            "provider_options": {
-              "thinking": {
-                "type": "enabled"
-              }
-            }
-          },
+        "model": "kimi-for-coding/k2p7",
+        "thinking": {
+          "type": "enabled"
+        },
+        "fallback_models": [
           "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
         ]
       },
       "momus": {
-        "models": [
-          {
-            "model": "kimi-for-coding/k2p7",
-            "provider_options": {
-              "thinking": {
-                "type": "enabled"
-              }
-            }
-          },
+        "model": "kimi-for-coding/k2p7",
+        "thinking": {
+          "type": "enabled"
+        },
+        "fallback_models": [
           "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
         ]
       },
       "atlas": {
-        "models": [
-          "minimax/MiniMax-M3",
+        "model": "minimax/MiniMax-M3",
+        "fallback_models": [
           "kimi-for-coding/k3-256k",
           "kimi-for-coding/k2p7"
         ]
       },
       "sisyphus-junior": {
-        "models": [
-          {
-            "model": "minimax/MiniMax-M2.7-highspeed",
-            "reasoning": "off"
-          },
+        "model": "minimax/MiniMax-M2.7-highspeed",
+        "reasoning": "off",
+        "fallback_models": [
           "kimi-for-coding/k2p7",
           "minimax/MiniMax-M3"
         ]

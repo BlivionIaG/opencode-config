@@ -6,7 +6,8 @@ This repository contains OpenCode AI agent configurations optimized for speed, r
 
 | File | Purpose |
 |------|---------|
-| `omo.jsonc` | Main agent configuration (agents, categories, routing) - unified OMO schema, lives at `~/.omo/omo.jsonc` via symlink |
+| `omo.jsonc` | Main agent configuration (agents, categories, routing) - unified OMO schema, synced to `~/.omo/omo.jsonc` |
+| `scripts/sync-omo.sh` | Syncs repo `omo.jsonc` with the live plugin config (push/pull/check/doctor) |
 | `opencode.json` | Core provider settings, default MiniMax M3 model, Chenco Qwen3.6 models, MiniMax models, native agents (`vulcan`) |
 | `agents/vulcan.md` | System prompt for the Vulcan deep-worker agent (Kimi K3, 1M context) |
 | `OPENCODE_MANUAL.md` | Complete usage guide |
@@ -23,27 +24,37 @@ git clone <your-repo-url> ~/.config/opencode
 ln -s ~/your-repo-path ~/.config/opencode
 ```
 
-### 2. Link the agent config (omo.jsonc)
+### 2. Install the agent config (omo.jsonc)
 
 Since oh-my-openagent 4.19.x, the plugin config lives at `~/.omo/omo.jsonc`
 (the plugin auto-migrates legacy `oh-my-openagent.json[c]` there on first
-launch). This repo keeps the real file under version control and links it:
+launch). This repo keeps the canonical copy under version control and syncs
+it with a script:
 
 ```bash
-mkdir -p ~/.omo
-# If the plugin already migrated/created one, back it up first:
-[ -f ~/.omo/omo.jsonc ] && [ ! -L ~/.omo/omo.jsonc ] && mv ~/.omo/omo.jsonc ~/.omo/omo.jsonc.pre-symlink
-ln -sf ~/.config/opencode/omo.jsonc ~/.omo/omo.jsonc
+# Install / update the live config from this repo:
+scripts/sync-omo.sh push
 
-# Verify the full agent roster loads through the link:
-opencode agent list
+# Verify everything is wired up (JSONC check + plugin doctor + agent roster):
+scripts/sync-omo.sh doctor
 ```
 
+Day-to-day workflow:
+
+| Situation | Command |
+|-----------|---------|
+| You edited `omo.jsonc` in the repo | `scripts/sync-omo.sh push` |
+| The plugin migrated/wrote its config (e.g. after an upgrade) | `scripts/sync-omo.sh pull` then review `git diff` |
+| Not sure which side is newer | `scripts/sync-omo.sh check` |
+
+We deliberately do **not** symlink `~/.omo/omo.jsonc`: the plugin's config
+migration can rewrite that path, and a symlink breaks silently. Copies +
+`sync-omo.sh check` make drift visible instead.
+
 **Do NOT** recreate `oh-my-openagent.json[c]` in `~/.config/opencode/` - the
-plugin's config migration will detect it and re-run, overwriting the symlink
-setup. Edit `omo.jsonc` (in this repo) directly; the plugin reads and writes
-through the symlink. Pre-migration backups live under
-`~/.omo/migration-backup-*` and `~/.omo/omo.jsonc.pre-symlink`.
+plugin's config migration will detect it and re-run. Pre-migration backups
+live under `~/.omo/migration-backup-*`; the sync script also timestamps its
+own backups on push.
 
 ### 3. Add your API keys (NOT in git!)
 
@@ -126,9 +137,9 @@ opencode
 
 ## Customization
 
-Edit `omo.jsonc` (in this repo; live at `~/.omo/omo.jsonc` via symlink) to adjust:
-- Agent models and token limits (unified `models[]` arrays - first entry is primary, rest are fallbacks)
-- Category routing rules
+Edit `omo.jsonc` (in this repo, then `scripts/sync-omo.sh push`) to adjust:
+- Agent models and token limits (`model` + `fallback_models`; `reasoning`/`variant`/`thinking` per agent)
+- Category routing rules (`models[]` arrays - first entry is primary, rest are fallbacks)
 - Parallel execution limits
 - Auto-confirmation settings
 

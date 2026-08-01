@@ -518,24 +518,31 @@ bunx oh-my-opencode doctor
 | File | Location | Purpose |
 |------|----------|---------|
 | `opencode.json` | `~/.config/opencode/` | Provider settings, session defaults, native agents (vulcan) |
-| `omo.jsonc` | `~/.omo/omo.jsonc` (symlink → `~/.config/opencode/omo.jsonc`) | Agent & category config (unified OMO schema) |
+| `omo.jsonc` | repo: `~/.config/opencode/omo.jsonc` → live: `~/.omo/omo.jsonc` | Agent & category config (unified OMO schema) |
+| `scripts/sync-omo.sh` | `~/.config/opencode/scripts/` | push/pull/check/doctor sync between repo and live config |
 | `agents/vulcan.md` | `~/.config/opencode/` | Vulcan deep-worker system prompt |
 
 **Since oh-my-openagent 4.19.x:** the plugin config moved from
 `~/.config/opencode/oh-my-openagent.jsonc` to `~/.omo/omo.jsonc` (automatic
 migration on first launch; backups under `~/.omo/migration-backup-*`). This
-repo version-controls the real file and symlinks it into place:
+repo version-controls the canonical copy and syncs it — no symlink, because
+the plugin can rewrite the live path and a symlink breaks silently:
 
 ```bash
-mkdir -p ~/.omo
-[ -f ~/.omo/omo.jsonc ] && [ ! -L ~/.omo/omo.jsonc ] && mv ~/.omo/omo.jsonc ~/.omo/omo.jsonc.pre-symlink
-ln -sf ~/.config/opencode/omo.jsonc ~/.omo/omo.jsonc
-opencode agent list   # verify full roster loads
+scripts/sync-omo.sh push    # repo -> ~/.omo/omo.jsonc (after editing the repo copy)
+scripts/sync-omo.sh pull    # live -> repo (after a plugin migration/upgrade writes it)
+scripts/sync-omo.sh check   # detect drift between the two
+scripts/sync-omo.sh doctor  # JSONC validation + plugin doctor + agent roster
 ```
 
-Key schema changes in the unified format: the whole config is wrapped in an
-`"[opencode]"` scope block, and per-agent `model` + `fallback_models` became a
-single `models[]` array (first entry = primary, rest = fallbacks).
+Schema notes for the unified format: the whole config is wrapped in an
+`"[opencode]"` scope block. **Agents** use `model` + `fallback_models` (with
+`reasoning`/`variant`/`thinking`/`mode`/`displayName` as sibling keys).
+**Categories** use `models[]` arrays (first entry = primary, rest =
+fallbacks; entries can be `{model, reasoning}` objects or plain strings).
+Note: the 4.19.4 auto-migration emitted `models[]` for *agents* too, which
+the schema rejects ("Unknown field" warnings) — if you see those, convert
+agent entries to `model` + `fallback_models` as in this repo's `omo.jsonc`.
 
 **Do NOT** recreate `oh-my-openagent.json[c]` in `~/.config/opencode/` — the
 plugin will detect it and re-run the migration.
@@ -543,9 +550,8 @@ plugin will detect it and re-run the migration.
 ### Reset Everything
 
 ```bash
-# If you need to start fresh:
-rm ~/.omo/omo.jsonc   # removes the symlink, not the repo file
-ln -s ~/.config/opencode/omo.jsonc ~/.omo/omo.jsonc
+# Reinstall the live config from the repo:
+scripts/sync-omo.sh push
 
 # Or restore from a migration backup:
 cp ~/.omo/migration-backup-*/.config/opencode/oh-my-openagent.jsonc /tmp/legacy.jsonc
@@ -607,10 +613,9 @@ For Kimi agents, you can control reasoning:
 Or configure per-agent in `omo.jsonc`:
 ```json
 "oracle": {
-  "models": [
-    { "model": "kimi-for-coding/k3-256k", "reasoning": "max" },
-    "kimi-for-coding/k2p7"
-  ]
+  "model": "kimi-for-coding/k3-256k",
+  "reasoning": "max",
+  "fallback_models": ["kimi-for-coding/k2p7", "minimax/MiniMax-M3"]
 }
 ```
 
@@ -783,8 +788,8 @@ Check your consumption:
 **Configuration Location:**
 ```
 ~/.config/opencode/opencode.json       (providers, defaults, native agents)
-~/.omo/omo.jsonc                       (agent config; symlink to repo omo.jsonc)
-~/.config/opencode/omo.jsonc           (real file, version-controlled)
+~/.omo/omo.jsonc                       (live agent config; synced from repo via scripts/sync-omo.sh)
+~/.config/opencode/omo.jsonc           (canonical copy, version-controlled)
 ```
 
 ---
