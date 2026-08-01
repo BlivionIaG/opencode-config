@@ -39,9 +39,9 @@ opencode "Your task here"
 | Command | Description |
 |---------|-------------|
 | `@explore <task>` | Fast search (MiniMax M2.7 HS, ~2s) |
-| `@oracle <task>` | Deep analysis (Kimi K3, ~8s) |
+| `@oracle <task>` | Deep analysis (Kimi K3-256k, ~8s) |
 | `@librarian <task>` | Docs and external reference lookup (MiniMax M2.7 HS, ~3s) |
-| `@prometheus <task>` | Implementation planning (Kimi K3, ~10s) |
+| `@prometheus <task>` | Implementation planning (Kimi K3-256k, ~10s) |
 | `agent1 & agent2` | Run agents in parallel |
 | `/status` | Check running agents |
 | `/models` | Switch models manually |
@@ -62,7 +62,7 @@ opencode "Your task here"
 
 ### Enabled Providers
 
-1. **kimi-for-coding** - Kimi K3, K2.7 Code, and K2.7 Code Highspeed (Kimi Code Plan; K3 up to 1M context on Allegro+)
+1. **kimi-for-coding** - Kimi K3, K3-256k, K2.7 Code, and K2.7 Code Highspeed (Kimi Code Plan; K3 up to 1M context on Allegro+, K3-256k fixed 256k context)
 2. **minimax** - MiniMax M3 and M2.7 Highspeed token plan (fast models, up to 1M context)
 3. **minimax-paygo** - MiniMax M2.7 Highspeed PayGo fallback using the same MiniMax Anthropic-compatible endpoint
 4. **chenco** - Chenco OpenAI-compatible endpoint (Qwen3.6 model family)
@@ -71,7 +71,8 @@ opencode "Your task here"
 
 | Model | OpenCode ID | Coding (score) | Agentic (score) | Context | Visual | Speed | Efficiency | Best for |
 |-------|-------------|----------------|-----------------|---------|--------|-------|------------|----------|
-| **Kimi K3** | `kimi-for-coding/k3` | KCB v2 72.9% | Terminal-Bench 2.1 88.3% | 1M | 5 | 2 | 2 | Visual tasks, architecture, hard debugging, strategic planning, long-horizon work |
+| **Kimi K3** | `kimi-for-coding/k3` | KCB v2 72.9% | Terminal-Bench 2.1 88.3% | 1M | 5 | 2 | 2 | Long-horizon work, video input |
+| **Kimi K3-256k** | `kimi-for-coding/k3-256k` | same as K3 | same as K3 | 256K | 3 | 2 | 3 | Visual tasks (image only), architecture, hard debugging, strategic planning; half the quota of K3 |
 | **Kimi K2.7 Code** | `kimi-for-coding/k2p7` | KCB v2 62.0% | MCP Atlas 76.0% | 256K | 3 | 2 | 3 | Balanced deep work; more intelligence than M3 when not rushed |
 | **Kimi K2.7 Highspeed** | `kimi-for-coding/k2p7-highspeed` | same as K2.7 | same as K2.7 | 256K | 3 | 5 | 2 | Speed-sensitive K2.7-level tasks (Allegro+) |
 | **MiniMax M3** | `minimax/MiniMax-M3` | SWE-Bench Pro 59.0% | MCP Atlas 74.2% | 400K | 4 | 4 | 5 | Everyday coding, orchestration, continuation, cost-efficient deep work |
@@ -100,12 +101,18 @@ opencode "Your task here"
 ### Model Characteristics
 
 **Kimi K3 (`kimi-for-coding/k3`)**
-- ✅ Flagship intelligence; best for visual understanding and long-horizon coding
+- ✅ Flagship intelligence; best for long-horizon coding and video input
 - ✅ Up to 1M context on Allegro+ plans
 - ✅ `reasoning_effort: max` (currently the only supported level; default is `max`)
-- ⚠️ Slowest Kimi model; highest Kimi quota use
+- ⚠️ Slowest Kimi model; highest Kimi quota use (2× K3-256k)
 - ⚠️ Leave sampling settings unset; Kimi rejects non-default `temperature`, `top_p`, `n`, and penalties
-- Use for: architecture, hard debugging, strategic planning, visual tasks, long engineering tasks
+- Use for: long-horizon autonomous work, video input (multimodal-looker), deep category tasks
+
+**Kimi K3-256k (`kimi-for-coding/k3-256k`)**
+- ✅ Same K3 intelligence, fixed 256K context, half the quota of K3 1M
+- ✅ Image input only (no video); `reasoning_effort: max`
+- ⚠️ Tasks exceeding 256K context should use K3 1M instead
+- Use for: oracle, prometheus, ultrabrain, visual-engineering agents; architecture, hard debugging, strategic planning
 
 **Kimi K2.7 Code (`kimi-for-coding/k2p7`)**
 - ✅ Mature, stable coding model with Thinking ON (always enabled)
@@ -166,13 +173,14 @@ opencode "Your task here"
 
 | Model | Where it is used | Why it was chosen |
 |-------|------------------|-------------------|
-| **Kimi K3** | Agents: `hephaestus`, `oracle`, `prometheus`, `multimodal-looker`<br>Categories: `deep`, `ultrabrain`, `visual-engineering` | Highest intelligence in the stack; native visual understanding; best for long-horizon coding, architecture, hard debugging, and strategic planning. Up to 1M context on Allegro+ plans. |
+| **Kimi K3** | Agents: `hephaestus`, `multimodal-looker`<br>Categories: `deep` | Highest intelligence in the stack; native visual and video understanding; best for long-horizon coding, video input. Up to 1M context on Allegro+ plans. |
+| **Kimi K3-256k** | Agents: `oracle`, `prometheus`<br>Categories: `ultrabrain`, `visual-engineering` | Same K3 intelligence at fixed 256K context; half the quota of K3 1M. Best for architecture, hard debugging, strategic planning, image-based visual tasks. |
 | **Kimi K2.7 Code** | Agents: `metis`, `momus`<br>Categories: `refactor`, `artistry`, `unspecified-high` | Balanced intelligence above MiniMax M3; cheaper and slower than K3. Good for deliberative review, plan consulting, creative tasks, and complex refactoring where you are not in a hurry. |
 | **Kimi K2.7 Highspeed** | Not assigned by default; available via `/models` manual override | Same capability as K2.7 but ~5–6× faster output. Use when speed matters more than quota efficiency; remember it costs 3× the K2.7 quota. |
 | **MiniMax M3** | Agents: `sisyphus`, `atlas` | Best speed/intelligence/cost balance for orchestration, continuation, and everyday coding. Keeps the main loop and long-running handlers fast and cheap. |
 | **MiniMax M2.7 Highspeed** | Agents: `librarian`, `explore`, `sisyphus-junior`<br>Categories: `quick`, `fix`, `search`, `test`, `explain`, `writing`, `unspecified-low` | Fastest, cheapest model for high-volume utility work: search, docs, quick fixes, tests, and writing. Configured as the OpenCode `small_model`. |
 
-**Fallback logic:** K3 primary falls back to K2.7, then to MiniMax M3. MiniMax M3 primary falls back to K3, then K2.7. MiniMax M2.7 highspeed primary falls back to M3, then K2.7. This keeps the most capable Kimi models behind the cheaper MiniMax options for cost control, while ensuring a reasoning model is always available if a provider fails.
+**Fallback logic:** K3-256k primary falls back to K2.7, then to MiniMax M3. K3 1M (used only for long-horizon/video tasks) falls back to K3-256k. MiniMax M3 primary falls back to K3-256k, then K2.7. MiniMax M2.7 highspeed primary falls back to M3, then K2.7. This keeps the most capable Kimi models behind the cheaper MiniMax options for cost control, while ensuring a reasoning model is always available if a provider fails.
 
 ## Agents Guide
 
@@ -183,7 +191,7 @@ opencode "Your task here"
 | **Sisyphus** | `minimax/MiniMax-M3` | thinking adaptive | 16384 | Main orchestrator, delegates tasks (K3/K2.7 fallback) |
 | **Atlas** | `minimax/MiniMax-M3` | thinking disabled / instant | 16384 | Plan orchestration, task coordination, continuation |
 | **Hephaestus** | `kimi-for-coding/k3` | `variant: max` | 32768 | Deep autonomous work, research |
-| **Prometheus** | `kimi-for-coding/k3` | `variant: max` | 32768 | Strategic planning |
+| **Prometheus** | `kimi-for-coding/k3-256k` | `variant: max` | 32768 | Strategic planning |
 
 ### Utility Agents
 
@@ -198,7 +206,7 @@ opencode "Your task here"
 
 | Agent | Model | Mode / Variant | Max Tokens | Use For |
 |-------|-------|----------------|------------|---------|
-| **Oracle** | `kimi-for-coding/k3` | `variant: max` | 32768 | Architecture analysis, debugging |
+| **Oracle** | `kimi-for-coding/k3-256k` | `variant: max` | 32768 | Architecture analysis, debugging |
 | **Metis** | `kimi-for-coding/k2p7` | thinking enabled | 32768 | Plan consulting |
 | **Momus** | `kimi-for-coding/k2p7` | thinking enabled | 32768 | Plan review |
 
@@ -237,8 +245,8 @@ Sisyphus automatically categorizes your requests based on keywords:
 | **fix** | fix, correct, repair | MiniMax M2.7 HS, 4096 maxTokens | ~1-2s |
 | **refactor** | refactor, cleanup, optimize | Kimi K2.7 thinking, 32768 maxTokens | ~8s |
 | **deep** | debug, investigate, analyze | Kimi K3 reasoning | ~8s |
-| **ultrabrain** | architect, design, plan | Kimi K3 reasoning | ~10s |
-| **visual-engineering** | UI, frontend, screenshot, design | Kimi K3 reasoning | ~8s |
+| **ultrabrain** | architect, design, plan | Kimi K3-256k reasoning | ~10s |
+| **visual-engineering** | UI, frontend, screenshot, design | Kimi K3-256k reasoning | ~8s |
 | **artistry** | creative, unconventional, novel | Kimi K2.7 thinking, 32768 maxTokens | ~8s |
 | **unspecified-low** | lightweight, simple, small | MiniMax M2.7 HS, 4096 maxTokens | ~1-2s |
 | **unspecified-high** | complex, important, high stakes | Kimi K2.7 reasoning | ~8s |
@@ -336,8 +344,8 @@ Your config uses Kimi for quality-critical reasoning and MiniMax token-plan rout
 | Code explanation | MiniMax M2.7 HS | Lower Kimi quota use | ~2-3s |
 | Test generation | MiniMax M2.7 HS | Lower Kimi quota use | ~3-4s |
 | Refactoring | Kimi K2.7 | Medium | ~8s |
-| Deep analysis | Kimi K3 | Higher | ~8s |
-| Architecture planning | Kimi K3 / MiniMax M3 fallback | Higher | ~8-10s |
+| Deep analysis | Kimi K3-256k | Higher | ~8s |
+| Architecture planning | Kimi K3-256k / MiniMax M3 fallback | Higher | ~8-10s |
 
 ### Your Monthly Budget
 
@@ -348,7 +356,7 @@ Your config uses Kimi for quality-critical reasoning and MiniMax token-plan rout
 **Typical Monthly Usage:**
 - MiniMax M2.7 highspeed for search, quick fixes, explanations, tests, writing, and fast utility work
 - MiniMax M3 for orchestration (Sisyphus), continuation (Atlas), and cost-efficient everyday coding
-- Kimi K3 for strategic planning, architecture, hard debugging, visual reasoning, and long-horizon implementation
+- Kimi K3-256k for strategic planning, architecture, hard debugging, visual reasoning; Kimi K3 1M for long-horizon implementation
 - Kimi K2.7 for refactoring, plan consulting, plan review, critique, and creative tasks
 - MiniMax PayGo only after token-plan MiniMax in fallback order
 - Runtime fallback retries quota, timeout, and provider errors, and escalates stalled primary requests after 30 seconds
@@ -577,7 +585,7 @@ For Kimi agents, you can control reasoning:
 Or configure per-agent in `oh-my-openagent.jsonc`:
 ```json
 "oracle": {
-  "model": "kimi-for-coding/k3",
+  "model": "kimi-for-coding/k3-256k",
   "thinking": { "type": "enabled" }  // or "disabled"
 }
 ```
@@ -589,7 +597,7 @@ Or configure per-agent in `oh-my-openagent.jsonc`:
 ### Workflow 1: Adding a Feature
 
 ```bash
-# 1. Plan (Kimi K3 - ~10s)
+# 1. Plan (Kimi K3-256k - ~10s)
 @prometheus plan how to add user profiles
 
 # 2. Research (Parallel MiniMax M2.7 HS - ~3s)
