@@ -60,8 +60,8 @@ case "$cmd" in
     ;;
   doctor)
     validate_jsonc "$REPO_CONFIG" && echo "JSONC: valid"
-    BIN="$HOME/.cache/opencode/packages/node_modules/.bin/oh-my-openagent"
-    [ -x "$BIN" ] && "$BIN" doctor || echo "(plugin CLI not found, skipping doctor)"
+    BIN="$(ls -d "$HOME"/.cache/opencode/packages/oh-my-openagent@*/node_modules/.bin/oh-my-openagent 2>/dev/null | sort -V | tail -1)"
+    [ -n "$BIN" ] && [ -x "$BIN" ] && "$BIN" doctor || echo "(plugin CLI not found, skipping doctor)"
     opencode agent list 2>/dev/null | grep -oP "^[\w -]+ \((primary|subagent|all)\)" || true
     ;;
   *)

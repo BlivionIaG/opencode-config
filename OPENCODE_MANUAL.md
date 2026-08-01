@@ -547,6 +547,19 @@ agent entries to `model` + `fallback_models` as in this repo's `omo.jsonc`.
 **Do NOT** recreate `oh-my-openagent.json[c]` in `~/.config/opencode/` — the
 plugin will detect it and re-run the migration.
 
+**Known 4.19.4 quirk — keep `fallback_models` for agents:** `oh-my-openagent
+doctor` warns "Deprecated reasoning config key: replace fallback_models with
+models". Do NOT act on it for agent entries. The TUI sidebar's config banner
+is driven by a different validator that rejects `models[]` on agents
+("Unknown config key") — the two checks contradict each other in 4.19.4.
+`fallback_models` keeps the TUI banner green; the doctor deprecations are
+cosmetic. Revisit when upstream reconciles the two (check after plugin
+upgrades with `scripts/sync-omo.sh doctor`).
+
+**tui.json is managed by opencode itself** — it rewrites the file to mirror
+opencode.json's plugin array on startup. Don't hand-edit it; commit whatever
+opencode writes.
+
 ### Reset Everything
 
 ```bash
