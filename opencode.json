@@ -113,7 +113,7 @@
       }
     }
   },
-  "model": "kimi-for-coding/k3",
+  "model": "minimax/MiniMax-M3",
   "small_model": "minimax/MiniMax-M2.7-highspeed",
   "enabled_providers": [
     "chenco",
