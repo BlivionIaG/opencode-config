@@ -173,7 +173,7 @@ opencode "Your task here"
 
 | Model | Where it is used | Why it was chosen |
 |-------|------------------|-------------------|
-| **Kimi K3** | Agents: `hephaestus`, `multimodal-looker`<br>Categories: `deep` | Highest intelligence in the stack; native visual and video understanding; best for long-horizon coding, video input. Up to 1M context on Allegro+ plans. |
+| **Kimi K3** | Agents: `vulcan` (native), `multimodal-looker`<br>Categories: `deep` | Highest intelligence in the stack; native visual and video understanding; best for long-horizon coding, video input. Up to 1M context on Allegro+ plans. |
 | **Kimi K3-256k** | Agents: `oracle`, `prometheus`<br>Categories: `ultrabrain`, `visual-engineering` | Same K3 intelligence at fixed 256K context; half the quota of K3 1M. Best for architecture, hard debugging, strategic planning, image-based visual tasks. |
 | **Kimi K2.7 Code** | Agents: `metis`, `momus`<br>Categories: `refactor`, `artistry`, `unspecified-high` | Balanced intelligence above MiniMax M3; cheaper and slower than K3. Good for deliberative review, plan consulting, creative tasks, and complex refactoring where you are not in a hurry. |
 | **Kimi K2.7 Highspeed** | Not assigned by default; available via `/models` manual override | Same capability as K2.7 but ~5–6× faster output. Use when speed matters more than quota efficiency; remember it costs 3× the K2.7 quota. |
@@ -190,7 +190,8 @@ opencode "Your task here"
 |-------|-------|----------------|------------|---------|
 | **Sisyphus** | `minimax/MiniMax-M3` | thinking adaptive | 16384 | Main orchestrator, delegates tasks (K3/K2.7 fallback) |
 | **Atlas** | `minimax/MiniMax-M3` | thinking disabled / instant | 16384 | Plan orchestration, task coordination, continuation |
-| **Hephaestus** | `kimi-for-coding/k3` | `variant: max` | 32768 | Deep autonomous work, research |
+| **Hephaestus** | GPT-only (plugin restriction) | - | - | Unavailable in this stack - use **Vulcan** instead |
+| **Vulcan** | `kimi-for-coding/k3` | native agent (`agents/vulcan.md`) | 32768 | Deep autonomous work, long-horizon implementation (Hephaestus equivalent for K3, 1M context) |
 | **Prometheus** | `kimi-for-coding/k3-256k` | `variant: max` | 32768 | Strategic planning |
 
 ### Utility Agents
@@ -603,8 +604,8 @@ Or configure per-agent in `oh-my-openagent.jsonc`:
 # 2. Research (Parallel MiniMax M2.7 HS - ~3s)
 @librarian find similar implementations & @explore find user-related code
 
-# 3. Implement (Kimi K3 - ~60s)
-@hephaestus implement the user profile feature
+# 3. Implement (Kimi K3 1M - ~60s)
+@vulcan implement the user profile feature
 
 # 4. Validate (Parallel agents - ~8s)
 @explore find related tests & @oracle review risk areas & @momus review plan gaps

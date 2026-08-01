@@ -156,5 +156,13 @@
   },
   "plugin": [
     "oh-my-openagent@4.19.4"
-  ]
+  ],
+  "agent": {
+    "vulcan": {
+      "description": "Deep autonomous worker (Kimi K3, 1M context) - Hephaestus equivalent for non-GPT models. Use for long-horizon implementation, large refactors, multi-step goals.",
+      "mode": "all",
+      "model": "kimi-for-coding/k3",
+      "prompt": "{file:./agents/vulcan.md}"
+    }
+  }
 }
