@@ -6,10 +6,9 @@ This repository contains OpenCode AI agent configurations optimized for speed, r
 
 | File | Purpose |
 |------|---------|
-| `oh-my-openagent.jsonc` | Main agent configuration (16 agents, categories, routing) |
-| `opencode.json` | Core provider settings, default Kimi K3 model, Chenco Qwen3.6 models, MiniMax token-plan models, and MiniMax PayGo fallback |
-| `opencode-large-project.json` | Extended config for large projects |
-| `zed-*.json` | Zed editor integration configs |
+| `omo.jsonc` | Main agent configuration (agents, categories, routing) - unified OMO schema, lives at `~/.omo/omo.jsonc` via symlink |
+| `opencode.json` | Core provider settings, default MiniMax M3 model, Chenco Qwen3.6 models, MiniMax models, native agents (`vulcan`) |
+| `agents/vulcan.md` | System prompt for the Vulcan deep-worker agent (Kimi K3, 1M context) |
 | `OPENCODE_MANUAL.md` | Complete usage guide |
 
 ## Setup
@@ -24,7 +23,29 @@ git clone <your-repo-url> ~/.config/opencode
 ln -s ~/your-repo-path ~/.config/opencode
 ```
 
-### 2. Add your API keys (NOT in git!)
+### 2. Link the agent config (omo.jsonc)
+
+Since oh-my-openagent 4.19.x, the plugin config lives at `~/.omo/omo.jsonc`
+(the plugin auto-migrates legacy `oh-my-openagent.json[c]` there on first
+launch). This repo keeps the real file under version control and links it:
+
+```bash
+mkdir -p ~/.omo
+# If the plugin already migrated/created one, back it up first:
+[ -f ~/.omo/omo.jsonc ] && [ ! -L ~/.omo/omo.jsonc ] && mv ~/.omo/omo.jsonc ~/.omo/omo.jsonc.pre-symlink
+ln -sf ~/.config/opencode/omo.jsonc ~/.omo/omo.jsonc
+
+# Verify the full agent roster loads through the link:
+opencode agent list
+```
+
+**Do NOT** recreate `oh-my-openagent.json[c]` in `~/.config/opencode/` - the
+plugin's config migration will detect it and re-run, overwriting the symlink
+setup. Edit `omo.jsonc` (in this repo) directly; the plugin reads and writes
+through the symlink. Pre-migration backups live under
+`~/.omo/migration-backup-*` and `~/.omo/omo.jsonc.pre-symlink`.
+
+### 3. Add your API keys (NOT in git!)
 
 Create `~/.config/opencode/.env.local`:
 
@@ -57,7 +78,7 @@ export N8N_API_URL="https://your-n8n-instance.example.com"
 export N8N_API_KEY="your_key"
 ```
 
-### 2b. n8n-mcp (optional)
+### 3b. n8n-mcp (optional)
 
 The `n8n-mcp` MCP server is configured in `opencode.json` but **disabled by default** to keep context lean. To enable:
 
@@ -67,7 +88,7 @@ The `n8n-mcp` MCP server is configured in `opencode.json` but **disabled by defa
 
 Adds ~20 tools (workflow mgmt, executions, node docs, templates) plus a ~540MB node DB cache in `~/.config/opencode/data/`.
 
-### 3. Start using
+### 4. Start using
 
 ```bash
 opencode
@@ -88,25 +109,25 @@ opencode
 |-----------|-------|-------|-------|
 | Search/Grep | `@explore` | MiniMax M2.7 highspeed | ~1-2s |
 | Quick fixes | quick/fix category | MiniMax M2.7 highspeed | ~1-2s |
-| Deep analysis | `@oracle` | Kimi K3 | ~8s |
-| Architecture | `@prometheus` | Kimi K3 with MiniMax fallback | ~8-10s |
+| Deep analysis | `@oracle` | Kimi K3-256k | ~8s |
+| Architecture | `@prometheus` | Kimi K3-256k | ~8-10s |
+| Long-horizon implementation | `@vulcan` | Kimi K3 (1M) | varies |
 
 ### Cost Optimization
 
-- Kimi K3 is the default model for primary coding work and deep reasoning
+- MiniMax M3 is the default session model (orchestration is cheap delegation, not deep reasoning)
+- Kimi K3-256k handles K3-quality reasoning (oracle, prometheus, ultrabrain, visual-engineering) at half the quota of K3 1M
+- Kimi K3 1M is reserved for long-horizon work (`@vulcan`, `deep` category) and video input (`multimodal-looker`)
 - Kimi K2.7 provides a balanced, high-speed reasoning option
 - MiniMax M2.7 Highspeed uses the token-plan key and is configured as OpenCode's fast/small model
-- MiniMax M3 is the multi-modal fallback and orchestration model
 - MiniMax PayGo is exposed as `minimax-paygo/MiniMax-M2.7-highspeed` and is only used after token-plan MiniMax fails
-- MiniMax token-plan routing handles utility tasks and lightweight plan coordination
-- Kimi K3/K2.7 reasoning remains reserved for strategic planning, deep refactors, visual reasoning, critique, and hard debugging
 - Runtime fallback escalates stalled or quota-limited Kimi requests after 30 seconds
 - Category routing sets per-task `variant`/`thinking` and `maxTokens` budgets
 
 ## Customization
 
-Edit `oh-my-openagent.jsonc` to adjust:
-- Agent models and token limits
+Edit `omo.jsonc` (in this repo; live at `~/.omo/omo.jsonc` via symlink) to adjust:
+- Agent models and token limits (unified `models[]` arrays - first entry is primary, rest are fallbacks)
 - Category routing rules
 - Parallel execution limits
 - Auto-confirmation settings

@@ -75,7 +75,7 @@ Every commit must clearly describe what was changed and why.
 ```
 feat: Add @test-engineer agent for automated testing
 
-Added new test-engineer agent configuration to oh-my-opencode.json.
+Added new test-engineer agent configuration to omo.jsonc.
 This agent specializes in writing and running test suites.
 
 - What changed: Added agent definition with MiniMax model
@@ -90,7 +90,7 @@ update: Increase context window for oracle agent
 Bumped maxTokens from 8192 to 16384 for oracle agent to handle
 larger codebases during architecture analysis.
 
-- What changed: oracle.maxTokens in oh-my-opencode.json
+- What changed: oracle.maxTokens in omo.jsonc
 - Why: Architecture analysis was failing on large projects
 - Testing: Tested with 500-file codebase, analysis completed
 ```
@@ -123,7 +123,7 @@ Each commit should represent a single logical change:
 1. **Test your changes:**
    ```bash
    # Verify syntax
-   python -m json.tool oh-my-opencode.json > /dev/null
+   grep -v "^\s*//" omo.jsonc | python3 -c "import json,sys,re; json.loads(re.sub(r',(\s*[}]])', r'\1', sys.stdin.read()))" > /dev/null
    
    # Test configuration loads
    opencode doctor
@@ -169,7 +169,7 @@ All JSON files must be valid:
 
 ```bash
 # Validate before committing
-python3 -m json.tool oh-my-opencode.json > /dev/null && echo "Valid JSON" || echo "Invalid JSON"
+grep -v "^\s*//" omo.jsonc | python3 -c "import json,sys,re; json.loads(re.sub(r',(\s*[}]])', r'\1', sys.stdin.read()))" > /dev/null && echo "Valid JSONC" || echo "Invalid JSONC"
 python3 -m json.tool opencode.json > /dev/null && echo "Valid JSON" || echo "Invalid JSON"
 ```
 
@@ -247,7 +247,7 @@ Before completing any task in this repository:
 ```bash
 # Pre-commit checks
 git diff --cached | grep -i "api_key\|secret\|token\|password"
-python3 -m json.tool oh-my-opencode.json > /dev/null
+grep -v "^\s*//" omo.jsonc | python3 -c "import json,sys,re; json.loads(re.sub(r',(\s*[}]])', r'\1', sys.stdin.read()))" > /dev/null
 
 # Commit template
 git commit -m "type: short description

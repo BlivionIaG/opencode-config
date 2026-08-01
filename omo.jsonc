@@ -1,0 +1,291 @@
+// OMO configuration
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/omo.schema.json",
+  "[opencode]": {
+    "model_fallback": true,
+    "runtime_fallback": {
+      "enabled": true,
+      "retry_on_errors": [
+        400,
+        402,
+        408,
+        429,
+        500,
+        502,
+        503,
+        504,
+        529
+      ],
+      "max_fallback_attempts": 3,
+      "cooldown_seconds": 60,
+      "timeout_seconds": 30,
+      "notify_on_fallback": true
+    },
+    "agents": {
+      "sisyphus": {
+        "mode": "primary",
+        "displayName": "Sisyphus - ultraworker",
+        "models": [
+          {
+            "model": "minimax/MiniMax-M3"
+          },
+          "kimi-for-coding/k3-256k",
+          "kimi-for-coding/k2p7"
+        ]
+      },
+      "hephaestus": {
+        "models": [
+          {
+            "model": "kimi-for-coding/k3",
+            "reasoning": "max"
+          },
+          "kimi-for-coding/k2p7",
+          "minimax/MiniMax-M3"
+        ]
+      },
+      "oracle": {
+        "models": [
+          {
+            "model": "kimi-for-coding/k3-256k",
+            "reasoning": "max"
+          },
+          "kimi-for-coding/k2p7",
+          "minimax/MiniMax-M3"
+        ]
+      },
+      "librarian": {
+        "models": [
+          {
+            "model": "minimax/MiniMax-M2.7-highspeed",
+            "reasoning": "off"
+          },
+          "kimi-for-coding/k2p7",
+          "minimax/MiniMax-M3"
+        ]
+      },
+      "explore": {
+        "models": [
+          {
+            "model": "minimax/MiniMax-M2.7-highspeed",
+            "reasoning": "off"
+          },
+          "kimi-for-coding/k2p7",
+          "minimax/MiniMax-M3"
+        ]
+      },
+      "multimodal-looker": {
+        "models": [
+          {
+            "model": "kimi-for-coding/k3",
+            "reasoning": "max"
+          },
+          "kimi-for-coding/k2p7",
+          "minimax/MiniMax-M3"
+        ]
+      },
+      "prometheus": {
+        "models": [
+          {
+            "model": "kimi-for-coding/k3-256k",
+            "reasoning": "max"
+          },
+          "kimi-for-coding/k2p7",
+          "minimax/MiniMax-M3"
+        ]
+      },
+      "metis": {
+        "models": [
+          {
+            "model": "kimi-for-coding/k2p7",
+            "provider_options": {
+              "thinking": {
+                "type": "enabled"
+              }
+            }
+          },
+          "kimi-for-coding/k3-256k",
+          "minimax/MiniMax-M3"
+        ]
+      },
+      "momus": {
+        "models": [
+          {
+            "model": "kimi-for-coding/k2p7",
+            "provider_options": {
+              "thinking": {
+                "type": "enabled"
+              }
+            }
+          },
+          "kimi-for-coding/k3-256k",
+          "minimax/MiniMax-M3"
+        ]
+      },
+      "atlas": {
+        "models": [
+          "minimax/MiniMax-M3",
+          "kimi-for-coding/k3-256k",
+          "kimi-for-coding/k2p7"
+        ]
+      },
+      "sisyphus-junior": {
+        "models": [
+          {
+            "model": "minimax/MiniMax-M2.7-highspeed",
+            "reasoning": "off"
+          },
+          "kimi-for-coding/k2p7",
+          "minimax/MiniMax-M3"
+        ]
+      }
+    },
+    "categories": {
+      "quick": {
+        "models": [
+          {
+            "model": "minimax/MiniMax-M2.7-highspeed",
+            "reasoning": "off"
+          },
+          "minimax/MiniMax-M3",
+          "kimi-for-coding/k2p7"
+        ]
+      },
+      "fix": {
+        "models": [
+          {
+            "model": "minimax/MiniMax-M2.7-highspeed",
+            "reasoning": "off"
+          },
+          "minimax/MiniMax-M3",
+          "kimi-for-coding/k2p7"
+        ]
+      },
+      "search": {
+        "models": [
+          {
+            "model": "minimax/MiniMax-M2.7-highspeed",
+            "reasoning": "off"
+          },
+          "minimax/MiniMax-M3",
+          "kimi-for-coding/k2p7"
+        ]
+      },
+      "test": {
+        "models": [
+          {
+            "model": "minimax/MiniMax-M2.7-highspeed",
+            "reasoning": "off"
+          },
+          "minimax/MiniMax-M3",
+          "kimi-for-coding/k2p7"
+        ]
+      },
+      "writing": {
+        "models": [
+          {
+            "model": "minimax/MiniMax-M2.7-highspeed",
+            "reasoning": "off"
+          },
+          "minimax/MiniMax-M3",
+          "kimi-for-coding/k2p7"
+        ]
+      },
+      "explain": {
+        "models": [
+          {
+            "model": "minimax/MiniMax-M2.7-highspeed",
+            "reasoning": "off"
+          },
+          "minimax/MiniMax-M3",
+          "kimi-for-coding/k2p7"
+        ]
+      },
+      "refactor": {
+        "models": [
+          {
+            "model": "kimi-for-coding/k2p7",
+            "provider_options": {
+              "thinking": {
+                "type": "enabled"
+              }
+            }
+          },
+          "kimi-for-coding/k3-256k",
+          "minimax/MiniMax-M3"
+        ]
+      },
+      "deep": {
+        "models": [
+          {
+            "model": "kimi-for-coding/k3",
+            "reasoning": "max"
+          },
+          "kimi-for-coding/k2p7",
+          "minimax/MiniMax-M3"
+        ]
+      },
+      "ultrabrain": {
+        "models": [
+          {
+            "model": "kimi-for-coding/k3-256k",
+            "reasoning": "max"
+          },
+          "kimi-for-coding/k2p7",
+          "minimax/MiniMax-M3"
+        ]
+      },
+      "visual-engineering": {
+        "models": [
+          {
+            "model": "kimi-for-coding/k3-256k",
+            "reasoning": "max"
+          },
+          "kimi-for-coding/k2p7",
+          "minimax/MiniMax-M3"
+        ]
+      },
+      "artistry": {
+        "models": [
+          {
+            "model": "kimi-for-coding/k2p7",
+            "provider_options": {
+              "thinking": {
+                "type": "enabled"
+              }
+            }
+          },
+          "kimi-for-coding/k3-256k",
+          "minimax/MiniMax-M3"
+        ]
+      },
+      "unspecified-low": {
+        "models": [
+          {
+            "model": "minimax/MiniMax-M2.7-highspeed",
+            "reasoning": "off"
+          },
+          "minimax/MiniMax-M3",
+          "kimi-for-coding/k2p7"
+        ]
+      },
+      "unspecified-high": {
+        "models": [
+          {
+            "model": "kimi-for-coding/k2p7",
+            "provider_options": {
+              "thinking": {
+                "type": "enabled"
+              }
+            }
+          },
+          "kimi-for-coding/k3-256k",
+          "minimax/MiniMax-M3"
+        ]
+      }
+    }
+  },
+  "_migrations": [
+    "2026-07-opencode-config-unification",
+    "2026-08-reasoning-unification"
+  ]
+}

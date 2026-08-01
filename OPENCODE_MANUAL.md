@@ -426,7 +426,7 @@ All prefixed with `n8n-mcp_` in tool listings (e.g. `n8n-mcp_n8n_list_workflows`
 
 **Disabling per-agent:**
 
-To keep it off globally but enable for a specific agent, add to `oh-my-openagent.jsonc`:
+To keep it off globally but enable for a specific agent, add to `omo.jsonc`:
 
 ```jsonc
 "tools": {
@@ -457,7 +457,7 @@ Then opt in per agent via the agent's `tools` block.
 # Wait 1 minute - limits reset automatically
 # Or reduce concurrent agents in config from 12 to 8
 
-# Edit oh-my-openagent.jsonc:
+# Edit omo.jsonc (repo copy of ~/.omo/omo.jsonc):
 "agents": {
   "defaults": {
     "maxConcurrent": 8  # Reduced from 12
@@ -517,18 +517,38 @@ bunx oh-my-opencode doctor
 
 | File | Location | Purpose |
 |------|----------|---------|
-| `opencode.json` | `~/.config/opencode/` | Provider settings |
-| `oh-my-openagent.jsonc` | `~/.config/opencode/` | Agent & category config |
+| `opencode.json` | `~/.config/opencode/` | Provider settings, session defaults, native agents (vulcan) |
+| `omo.jsonc` | `~/.omo/omo.jsonc` (symlink → `~/.config/opencode/omo.jsonc`) | Agent & category config (unified OMO schema) |
+| `agents/vulcan.md` | `~/.config/opencode/` | Vulcan deep-worker system prompt |
+
+**Since oh-my-openagent 4.19.x:** the plugin config moved from
+`~/.config/opencode/oh-my-openagent.jsonc` to `~/.omo/omo.jsonc` (automatic
+migration on first launch; backups under `~/.omo/migration-backup-*`). This
+repo version-controls the real file and symlinks it into place:
+
+```bash
+mkdir -p ~/.omo
+[ -f ~/.omo/omo.jsonc ] && [ ! -L ~/.omo/omo.jsonc ] && mv ~/.omo/omo.jsonc ~/.omo/omo.jsonc.pre-symlink
+ln -sf ~/.config/opencode/omo.jsonc ~/.omo/omo.jsonc
+opencode agent list   # verify full roster loads
+```
+
+Key schema changes in the unified format: the whole config is wrapped in an
+`"[opencode]"` scope block, and per-agent `model` + `fallback_models` became a
+single `models[]` array (first entry = primary, rest = fallbacks).
+
+**Do NOT** recreate `oh-my-openagent.json[c]` in `~/.config/opencode/` — the
+plugin will detect it and re-run the migration.
 
 ### Reset Everything
 
 ```bash
 # If you need to start fresh:
-rm ~/.config/opencode/oh-my-openagent.jsonc
-cp ~/your-backup/oh-my-openagent.jsonc ~/.config/opencode/
+rm ~/.omo/omo.jsonc   # removes the symlink, not the repo file
+ln -s ~/.config/opencode/omo.jsonc ~/.omo/omo.jsonc
 
-# Or regenerate:
-bunx oh-my-opencode@latest install
+# Or restore from a migration backup:
+cp ~/.omo/migration-backup-*/.config/opencode/oh-my-openagent.jsonc /tmp/legacy.jsonc
 ```
 
 ---
@@ -537,13 +557,14 @@ bunx oh-my-opencode@latest install
 
 ### Custom Categories
 
-Add to `oh-my-openagent.jsonc`:
+Add to `omo.jsonc`:
 ```json
 "categories": {
   "my-custom-category": {
-    "model": "kimi-for-coding/k3",
-    "thinking": { "type": "enabled" },
-    "maxTokens": 4096
+    "models": [
+      { "model": "kimi-for-coding/k3", "reasoning": "max" },
+      "kimi-for-coding/k2p7"
+    ]
   }
 }
 ```
@@ -583,11 +604,13 @@ For Kimi agents, you can control reasoning:
 /acp thinking disabled
 ```
 
-Or configure per-agent in `oh-my-openagent.jsonc`:
+Or configure per-agent in `omo.jsonc`:
 ```json
 "oracle": {
-  "model": "kimi-for-coding/k3-256k",
-  "thinking": { "type": "enabled" }  // or "disabled"
+  "models": [
+    { "model": "kimi-for-coding/k3-256k", "reasoning": "max" },
+    "kimi-for-coding/k2p7"
+  ]
 }
 ```
 
@@ -759,8 +782,9 @@ Check your consumption:
 
 **Configuration Location:**
 ```
-~/.config/opencode/opencode.json
-~/.config/opencode/oh-my-openagent.jsonc
+~/.config/opencode/opencode.json       (providers, defaults, native agents)
+~/.omo/omo.jsonc                       (agent config; symlink to repo omo.jsonc)
+~/.config/opencode/omo.jsonc           (real file, version-controlled)
 ```
 
 ---
