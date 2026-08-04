@@ -25,91 +25,118 @@
       "sisyphus": {
         "mode": "primary",
         "displayName": "Sisyphus - ultraworker",
-        "model": "minimax/MiniMax-M3",
-        "fallback_models": [
+        "models": [
+          {
+            "model": "minimax/MiniMax-M3",
+            "reasoning": "auto"
+          },
           "kimi-for-coding/k3-256k",
           "kimi-for-coding/k2p7"
         ]
       },
       "hephaestus": {
-        "model": "kimi-for-coding/k3",
-        "reasoning": "max",
-        "fallback_models": [
+        "models": [
+          {
+            "model": "kimi-for-coding/k3",
+            "reasoning": "max"
+          },
           "kimi-for-coding/k2p7",
           "minimax/MiniMax-M3"
         ]
       },
       "oracle": {
-        "model": "kimi-for-coding/k3-256k",
-        "reasoning": "max",
-        "fallback_models": [
+        "models": [
+          {
+            "model": "kimi-for-coding/k3-256k",
+            "reasoning": "max"
+          },
           "kimi-for-coding/k2p7",
           "minimax/MiniMax-M3"
         ]
       },
       "librarian": {
-        "model": "minimax/MiniMax-M2.7-highspeed",
-        "reasoning": "off",
-        "fallback_models": [
+        "models": [
+          {
+            "model": "minimax/MiniMax-M2.7-highspeed",
+            "reasoning": "off"
+          },
           "kimi-for-coding/k2p7",
           "minimax/MiniMax-M3"
         ]
       },
       "explore": {
-        "model": "minimax/MiniMax-M2.7-highspeed",
-        "reasoning": "off",
-        "fallback_models": [
+        "models": [
+          {
+            "model": "minimax/MiniMax-M2.7-highspeed",
+            "reasoning": "off"
+          },
           "kimi-for-coding/k2p7",
           "minimax/MiniMax-M3"
         ]
       },
       "multimodal-looker": {
-        "model": "kimi-for-coding/k3",
-        "reasoning": "max",
-        "fallback_models": [
+        "models": [
+          {
+            "model": "kimi-for-coding/k3",
+            "reasoning": "max"
+          },
           "kimi-for-coding/k2p7",
           "minimax/MiniMax-M3"
         ]
       },
       "prometheus": {
-        "model": "kimi-for-coding/k3-256k",
-        "reasoning": "max",
-        "fallback_models": [
+        "models": [
+          {
+            "model": "kimi-for-coding/k3-256k",
+            "reasoning": "max"
+          },
           "kimi-for-coding/k2p7",
           "minimax/MiniMax-M3"
         ]
       },
       "metis": {
-        "model": "kimi-for-coding/k2p7",
-        "thinking": {
-          "type": "enabled"
-        },
-        "fallback_models": [
+        "models": [
+          {
+            "model": "kimi-for-coding/k2p7",
+            "provider_options": {
+              "thinking": {
+                "type": "enabled"
+              }
+            }
+          },
           "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
         ]
       },
       "momus": {
-        "model": "kimi-for-coding/k2p7",
-        "thinking": {
-          "type": "enabled"
-        },
-        "fallback_models": [
+        "models": [
+          {
+            "model": "kimi-for-coding/k2p7",
+            "provider_options": {
+              "thinking": {
+                "type": "enabled"
+              }
+            }
+          },
           "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
         ]
       },
       "atlas": {
-        "model": "minimax/MiniMax-M3",
-        "fallback_models": [
+        "models": [
+          {
+            "model": "minimax/MiniMax-M3"
+          },
           "kimi-for-coding/k3-256k",
           "kimi-for-coding/k2p7"
         ]
       },
       "sisyphus-junior": {
-        "model": "minimax/MiniMax-M2.7-highspeed",
-        "reasoning": "off",
-        "fallback_models": [
+        "models": [
+          {
+            "model": "minimax/MiniMax-M2.7-highspeed",
+            "reasoning": "off"
+          },
           "kimi-for-coding/k2p7",
           "minimax/MiniMax-M3"
         ]
@@ -256,6 +283,7 @@
   },
   "_migrations": [
     "2026-07-opencode-config-unification",
-    "2026-08-reasoning-unification"
+    "2026-08-reasoning-unification",
+    "2026-08-agent-models-array-conversion"
   ]
 }
