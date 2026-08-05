@@ -1,7 +1,7 @@
 # Scripts
 
 Operational scripts for keeping this repo in sync with the live
-`~/.omo/omo.jsonc` and for one-shot schema upgrades.
+`~/.omo/omo.jsonc` and for one-shot schema migrations.
 
 ## sync-omo.sh
 
@@ -19,67 +19,73 @@ Use `push` after editing the repo copy. Use `pull` after the plugin
 auto-migrates or rewrites its config. `check` should be wired into CI or
 run before any commit.
 
-## upgrade-agent-schema.py
+## revert-agent-schema.py
 
-Idempotent one-shot converter that rewrites agent entries from the
-deprecated `model + fallback_models` schema to the plugin's current
-`models:[{primary}, ...fallbacks]` schema.
-
-**When to run it:** if `oh-my-opencode doctor` reports
-`Deprecated reasoning config key ... fallback_models` warnings, or if a
-category that should use your custom models is silently falling back to
-plugin built-in defaults (e.g. `gpt-5.6-sol`, `claude-fable-5`).
+The agent schema in this repo uses the **legacy** `model + fallback_models`
+form on purpose — see "Why legacy format?" below. If you accidentally
+hand-edit an agent to use the modern `models:[]` array form, or if the
+plugin's auto-migration rewrites one, this script converts it back.
 
 ```bash
 # Preview what would change (no file writes):
-scripts/upgrade-agent-schema.py --check omo.jsonc
+scripts/revert-agent-schema.py --check omo.jsonc
 
 # Apply the conversion:
-scripts/upgrade-agent-schema.py omo.jsonc
+scripts/revert-agent-schema.py omo.jsonc
 ```
 
-The script is idempotent — re-running it on an already-converted config
-reports `No changes needed`. After running:
+The script is idempotent — re-running on already-reverted config reports
+`No changes needed`. It only touches `[opencode].agents.*`; categories
+(which legitimately use `models:[]`) are left alone.
 
-```bash
-scripts/sync-omo.sh push    # ship the converted config to ~/.omo/
-scripts/sync-omo.sh doctor  # verify doctor is happy
-```
+### Why legacy format?
 
-### What it does
+The plugin has two different schemas for agents:
 
-For every agent under `[opencode].agents`:
+| Schema                              | Where used                              | Accepts                  |
+| ----------------------------------- | --------------------------------------- | ------------------------ |
+| `AgentOverrideConfigSchema`         | `oh-my-opencode doctor`                 | `model + fallback_models`|
+| `OmoAgentDefSchema` (`.strict()`)   | `OmoConfigSchema.agents` (top-level)    | `models:[]` array        |
 
-| Legacy key                                       | Action                                                              |
-| ------------------------------------------------ | ------------------------------------------------------------------- |
-| `model` + `fallback_models`                      | Folded into `models:[{primary_obj}, ...fallbacks]`                  |
-| `reasoning` / `variant` / `reasoningEffort`      | Moved onto the primary model object                                 |
-| `thinking: { type: enabled }` (K2.7)             | Moved to `provider_options.thinking: { type: enabled }` on primary  |
-| `thinking: { type: adaptive }` (M3, was invalid)  | Translated to `reasoning: "auto"` on primary                        |
-| `thinking: { type: disabled }`                   | Translated to `reasoning: "off"` on primary                         |
-| Other keys (mode, displayName, prompt, tools…)   | Preserved                                                           |
+This repo puts agents under `[opencode].agents`, which uses the
+**permissive** `OmoOpenCodeHarnessConfigSchema = record(string, unknown())`.
+That schema accepts `model + fallback_models` without strict validation,
+and the runtime's `normalizeDefinition` step collapses that form into
+`models:[]` for actual use downstream.
 
-### What it does NOT do
+If you switch to `models:[]` here, two things break:
 
-- Touch categories — they're already in `models:[]` format
-- Touch the live `~/.omo/omo.jsonc` directly — use `sync-omo.sh push`
-- Validate against the plugin's zod schema — this is a structural rewrite,
-  not a semantic check. Use `sync-omo.sh doctor` for validation.
+1. The doctor (which uses `AgentOverrideConfigSchema`) reports every
+   `agents.{name}.models` as `Invalid configuration / Unknown config key`
+   with `severity: error`, `affects: plugin startup`. The config check
+   status flips to `fail`. The doctor warning stops being cosmetic.
+2. The plugin's runtime still works because `[opencode]` is permissive,
+   but you get a constant `Config invalid` banner every time you open a
+   session.
 
-## When the doctor complains about `models` being unknown
+The current convention is therefore:
 
-After running this converter, `oh-my-opencode doctor` may still report
-`Invalid configuration / Unknown config key: agents.{name}.models` for
-each agent. This is a **false positive**: the doctor uses an older schema
-(`OhMyOpenCodeConfigSchema`) that predates the plugin's runtime schema
-(`OmoAgentDefSchema`), which does accept `models:[]` on agents. The
-runtime honors the converted config correctly; the doctor complaints will
-go away when the plugin's doctor schema is updated.
+- **Agents** (`[opencode].agents.*`): legacy `model + fallback_models`
+- **Categories** (`[opencode].categories.*`): modern `models:[]`
 
-If you actually want to silence the doctor, the only options are:
+The doctor emits "Deprecated reasoning config key" warnings on agents for
+`fallback_models` and `thinking`. Those are warnings (status `warn`), not
+errors — `replace with models` is the plugin's suggested migration but
+the doctor schema has not been updated to match. The runtime handles
+both forms under `[opencode]` correctly.
 
-1. Wait for the plugin to ship a doctor schema update.
-2. Move the agents into a `models`-only top-level config (no harness
-   block) — but that breaks the opencode harness routing and is not
-   recommended.
-3. Live with the warnings (recommended) — they're cosmetic.
+## When `oh-my-opencode doctor` says "Configuration invalid"
+
+You are probably seeing this after a hand-edit or plugin auto-migration
+moved an agent into `models:[]` form. Two options:
+
+1. **Run revert-agent-schema.py** to put it back to the legacy form.
+   This is the recommended fix.
+
+2. **Move the agent definitions to top-level `agents`** (no `[opencode]`
+   wrapper). The top-level `agents` uses strict `OmoAgentsConfigSchema`,
+   which DOES accept `models:[]`. But this breaks opencode harness
+   routing and is not recommended.
+
+If neither works, the plugin version has likely drifted past what this
+config supports. Pin the plugin version or open an issue upstream.
