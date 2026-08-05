@@ -49,6 +49,13 @@ session.json
 logs/
 *.log
 
+# OMO plugin runtime state (live config lives at ~/.omo/, mirrored here
+# only for scripts/sync-omo.sh to find it without re-resolving $HOME)
+.omo/
+
+# Local LSP installation decisions (per-machine, not for the repo)
+lsp-install-decisions.json
+
 # OS files
 .DS_Store
 Thumbs.db
