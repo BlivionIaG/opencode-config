@@ -7,10 +7,11 @@
 # the target path, and a symlink makes that hard to notice.
 #
 # Usage:
-#   scripts/sync-omo.sh push    # repo  -> ~/.omo/omo.jsonc  (after editing the repo copy)
-#   scripts/sync-omo.sh pull    # ~/.omo/omo.jsonc -> repo   (after the plugin migrates/writes it)
-#   scripts/sync-omo.sh check   # diff the two, exit 1 if they differ
-#   scripts/sync-omo.sh doctor  # validate JSONC + run plugin doctor + list agents
+#   scripts/sync-omo.sh push      # repo  -> ~/.omo/omo.jsonc  (after editing the repo copy)
+#   scripts/sync-omo.sh pull      # ~/.omo/omo.jsonc -> repo   (after the plugin migrates/writes it)
+#   scripts/sync-omo.sh check     # diff the two, exit 1 if they differ
+#   scripts/sync-omo.sh validate  # run scripts/lint-omo-config.py on the repo copy
+#   scripts/sync-omo.sh doctor    # validate JSONC + run plugin doctor + list agents
 
 set -euo pipefail
 
@@ -18,9 +19,20 @@ REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 REPO_CONFIG="$REPO_DIR/omo.jsonc"
 LIVE_DIR="$HOME/.omo"
 LIVE_CONFIG="$LIVE_DIR/omo.jsonc"
+LINT_PY="$REPO_DIR/scripts/lint-omo-config.py"
 
 validate_jsonc() {
-  grep -v "^\s*//" "$1" | python3 -c "import json,sys,re; json.loads(re.sub(r',(\s*[}\]])', r'\1', sys.stdin.read()))" > /dev/null
+  grep -v "^\s*//" "$1" | python3 -c "import json,sys,re; json.loads(re.sub(r',(\s*[}]])', r'\1', sys.stdin.read()))" > /dev/null
+}
+
+validate_format() {
+  # Run the format linter (rejects `models:[]` arrays which the plugin
+  # runtime drops, invalid reasoning values, etc.)
+  if [ ! -f "$LINT_PY" ]; then
+    echo "ERROR: $LINT_PY not found"
+    exit 1
+  fi
+  python3 "$LINT_PY" "$REPO_CONFIG"
 }
 
 cmd="${1:-check}"
@@ -28,6 +40,7 @@ cmd="${1:-check}"
 case "$cmd" in
   push)
     validate_jsonc "$REPO_CONFIG" || { echo "ERROR: $REPO_CONFIG is not valid JSONC"; exit 1; }
+    validate_format || { echo "ERROR: $REPO_CONFIG has format issues (run: scripts/sync-omo.sh validate)"; exit 1; }
     mkdir -p "$LIVE_DIR"
     if [ -f "$LIVE_CONFIG" ] && ! diff -q "$REPO_CONFIG" "$LIVE_CONFIG" > /dev/null 2>&1; then
       cp "$LIVE_CONFIG" "$LIVE_CONFIG.bak.$(date -u +%Y-%m-%dT%H-%M-%SZ)"
@@ -41,8 +54,13 @@ case "$cmd" in
     validate_jsonc "$LIVE_CONFIG" || { echo "ERROR: $LIVE_CONFIG is not valid JSONC"; exit 1; }
     cp "$LIVE_CONFIG" "$REPO_CONFIG"
     echo "Pulled $LIVE_CONFIG -> $REPO_CONFIG (review with: git diff omo.jsonc)"
+    # Run the linter on the freshly-pulled config to surface any
+    # format drift the plugin wrote (e.g. it might have re-introduced
+    # models:[] even though canonical is model + fallback_models).
+    validate_format || true
     ;;
   check)
+    validate_format || { echo "ERROR: $REPO_CONFIG has format issues (run: scripts/sync-omo.sh validate)"; exit 1; }
     if [ ! -f "$LIVE_CONFIG" ]; then
       echo "MISSING: $LIVE_CONFIG (run: scripts/sync-omo.sh push)"
       exit 1
@@ -58,14 +76,18 @@ case "$cmd" in
       exit 1
     fi
     ;;
+  validate)
+    validate_format
+    ;;
   doctor)
     validate_jsonc "$REPO_CONFIG" && echo "JSONC: valid"
+    validate_format || true
     BIN="$(ls -d "$HOME"/.cache/opencode/packages/oh-my-openagent@*/node_modules/.bin/oh-my-openagent 2>/dev/null | sort -V | tail -1)"
     [ -n "$BIN" ] && [ -x "$BIN" ] && "$BIN" doctor || echo "(plugin CLI not found, skipping doctor)"
     opencode agent list 2>/dev/null | grep -oP "^[\w -]+ \((primary|subagent|all)\)" || true
     ;;
   *)
-    echo "Usage: $0 {push|pull|check|doctor}" >&2
+    echo "Usage: $0 {push|pull|check|validate|doctor}" >&2
     exit 2
     ;;
 esac
