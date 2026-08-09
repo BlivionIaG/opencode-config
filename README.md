@@ -71,9 +71,6 @@ export KIMI_API_KEY="your_actual_key_here"
 # MiniMax token plan
 export MINIMAX_API_KEY="your_actual_key_here"
 
-# MiniMax PayGo fallback
-export MINIMAX_PAYGO_API_KEY="your_actual_key_here"
-
 # Chenco OpenAI-compatible endpoint
 export CHENCO_API_KEY="your_actual_key_here"
 
@@ -118,19 +115,19 @@ opencode
 |-----------|-------|-------|-------|
 | Search/Grep | `@explore` | MiniMax M2.7 highspeed | ~1-2s |
 | Quick fixes | quick/fix category | MiniMax M2.7 highspeed | ~1-2s |
-| Deep analysis | `@oracle` | Kimi K3-256k | ~8s |
-| Architecture | `@prometheus` | Kimi K3-256k | ~8-10s |
+| Deep analysis | `@oracle` | Qwen3.8 Max (Kimi K3-256k fallback) | ~8s |
+| Architecture | `@prometheus` | Qwen3.8 Max (Kimi K3-256k fallback) | ~8-10s |
 | Long-horizon implementation | `@vulcan` | Kimi K3 (1M) | varies |
 
 ### Cost Optimization
 
 - MiniMax M3 is the default session model (orchestration is cheap delegation, not deep reasoning)
-- Kimi K3-256k handles K3-quality reasoning (oracle, prometheus, ultrabrain, visual-engineering) at half the quota of K3 1M
-- Kimi K3 1M is reserved for long-horizon work (`@vulcan`, `deep` category) and video input (`multimodal-looker`)
-- Kimi K2.7 provides a balanced, high-speed reasoning option
+- Qwen3.8 Max is the new primary for deep reasoning (oracle, prometheus, ultrabrain, visual-engineering, hephaestus, multimodal-looker, deep category); Kimi K3-256k/K3 are kept as first fallbacks
+- GLM-5.2 is the new primary for K2.7-class deliberative work (metis, momus, refactor, artistry, unspecified-high); Kimi K2.7 is kept as first fallback
+- Kimi K3 1M is reserved for long-horizon work (`@vulcan`) — not yet migrated to bailian
+- Kimi K2.7 provides a balanced, high-speed reasoning fallback
 - MiniMax M2.7 Highspeed uses the token-plan key and is configured as OpenCode's fast/small model
-- MiniMax PayGo is exposed as `minimax-paygo/MiniMax-M2.7-highspeed` and is only used after token-plan MiniMax fails
-- Runtime fallback escalates stalled or quota-limited Kimi requests after 30 seconds
+- Runtime fallback escalates stalled or quota-limited requests after 30 seconds
 - Category routing sets per-task `variant`/`thinking` and `maxTokens` budgets
 
 ## Customization

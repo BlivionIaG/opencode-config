@@ -33,17 +33,19 @@
         ]
       },
       "hephaestus": {
-        "model": "kimi-for-coding/k3",
+        "model": "bailian-token-plan-personal/qwen3.8-max",
         "reasoning": "max",
         "fallback_models": [
+          "kimi-for-coding/k3",
           "kimi-for-coding/k2p7",
           "minimax/MiniMax-M3"
         ]
       },
       "oracle": {
-        "model": "kimi-for-coding/k3-256k",
+        "model": "bailian-token-plan-personal/qwen3.8-max",
         "reasoning": "max",
         "fallback_models": [
+          "kimi-for-coding/k3-256k",
           "kimi-for-coding/k2p7",
           "minimax/MiniMax-M3"
         ]
@@ -65,37 +67,41 @@
         ]
       },
       "multimodal-looker": {
-        "model": "kimi-for-coding/k3",
+        "model": "bailian-token-plan-personal/qwen3.8-max",
         "reasoning": "max",
         "fallback_models": [
+          "kimi-for-coding/k3",
           "kimi-for-coding/k2p7",
           "minimax/MiniMax-M3"
         ]
       },
       "prometheus": {
-        "model": "kimi-for-coding/k3-256k",
+        "model": "bailian-token-plan-personal/qwen3.8-max",
         "reasoning": "max",
         "fallback_models": [
+          "kimi-for-coding/k3-256k",
           "kimi-for-coding/k2p7",
           "minimax/MiniMax-M3"
         ]
       },
       "metis": {
-        "model": "kimi-for-coding/k2p7",
+        "model": "bailian-token-plan-personal/glm-5.2",
         "thinking": {
           "type": "enabled"
         },
         "fallback_models": [
+          "kimi-for-coding/k2p7",
           "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
         ]
       },
       "momus": {
-        "model": "kimi-for-coding/k2p7",
+        "model": "bailian-token-plan-personal/glm-5.2",
         "thinking": {
           "type": "enabled"
         },
         "fallback_models": [
+          "kimi-for-coding/k2p7",
           "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
         ]
@@ -180,11 +186,12 @@
       "refactor": {
         "models": [
           {
-            "model": "kimi-for-coding/k2p7",
+            "model": "bailian-token-plan-personal/glm-5.2",
             "thinking": {
               "type": "enabled"
             }
           },
+          "kimi-for-coding/k2p7",
           "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
         ]
@@ -192,9 +199,10 @@
       "deep": {
         "models": [
           {
-            "model": "kimi-for-coding/k3",
+            "model": "bailian-token-plan-personal/qwen3.8-max",
             "reasoning": "max"
           },
+          "kimi-for-coding/k3",
           "kimi-for-coding/k2p7",
           "minimax/MiniMax-M3"
         ]
@@ -202,9 +210,10 @@
       "ultrabrain": {
         "models": [
           {
-            "model": "kimi-for-coding/k3-256k",
+            "model": "bailian-token-plan-personal/qwen3.8-max",
             "reasoning": "max"
           },
+          "kimi-for-coding/k3-256k",
           "kimi-for-coding/k2p7",
           "minimax/MiniMax-M3"
         ]
@@ -212,9 +221,10 @@
       "visual-engineering": {
         "models": [
           {
-            "model": "kimi-for-coding/k3-256k",
+            "model": "bailian-token-plan-personal/qwen3.8-max",
             "reasoning": "max"
           },
+          "kimi-for-coding/k3-256k",
           "kimi-for-coding/k2p7",
           "minimax/MiniMax-M3"
         ]
@@ -222,11 +232,12 @@
       "artistry": {
         "models": [
           {
-            "model": "kimi-for-coding/k2p7",
+            "model": "bailian-token-plan-personal/glm-5.2",
             "thinking": {
               "type": "enabled"
             }
           },
+          "kimi-for-coding/k2p7",
           "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
         ]
@@ -244,11 +255,12 @@
       "unspecified-high": {
         "models": [
           {
-            "model": "kimi-for-coding/k2p7",
+            "model": "bailian-token-plan-personal/glm-5.2",
             "thinking": {
               "type": "enabled"
             }
           },
+          "kimi-for-coding/k2p7",
           "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
         ]
