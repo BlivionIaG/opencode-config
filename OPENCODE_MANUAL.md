@@ -401,12 +401,12 @@ Gives agents full knowledge of the 1,851 n8n nodes + read/write access to your n
 
 **Setup:**
 
-1. Add to `~/.config/opencode/.env.local`:
+1. Add to your shell config (`~/.zshenv`, `~/.bashrc`, etc.):
    ```bash
-   N8N_API_URL=https://your-n8n-instance.example.com
-   N8N_API_KEY=your_n8n_api_key
+   export N8N_API_URL="https://your-n8n-instance.example.com"
+   export N8N_API_KEY="your_n8n_api_key"
    ```
-2. In `opencode.json`, flip `"enabled": false` → `true` under `mcp.n8n-mcp`.
+2. In `opencode.json`, flip `"enabled": false` → `"true"` under `mcp.n8n-mcp`.
 3. In a prompt, explicitly opt in: *"use n8n-mcp to list my failing workflows"*.
 
 **Tools exposed (~20):**

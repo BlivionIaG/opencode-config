@@ -2,7 +2,8 @@
 # setup.sh - bootstrap this OpenCode config on a new machine.
 #
 # Prereqs: opencode installed (https://opencode.ai), git.
-# After running: add your API keys to .env.local (see README), then `opencode`.
+# After running: add your API keys to your shell config (~/.zshenv or
+# ~/.bashrc) — see README — then `opencode`.
 
 set -euo pipefail
 
@@ -25,18 +26,22 @@ echo "==> Installing agent config to ~/.omo/omo.jsonc"
 scripts/sync-omo.sh push
 
 echo "==> Checking API keys"
-if [ -f .env.local ]; then
-  echo "    .env.local present"
+missing=()
+for k in KIMI_API_KEY MINIMAX_API_KEY MINIMAX_PAYGO_API_KEY CHENCO_API_KEY; do
+  if [ -z "${!k:-}" ]; then missing+=("$k"); fi
+done
+if [ "${#missing[@]}" -eq 0 ]; then
+  echo "    all required keys present in environment"
 else
-  cat <<'EOF'
-    WARNING: .env.local missing. Create it with your keys:
+  cat <<EOF
+    WARNING: unset env vars: ${missing[*]}
 
-      KIMI_API_KEY=...
-      MINIMAX_API_KEY=...
-      MINIMAX_PAYGO_API_KEY=...
-      CHENCO_API_KEY=...
+    Add them to your shell config (e.g. ~/.zshenv, ~/.bashrc, ~/.profile):
 
-    (Or export the equivalent environment variables.)
+      export ${missing[0]}=your_actual_key_here
+      ...
+
+    Then restart your shell or 'source' the file.
 EOF
 fi
 
@@ -46,7 +51,7 @@ scripts/sync-omo.sh doctor
 cat <<'EOF'
 
 Done. Next steps:
-  1. Add API keys to .env.local if you haven't (see above)
+  1. Add API keys to your shell config if you haven't (see above)
   2. Run: opencode
 
 Day-to-day config edits:

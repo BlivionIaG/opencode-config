@@ -58,48 +58,44 @@ own backups on push.
 
 ### 3. Add your API keys (NOT in git!)
 
-Create `~/.config/opencode/.env.local`:
+Add the keys to your shell config so every process inherits them. Pick the file that matches your shell:
+
+- **zsh** → `~/.zshenv` (loaded for every zsh invocation, including non-interactive scripts)
+- **bash** → `~/.bashrc` (interactive) or `~/.bash_profile` (login shells)
+- **fish** → `~/.config/fish/config.fish` (using `set -x KEY value`)
 
 ```bash
 # Kimi (if needed)
-KIMI_API_KEY=your_actual_key_here
+export KIMI_API_KEY="your_actual_key_here"
 
 # MiniMax token plan
-MINIMAX_API_KEY=your_actual_key_here
+export MINIMAX_API_KEY="your_actual_key_here"
 
 # MiniMax PayGo fallback
-MINIMAX_PAYGO_API_KEY=your_actual_key_here
+export MINIMAX_PAYGO_API_KEY="your_actual_key_here"
 
 # Chenco OpenAI-compatible endpoint
-CHENCO_API_KEY=your_actual_key_here
+export CHENCO_API_KEY="your_actual_key_here"
 
 # Alibaba Cloud Model Studio (bailian token plan, Anthropic-compatible)
-BAILIAN_TOKEN_PLAN_API_KEY=your_actual_key_here
+export BAILIAN_TOKEN_PLAN_API_KEY="your_actual_key_here"
 
 # n8n-mcp (optional, only if you use the n8n MCP server)
-N8N_API_URL=https://your-n8n-instance.example.com
-N8N_API_KEY=your_n8n_api_key_here
-```
-
-Or use environment variables:
-
-```bash
-export KIMI_API_KEY="your_key"
-export MINIMAX_API_KEY="your_key"
-export MINIMAX_PAYGO_API_KEY="your_key"
-export CHENCO_API_KEY="your_key"
-export BAILIAN_TOKEN_PLAN_API_KEY="your_key"
 export N8N_API_URL="https://your-n8n-instance.example.com"
-export N8N_API_KEY="your_key"
+export N8N_API_KEY="your_n8n_api_key_here"
 ```
+
+Then reload the file (e.g. `source ~/.zshenv`) or restart your shell.
+
+`opencode.json` references these via `{env:VAR_NAME}` placeholders, so the provider config stays secret-free.
 
 ### 3b. n8n-mcp (optional)
 
 The `n8n-mcp` MCP server is configured in `opencode.json` but **disabled by default** to keep context lean. To enable:
 
-1. Set `N8N_API_URL` and `N8N_API_KEY` in `.env.local` (see above).
+1. Set `N8N_API_URL` and `N8N_API_KEY` in your shell config (see above).
 2. In `opencode.json`, change `"enabled": false` to `"enabled": true` under `mcp.n8n-mcp`.
-3. Reference its tools in prompts with the `n8n-mcp_*` prefix, e.g. *"use n8n-mcp to list my workflows"*.
+3. Reference its tools in prompts with the `n8n-mcp_*` prefix, e.g. *"use n8n-mcp to list my failing workflows"*.
 
 Adds ~20 tools (workflow mgmt, executions, node docs, templates) plus a ~540MB node DB cache in `~/.config/opencode/data/`.
 
@@ -111,10 +107,8 @@ opencode
 
 ## Security
 
-- **No API keys in git** - Keys are injected via environment
-- **Pattern-based .gitignore** - Prevents accidental commits of secrets
-- `.env*` files are ignored
-- `*secret*`, `*credential*`, `*key*` patterns blocked
+- **No API keys in git** - Keys live in your shell config (`~/.zshenv`, `~/.bashrc`, etc.), outside the repo
+- **Defense-in-depth .gitignore** - Even if a `.env` file slips in, the pattern blocks `.env*`, `*secret*`, `*credential*`, `*key*` from being committed
 
 ## Architecture
 

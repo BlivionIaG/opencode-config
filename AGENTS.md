@@ -13,14 +13,18 @@ This document defines mandatory rules for AI agents working with this repository
 - Environment files: `.env`, `.env.local`, `.env.*`
 
 **Where credentials belong:**
-```bash
-# Option 1: Environment variables
-export OPENCODE_GO_API_KEY="your_key"
-export KIMI_API_KEY="your_key"
+In your shell config — keys live outside the repo entirely, loaded by every shell invocation:
 
-# Option 2: .env.local file (already in .gitignore)
-~/.config/opencode/.env.local
+```bash
+# zsh: ~/.zshenv (loaded for every zsh, including non-interactive scripts)
+export KIMI_API_KEY="your_key"
+export MINIMAX_API_KEY="your_key"
+
+# bash: ~/.bashrc (interactive) or ~/.bash_profile (login shells)
+# fish: ~/.config/fish/config.fish (use `set -x KEY value`)
 ```
+
+`opencode.json` references these via `{env:VAR_NAME}` placeholders, so the provider config stays secret-free.
 
 **Verification before commit:**
 ```bash
@@ -41,7 +45,7 @@ git diff --stat origin/master
 # Review all changes
 git diff origin/master
 
-# Ensure no .env files are staged
+# Defense-in-depth: ensure no .env or secret-shaped files slipped into staging
 git diff --cached --name-only | grep -E "\.env|secret|credential" && echo "BLOCKED: Secrets detected" || echo "OK"
 ```
 
