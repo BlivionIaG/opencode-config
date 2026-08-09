@@ -136,30 +136,8 @@
             "reasoning": true
           }
         },
-        "qwen3.7-max": {
-          "name": "Qwen3.7 Max",
-          "options": {
-            "thinking": {
-              "type": "enabled",
-              "budgetTokens": 8192
-            }
-          }
-        },
         "qwen3.7-plus": {
           "name": "Qwen3.7 Plus",
-          "modalities": {
-            "input": ["text", "image"],
-            "output": ["text"]
-          },
-          "options": {
-            "thinking": {
-              "type": "enabled",
-              "budgetTokens": 8192
-            }
-          }
-        },
-        "qwen3.6-flash": {
-          "name": "Qwen3.6 Flash",
           "modalities": {
             "input": ["text", "image"],
             "output": ["text"]
@@ -179,9 +157,6 @@
               "budgetTokens": 8192
             }
           }
-        },
-        "deepseek-v4-pro": {
-          "name": "DeepSeek V4 Pro"
         },
         "deepseek-v4-flash-0731": {
           "name": "DeepSeek V4 Flash 0731"
@@ -236,9 +211,9 @@
   ],
   "agent": {
     "vulcan": {
-      "description": "Deep autonomous worker (Kimi K3, 1M context) - Hephaestus equivalent for non-GPT models. Use for long-horizon implementation, large refactors, multi-step goals.",
+      "description": "Deep autonomous worker (DeepSeek V4 Flash 0731) - long-horizon implementation, large refactors, multi-step goals. Prompt tuned for one task at a time, no premature scaling.",
       "mode": "all",
-      "model": "kimi-for-coding/k3",
+      "model": "bailian-token-plan-personal/deepseek-v4-flash-0731",
       "prompt": "{file:./agents/vulcan.md}"
     }
   }

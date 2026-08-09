@@ -115,17 +115,20 @@ opencode
 |-----------|-------|-------|-------|
 | Search/Grep | `@explore` | MiniMax M2.7 highspeed | ~1-2s |
 | Quick fixes | quick/fix category | MiniMax M2.7 highspeed | ~1-2s |
+| Delegated task execution | `sisyphus-junior` | DeepSeek V4 Flash 0731 | ~3-5s |
 | Deep analysis | `@oracle` | Qwen3.8 Max (Kimi K3-256k fallback) | ~8s |
 | Architecture | `@prometheus` | Qwen3.8 Max (Kimi K3-256k fallback) | ~8-10s |
-| Long-horizon implementation | `@vulcan` | Kimi K3 (1M) | varies |
+| Vision tasks | `@multimodal-looker` | Qwen3.7 Plus (Qwen3.8 Max fallback) | ~3-5s |
+| UI/frontend | `visual-engineering` category | Qwen3.7 Plus (Qwen3.8 Max fallback) | ~5-8s |
+| Long-horizon implementation | `@vulcan` | DeepSeek V4 Flash 0731 | varies |
 
 ### Cost Optimization
 
 - MiniMax M3 is the default session model (orchestration is cheap delegation, not deep reasoning)
-- Qwen3.8 Max is the new primary for deep reasoning (oracle, prometheus, ultrabrain, visual-engineering, hephaestus, multimodal-looker, deep category); Kimi K3-256k/K3 are kept as first fallbacks
-- GLM-5.2 is the new primary for K2.7-class deliberative work (metis, momus, refactor, artistry, unspecified-high); Kimi K2.7 is kept as first fallback
-- Kimi K3 1M is reserved for long-horizon work (`@vulcan`) — not yet migrated to bailian
-- Kimi K2.7 provides a balanced, high-speed reasoning fallback
+- Qwen3.8 Max is the primary for deep reasoning (oracle, prometheus, ultrabrain, hephaestus, deep category); Kimi K3-256k kept as first fallback
+- Qwen3.7 Plus is the primary for vision tasks (multimodal-looker, visual-engineering); Qwen3.8 Max as fallback for harder visual work
+- GLM-5.2 is the primary for deliberative work (metis, momus, refactor, artistry, unspecified-high); Kimi K3-256k kept as first fallback
+- DeepSeek V4 Flash 0731 powers `vulcan` (long-horizon autonomous) and `sisyphus-junior` (delegated executor)
 - MiniMax M2.7 Highspeed uses the token-plan key and is configured as OpenCode's fast/small model
 - Runtime fallback escalates stalled or quota-limited requests after 30 seconds
 - Category routing sets per-task `variant`/`thinking` and `maxTokens` budgets

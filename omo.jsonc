@@ -28,8 +28,7 @@
         "model": "minimax/MiniMax-M3",
         "reasoning": "auto",
         "fallback_models": [
-          "kimi-for-coding/k3-256k",
-          "kimi-for-coding/k2p7"
+          "kimi-for-coding/k3-256k"
         ]
       },
       "hephaestus": {
@@ -37,7 +36,6 @@
         "reasoning": "max",
         "fallback_models": [
           "kimi-for-coding/k3",
-          "kimi-for-coding/k2p7",
           "minimax/MiniMax-M3"
         ]
       },
@@ -46,7 +44,6 @@
         "reasoning": "max",
         "fallback_models": [
           "kimi-for-coding/k3-256k",
-          "kimi-for-coding/k2p7",
           "minimax/MiniMax-M3"
         ]
       },
@@ -54,7 +51,6 @@
         "model": "minimax/MiniMax-M2.7-highspeed",
         "reasoning": "off",
         "fallback_models": [
-          "kimi-for-coding/k2p7",
           "minimax/MiniMax-M3"
         ]
       },
@@ -62,16 +58,15 @@
         "model": "minimax/MiniMax-M2.7-highspeed",
         "reasoning": "off",
         "fallback_models": [
-          "kimi-for-coding/k2p7",
           "minimax/MiniMax-M3"
         ]
       },
       "multimodal-looker": {
-        "model": "bailian-token-plan-personal/qwen3.8-max",
+        "model": "bailian-token-plan-personal/qwen3.7-plus",
         "reasoning": "max",
         "fallback_models": [
+          "bailian-token-plan-personal/qwen3.8-max",
           "kimi-for-coding/k3",
-          "kimi-for-coding/k2p7",
           "minimax/MiniMax-M3"
         ]
       },
@@ -80,7 +75,6 @@
         "reasoning": "max",
         "fallback_models": [
           "kimi-for-coding/k3-256k",
-          "kimi-for-coding/k2p7",
           "minimax/MiniMax-M3"
         ]
       },
@@ -90,7 +84,6 @@
           "type": "enabled"
         },
         "fallback_models": [
-          "kimi-for-coding/k2p7",
           "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
         ]
@@ -101,7 +94,6 @@
           "type": "enabled"
         },
         "fallback_models": [
-          "kimi-for-coding/k2p7",
           "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
         ]
@@ -109,16 +101,15 @@
       "atlas": {
         "model": "minimax/MiniMax-M3",
         "fallback_models": [
-          "kimi-for-coding/k3-256k",
-          "kimi-for-coding/k2p7"
+          "kimi-for-coding/k3-256k"
         ]
       },
       "sisyphus-junior": {
-        "model": "minimax/MiniMax-M2.7-highspeed",
-        "reasoning": "off",
+        "model": "bailian-token-plan-personal/deepseek-v4-flash-0731",
+        "reasoning": "auto",
         "fallback_models": [
-          "kimi-for-coding/k2p7",
-          "minimax/MiniMax-M3"
+          "minimax/MiniMax-M3",
+          "minimax/MiniMax-M2.7-highspeed"
         ]
       }
     },
@@ -129,8 +120,7 @@
             "model": "minimax/MiniMax-M2.7-highspeed",
             "reasoning": "off"
           },
-          "minimax/MiniMax-M3",
-          "kimi-for-coding/k2p7"
+          "minimax/MiniMax-M3"
         ]
       },
       "fix": {
@@ -139,8 +129,7 @@
             "model": "minimax/MiniMax-M2.7-highspeed",
             "reasoning": "off"
           },
-          "minimax/MiniMax-M3",
-          "kimi-for-coding/k2p7"
+          "minimax/MiniMax-M3"
         ]
       },
       "search": {
@@ -149,8 +138,7 @@
             "model": "minimax/MiniMax-M2.7-highspeed",
             "reasoning": "off"
           },
-          "minimax/MiniMax-M3",
-          "kimi-for-coding/k2p7"
+          "minimax/MiniMax-M3"
         ]
       },
       "test": {
@@ -159,8 +147,7 @@
             "model": "minimax/MiniMax-M2.7-highspeed",
             "reasoning": "off"
           },
-          "minimax/MiniMax-M3",
-          "kimi-for-coding/k2p7"
+          "minimax/MiniMax-M3"
         ]
       },
       "writing": {
@@ -169,8 +156,7 @@
             "model": "minimax/MiniMax-M2.7-highspeed",
             "reasoning": "off"
           },
-          "minimax/MiniMax-M3",
-          "kimi-for-coding/k2p7"
+          "minimax/MiniMax-M3"
         ]
       },
       "explain": {
@@ -179,8 +165,7 @@
             "model": "minimax/MiniMax-M2.7-highspeed",
             "reasoning": "off"
           },
-          "minimax/MiniMax-M3",
-          "kimi-for-coding/k2p7"
+          "minimax/MiniMax-M3"
         ]
       },
       "refactor": {
@@ -191,7 +176,6 @@
               "type": "enabled"
             }
           },
-          "kimi-for-coding/k2p7",
           "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
         ]
@@ -203,7 +187,6 @@
             "reasoning": "max"
           },
           "kimi-for-coding/k3",
-          "kimi-for-coding/k2p7",
           "minimax/MiniMax-M3"
         ]
       },
@@ -214,18 +197,17 @@
             "reasoning": "max"
           },
           "kimi-for-coding/k3-256k",
-          "kimi-for-coding/k2p7",
           "minimax/MiniMax-M3"
         ]
       },
       "visual-engineering": {
         "models": [
           {
-            "model": "bailian-token-plan-personal/qwen3.8-max",
+            "model": "bailian-token-plan-personal/qwen3.7-plus",
             "reasoning": "max"
           },
+          "bailian-token-plan-personal/qwen3.8-max",
           "kimi-for-coding/k3-256k",
-          "kimi-for-coding/k2p7",
           "minimax/MiniMax-M3"
         ]
       },
@@ -237,7 +219,6 @@
               "type": "enabled"
             }
           },
-          "kimi-for-coding/k2p7",
           "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
         ]
@@ -248,8 +229,7 @@
             "model": "minimax/MiniMax-M2.7-highspeed",
             "reasoning": "off"
           },
-          "minimax/MiniMax-M3",
-          "kimi-for-coding/k2p7"
+          "minimax/MiniMax-M3"
         ]
       },
       "unspecified-high": {
@@ -260,7 +240,6 @@
               "type": "enabled"
             }
           },
-          "kimi-for-coding/k2p7",
           "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
         ]
