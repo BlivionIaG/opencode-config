@@ -73,6 +73,9 @@ MINIMAX_PAYGO_API_KEY=your_actual_key_here
 # Chenco OpenAI-compatible endpoint
 CHENCO_API_KEY=your_actual_key_here
 
+# Alibaba Cloud Model Studio (bailian token plan, Anthropic-compatible)
+BAILIAN_TOKEN_PLAN_API_KEY=your_actual_key_here
+
 # n8n-mcp (optional, only if you use the n8n MCP server)
 N8N_API_URL=https://your-n8n-instance.example.com
 N8N_API_KEY=your_n8n_api_key_here
@@ -85,6 +88,7 @@ export KIMI_API_KEY="your_key"
 export MINIMAX_API_KEY="your_key"
 export MINIMAX_PAYGO_API_KEY="your_key"
 export CHENCO_API_KEY="your_key"
+export BAILIAN_TOKEN_PLAN_API_KEY="your_key"
 export N8N_API_URL="https://your-n8n-instance.example.com"
 export N8N_API_KEY="your_key"
 ```
