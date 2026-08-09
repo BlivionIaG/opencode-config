@@ -33,7 +33,6 @@
       },
       "hephaestus": {
         "model": "bailian-token-plan-personal/qwen3.8-max",
-        "reasoning": "max",
         "fallback_models": [
           "kimi-for-coding/k3",
           "minimax/MiniMax-M3"
@@ -41,7 +40,6 @@
       },
       "oracle": {
         "model": "bailian-token-plan-personal/qwen3.8-max",
-        "reasoning": "max",
         "fallback_models": [
           "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
@@ -49,21 +47,18 @@
       },
       "librarian": {
         "model": "minimax/MiniMax-M2.7-highspeed",
-        "reasoning": "off",
         "fallback_models": [
           "minimax/MiniMax-M3"
         ]
       },
       "explore": {
         "model": "minimax/MiniMax-M2.7-highspeed",
-        "reasoning": "off",
         "fallback_models": [
           "minimax/MiniMax-M3"
         ]
       },
       "multimodal-looker": {
         "model": "bailian-token-plan-personal/qwen3.7-plus",
-        "reasoning": "max",
         "fallback_models": [
           "bailian-token-plan-personal/qwen3.8-max",
           "kimi-for-coding/k3",
@@ -72,7 +67,6 @@
       },
       "prometheus": {
         "model": "bailian-token-plan-personal/qwen3.8-max",
-        "reasoning": "max",
         "fallback_models": [
           "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
@@ -80,9 +74,6 @@
       },
       "metis": {
         "model": "bailian-token-plan-personal/glm-5.2",
-        "thinking": {
-          "type": "enabled"
-        },
         "fallback_models": [
           "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
@@ -90,9 +81,6 @@
       },
       "momus": {
         "model": "bailian-token-plan-personal/glm-5.2",
-        "thinking": {
-          "type": "enabled"
-        },
         "fallback_models": [
           "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
@@ -117,8 +105,7 @@
       "quick": {
         "models": [
           {
-            "model": "minimax/MiniMax-M2.7-highspeed",
-            "reasoning": "off"
+            "model": "minimax/MiniMax-M2.7-highspeed"
           },
           "minimax/MiniMax-M3"
         ]
@@ -126,8 +113,7 @@
       "fix": {
         "models": [
           {
-            "model": "minimax/MiniMax-M2.7-highspeed",
-            "reasoning": "off"
+            "model": "minimax/MiniMax-M2.7-highspeed"
           },
           "minimax/MiniMax-M3"
         ]
@@ -135,8 +121,7 @@
       "search": {
         "models": [
           {
-            "model": "minimax/MiniMax-M2.7-highspeed",
-            "reasoning": "off"
+            "model": "minimax/MiniMax-M2.7-highspeed"
           },
           "minimax/MiniMax-M3"
         ]
@@ -144,8 +129,7 @@
       "test": {
         "models": [
           {
-            "model": "minimax/MiniMax-M2.7-highspeed",
-            "reasoning": "off"
+            "model": "minimax/MiniMax-M2.7-highspeed"
           },
           "minimax/MiniMax-M3"
         ]
@@ -153,8 +137,7 @@
       "writing": {
         "models": [
           {
-            "model": "minimax/MiniMax-M2.7-highspeed",
-            "reasoning": "off"
+            "model": "minimax/MiniMax-M2.7-highspeed"
           },
           "minimax/MiniMax-M3"
         ]
@@ -162,8 +145,7 @@
       "explain": {
         "models": [
           {
-            "model": "minimax/MiniMax-M2.7-highspeed",
-            "reasoning": "off"
+            "model": "minimax/MiniMax-M2.7-highspeed"
           },
           "minimax/MiniMax-M3"
         ]
@@ -171,10 +153,7 @@
       "refactor": {
         "models": [
           {
-            "model": "bailian-token-plan-personal/glm-5.2",
-            "thinking": {
-              "type": "enabled"
-            }
+            "model": "bailian-token-plan-personal/glm-5.2"
           },
           "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
@@ -183,8 +162,7 @@
       "deep": {
         "models": [
           {
-            "model": "bailian-token-plan-personal/qwen3.8-max",
-            "reasoning": "max"
+            "model": "bailian-token-plan-personal/qwen3.8-max"
           },
           "kimi-for-coding/k3",
           "minimax/MiniMax-M3"
@@ -193,8 +171,7 @@
       "ultrabrain": {
         "models": [
           {
-            "model": "bailian-token-plan-personal/qwen3.8-max",
-            "reasoning": "max"
+            "model": "bailian-token-plan-personal/qwen3.8-max"
           },
           "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
@@ -203,8 +180,7 @@
       "visual-engineering": {
         "models": [
           {
-            "model": "bailian-token-plan-personal/qwen3.7-plus",
-            "reasoning": "max"
+            "model": "bailian-token-plan-personal/qwen3.7-plus"
           },
           "bailian-token-plan-personal/qwen3.8-max",
           "kimi-for-coding/k3-256k",
@@ -214,10 +190,7 @@
       "artistry": {
         "models": [
           {
-            "model": "bailian-token-plan-personal/glm-5.2",
-            "thinking": {
-              "type": "enabled"
-            }
+            "model": "bailian-token-plan-personal/glm-5.2"
           },
           "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
@@ -226,8 +199,7 @@
       "unspecified-low": {
         "models": [
           {
-            "model": "minimax/MiniMax-M2.7-highspeed",
-            "reasoning": "off"
+            "model": "minimax/MiniMax-M2.7-highspeed"
           },
           "minimax/MiniMax-M3"
         ]
@@ -235,10 +207,7 @@
       "unspecified-high": {
         "models": [
           {
-            "model": "bailian-token-plan-personal/glm-5.2",
-            "thinking": {
-              "type": "enabled"
-            }
+            "model": "bailian-token-plan-personal/glm-5.2"
           },
           "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
