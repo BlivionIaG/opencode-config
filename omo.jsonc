@@ -26,7 +26,8 @@
         "mode": "primary",
         "displayName": "Sisyphus - ultraworker",
         "model": "minimax/MiniMax-M3",
-        "reasoning": "auto"
+        "reasoning": "auto",
+        "fallback_models": []
       },
       "hephaestus": {
         "model": "bailian-token-plan-personal/qwen3.8-max",
