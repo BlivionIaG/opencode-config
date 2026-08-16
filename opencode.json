@@ -162,6 +162,38 @@
           "name": "DeepSeek V4 Flash 0731"
         }
       }
+    },
+    "baseten": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Baseten",
+      "options": {
+        "baseURL": "https://inference.baseten.co/v1",
+        "apiKey": "{env:BASETEN_API_KEY}"
+      },
+      "models": {
+        "deepseek-ai/DeepSeek-V4-Flash-0731": {
+          "name": "DeepSeek V4 Flash 0731",
+          "family": "deepseek",
+          "attachment": false,
+          "reasoning": true,
+          "tool_call": true,
+          "temperature": true,
+          "release_date": "2026-07-31",
+          "modalities": {
+            "input": ["text"],
+            "output": ["text"]
+          },
+          "cost": {
+            "input": 0.00000013,
+            "output": 0.00000026,
+            "cache_read": 0.000000028
+          },
+          "limit": {
+            "context": 1048576,
+            "output": 393216
+          }
+        }
+      }
     }
   },
   "model": "minimax/MiniMax-M3",
@@ -171,7 +203,8 @@
     "minimax",
     "kimi-for-coding",
     "sglang-test",
-    "bailian-token-plan-personal"
+    "bailian-token-plan-personal",
+    "baseten"
   ],
   "mcp": {
     "n8n-mcp": {

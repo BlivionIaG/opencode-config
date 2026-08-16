@@ -77,6 +77,9 @@ export CHENCO_API_KEY="your_actual_key_here"
 # Alibaba Cloud Model Studio (bailian token plan, Anthropic-compatible)
 export BAILIAN_TOKEN_PLAN_API_KEY="your_actual_key_here"
 
+# Baseten (Model APIs, OpenAI-compatible - direct DeepSeek V4 Flash 0731 hosting)
+export BASETEN_API_KEY="your_actual_key_here"
+
 # n8n-mcp (optional, only if you use the n8n MCP server)
 export N8N_API_URL="https://your-n8n-instance.example.com"
 export N8N_API_KEY="your_n8n_api_key_here"
