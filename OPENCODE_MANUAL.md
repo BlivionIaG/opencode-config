@@ -63,9 +63,10 @@ opencode "Your task here"
 ### Enabled Providers
 
 1. **bailian-token-plan-personal** - Alibaba Cloud Model Studio (Singapore token-plan endpoint, Anthropic-compatible). Qwen3.8 Max, Qwen3.7 Max/Plus, Qwen3.6 Flash, GLM-5.2, DeepSeek V4 Pro/Flash. Default primary for deep-reasoning and image-input tasks.
-2. **kimi-for-coding** - Kimi K3 and K3-256k (Kimi Code Plan; K3 up to 1M context on Allegro+, K3-256k fixed 256k context). Kept as first fallback for every bailian-anchored slot.
-3. **minimax** - MiniMax M3 and M2.7 Highspeed token plan (fast models, up to 1M context)
-4. **chenco** - Chenco OpenAI-compatible endpoint (Qwen3.6 model family)
+2. **kimi-for-coding** - Kimi K3 and K3-256k (Kimi Code Plan; K3 up to 1M context on Allegro+, K3-256k fixed 256k context). Kept as second fallback for bailian-anchored slots (Baseten V4 Pro is first).
+3. **baseten** - Baseten Model APIs (OpenAI-compatible). Hosts DeepSeek V4 Flash 0731 and DeepSeek V4 Pro 0813 directly. V4 Pro 0813 is the new first fallback for bailian Qwen3.8 Max and GLM-5.2 — cheaper than Kimi K3 and still frontier-class.
+4. **minimax** - MiniMax M3 and M2.7 Highspeed token plan (fast models, up to 1M context)
+5. **chenco** - Chenco OpenAI-compatible endpoint (Qwen3.6 model family)
 
 ### Model Selection Matrix
 
@@ -73,9 +74,10 @@ opencode "Your task here"
 |-------|-------------|----------------|-----------------|---------|--------|-------|------------|----------|
 | **Qwen3.8 Max** | `bailian-token-plan-personal/qwen3.8-max` | TBD | TBD | 983K | yes | 3 | 4 | Deep reasoning (256k thinking budget), long-horizon, vision input. Default primary for the K3-slot. |
 | **Qwen3.7 Plus** | `bailian-token-plan-personal/qwen3.7-plus` | TBD | TBD | TBD | yes | 4 | 4 | Vision-capable mid-tier; default primary for `multimodal-looker` and `visual-engineering` (Qwen3.8 Max as fallback for harder visual reasoning) |
-| **GLM-5.2** | `bailian-token-plan-personal/glm-5.2` | TBD | TBD | TBD | no | 3 | 4 | Deliberative work (refactor, plan review, creative) — different family for diversity |
+| **GLM-5.2** | `bailian-token-plan-personal/glm-5.2` | TBD | TBD | TBD | no | 3 | 4 | Deliberative work (refactor, plan review, creative) — different model family for diversity |
+| **DeepSeek V4 Pro 0813** | `baseten/deepseek-ai/DeepSeek-V4-Pro-0813` | TBD | TBD | 1M | no | 3 | 4 | Direct fallback for Qwen3.8 Max and GLM-5.2. 1.6T MoE (49B active), 1M context, frontier-class on SWE-bench / LiveCodeBench. Cheaper than Kimi K3. |
 | **DeepSeek V4 Flash 0731** | `bailian-token-plan-personal/deepseek-v4-flash-0731` | TBD | TBD | TBD | TBD | 5 | 5 | Best intelligence/speed balance for coding; powers `vulcan` (long-horizon autonomous) and `sisyphus-junior` (delegated executor) |
-| **Kimi K3** | `kimi-for-coding/k3` | KCB v2 72.9% | Terminal-Bench 2.1 88.3% | 1M | 5 | 2 | 2 | Long-horizon work, video input (now first fallback for Qwen3.8 Max) |
+| **Kimi K3** | `kimi-for-coding/k3` | KCB v2 72.9% | Terminal-Bench 2.1 88.3% | 1M | 5 | 2 | 2 | Long-horizon work, video input (now second fallback for Qwen3.8 Max, behind Baseten V4 Pro) |
 | **Kimi K3-256k** | `kimi-for-coding/k3-256k` | same as K3 | same as K3 | 256K | 3 | 2 | 3 | Visual tasks (image only), architecture, hard debugging, strategic planning; half the quota of K3 |
 | **MiniMax M3** | `minimax/MiniMax-M3` | SWE-Bench Pro 59.0% | MCP Atlas 74.2% | 400K | 4 | 4 | 5 | Everyday coding, orchestration, continuation, cost-efficient deep work |
 | **MiniMax M2.7 HS** | `minimax/MiniMax-M2.7-highspeed` | SWE-Bench Pro 56.2% | MCP Atlas ~70% | 200K | 2 | 5 | 5 | Search, docs, quick fixes, tests, writing, fast utility work |
@@ -137,6 +139,14 @@ opencode "Your task here"
 - ⚠️ Provider config has no reasoning/thinking options — agent-level `reasoning: "auto"` is what enables reasoning
 - Use for: agentic workhorse, delegated task execution, long-horizon autonomous work where v4-flash's speed advantage matters
 
+**DeepSeek V4 Pro 0813 (`baseten/deepseek-ai/DeepSeek-V4-Pro-0813`)**
+- ✅ Direct fallback for bailian Qwen3.8 Max and GLM-5.2 (frontier-class 1.6T MoE, 49B active, 1M context, fp4)
+- ✅ Cheaper than Kimi K3 ($1.32/M input vs $3/M input) — improved cost control when bailian fails
+- ✅ Reasoning + tool-call capable on the Baseten OpenAI-compatible endpoint
+- ⚠️ Text-only input (no image/video) — only the bailian primaries cover vision tasks
+- ⚠️ Provider config has no reasoning/thinking options — relies on default reasoning
+- Use for: failover from bailian primary, where the request needs frontier-class intelligence and Kimi K3 quota should be preserved
+
 **MiniMax M3 (`minimax/MiniMax-M3`)**
 - ✅ Best speed/intelligence balance in the MiniMax family
 - ✅ 400K context, multimodal (text/image/video input), tool-call capable
@@ -177,16 +187,17 @@ opencode "Your task here"
 
 | Model | Where it is used | Why it was chosen |
 |-------|------------------|-------------------|
-| **Qwen3.8 Max** | Agents: `hephaestus`, `oracle`, `prometheus`<br>Categories: `deep`, `ultrabrain` | Primary for the K3-slot. 256K thinking budget + 983K context + image input. Kimi K3-256k kept as first fallback. Used for vision only as a fallback (Qwen3.7 Plus is the primary for vision tasks). |
+| **Qwen3.8 Max** | Agents: `hephaestus`, `oracle`, `prometheus`<br>Categories: `deep`, `ultrabrain` | Primary for the K3-slot. 256K thinking budget + 983K context + image input. Baseten DeepSeek V4 Pro 0813 is the first fallback (cheaper than Kimi), Kimi K3-256k kept as second fallback. Used for vision only as a fallback (Qwen3.7 Plus is the primary for vision tasks). |
 | **Qwen3.7 Plus** | Agents: `multimodal-looker`<br>Categories: `visual-engineering` | Primary for vision tasks. 8K thinking budget + vision input. Cheaper than Qwen3.8 Max for typical vision work; Qwen3.8 Max as fallback for harder visual reasoning. |
-| **GLM-5.2** | Agents: `metis`, `momus`<br>Categories: `refactor`, `artistry`, `unspecified-high` | Primary for the deliberative/refactor/creative slot. Deliberative reasoning with 8K thinking budget; different model family for diversity. Kimi K3-256k kept as first fallback. |
+| **GLM-5.2** | Agents: `metis`, `momus`<br>Categories: `refactor`, `artistry`, `unspecified-high` | Primary for the deliberative/refactor/creative slot. Deliberative reasoning with 8K thinking budget; different model family for diversity. Baseten DeepSeek V4 Pro 0813 is the first fallback, Kimi K3-256k kept as second fallback. |
 | **DeepSeek V4 Flash 0731** | Agents: `vulcan` (`opencode.json`), `sisyphus-junior` | Agentic workhorse with best intelligence/speed balance per the user's evaluation. Powers `vulcan` (long-horizon autonomous) and `sisyphus-junior` (delegated executor). No reasoning/thinking config at provider level — agent-level `reasoning: "auto"` is mandatory. |
-| **Kimi K3-256k** | First fallback for `oracle`, `prometheus`, `ultrabrain`, `visual-engineering`, `metis`, `momus`, `refactor`, `artistry`, `unspecified-high`<br>Also fallback for `hephaestus`, `multimodal-looker`, `deep` (behind K3 1M) | Same K3 intelligence at fixed 256K context; half the quota of K3 1M. Best for architecture, hard debugging, strategic planning, image-based visual tasks. |
-| **Kimi K3** | First fallback for `hephaestus`, `multimodal-looker`, `deep` | Highest intelligence in the stack; native visual and video understanding; best for long-horizon coding, video input. Up to 1M context on Allegro+ plans. |
+| **DeepSeek V4 Pro 0813** | First fallback for `hephaestus`, `oracle`, `prometheus`, `metis`, `momus`, `deep`, `ultrabrain`, `refactor`, `artistry`, `unspecified-high` | Direct baseten-hosted fallback for the bailian Qwen3.8 Max and GLM-5.2 primaries. Frontier-class 1.6T MoE at fp4; 1M context. Cheaper than Kimi K3 — preferred fallback for cost control. |
+| **Kimi K3-256k** | Second fallback for `oracle`, `prometheus`, `ultrabrain`, `visual-engineering`, `metis`, `momus`, `refactor`, `artistry`, `unspecified-high`<br>Also fallback for `hephaestus`, `multimodal-looker`, `deep` (behind K3 1M) | Same K3 intelligence at fixed 256K context; half the quota of K3 1M. Best for architecture, hard debugging, strategic planning, image-based visual tasks. |
+| **Kimi K3** | Second fallback for `hephaestus`, `multimodal-looker`, `deep` | Highest intelligence in the stack; native visual and video understanding; best for long-horizon coding, video input. Up to 1M context on Allegro+ plans. |
 | **MiniMax M3** | Agents: `sisyphus`, `atlas` | Best speed/intelligence/cost balance for orchestration, continuation, and everyday coding. Keeps the main loop and long-running handlers fast and cheap. |
 | **MiniMax M2.7 Highspeed** | Agents: `librarian`, `explore`<br>Categories: `quick`, `fix`, `search`, `test`, `explain`, `writing`, `unspecified-low` | Fastest, cheapest model for high-volume utility work: search, docs, quick fixes, tests, and writing. Configured as the OpenCode `small_model`. |
 
-**Fallback logic:** Bailian Qwen3.8 Max primary falls back to Kimi K3-256k → MiniMax M3. Bailian Qwen3.7 Plus primary falls back to Qwen3.8 Max (vision) → Kimi K3 → MiniMax M3. Bailian GLM-5.2 primary falls back to Kimi K3-256k → MiniMax M3. Bailian DeepSeek V4 Flash primary falls back to MiniMax M3 → MiniMax M2.7 HS. MiniMax M3 primary falls back to K3-256k. MiniMax M2.7 highspeed primary falls back to M3. This keeps the most capable Kimi models behind the cheaper bailian options for cost control (with bailian primary), while ensuring a reasoning model is always available if a provider fails.
+**Fallback logic:** Bailian Qwen3.8 Max primary falls back to Baseten DeepSeek V4 Pro 0813 → Kimi K3-256k → MiniMax M3. Bailian Qwen3.7 Plus primary falls back to Qwen3.8 Max (vision) → Kimi K3 → MiniMax M3. Bailian GLM-5.2 primary falls back to Baseten DeepSeek V4 Pro 0813 → Kimi K3-256k → MiniMax M3. Bailian DeepSeek V4 Flash primary falls back to MiniMax M3 → MiniMax M2.7 HS. MiniMax M3 primary falls back to K3-256k. MiniMax M2.7 highspeed primary falls back to M3. This keeps the most capable Kimi models behind both bailian and baseten for cost control, while ensuring a reasoning model is always available if a provider fails.
 
 ## Agents Guide
 
@@ -196,9 +207,9 @@ opencode "Your task here"
 |-------|-------|----------------|------------|---------|
 | **Sisyphus** | `minimax/MiniMax-M3` | thinking adaptive | 16384 | Main orchestrator, delegates tasks (no fallback — runtime retries only) |
 | **Atlas** | `minimax/MiniMax-M3` | thinking disabled / instant | 16384 | Plan orchestration, task coordination, continuation |
-| **Hephaestus** | `bailian-token-plan-personal/qwen3.8-max` | `reasoning: max` | 32768 | Deep autonomous work, long-horizon implementation. Kimi K3 first fallback. |
+| **Hephaestus** | `bailian-token-plan-personal/qwen3.8-max` | `reasoning: max` | 32768 | Deep autonomous work, long-horizon implementation. Baseten DeepSeek V4 Pro 0813 first fallback, then Kimi K3. |
 | **Vulcan** | `bailian-token-plan-personal/deepseek-v4-flash-0731` | native agent (`agents/vulcan.md`) | 32768 | Deep autonomous work, long-horizon implementation. v4-flash tuned for fast intelligent agentic execution. |
-| **Prometheus** | `bailian-token-plan-personal/qwen3.8-max` | `reasoning: max` | 32768 | Strategic planning. Kimi K3-256k first fallback. |
+| **Prometheus** | `bailian-token-plan-personal/qwen3.8-max` | `reasoning: max` | 32768 | Strategic planning. Baseten DeepSeek V4 Pro 0813 first fallback, then Kimi K3-256k. |
 
 ### Utility Agents
 
@@ -213,9 +224,9 @@ opencode "Your task here"
 
 | Agent | Model | Mode / Variant | Max Tokens | Use For |
 |-------|-------|----------------|------------|---------|
-| **Oracle** | `bailian-token-plan-personal/qwen3.8-max` | `reasoning: max` | 32768 | Architecture analysis, debugging. Kimi K3-256k first fallback. |
-| **Metis** | `bailian-token-plan-personal/glm-5.2` | thinking enabled | 32768 | Plan consulting. Kimi K3-256k first fallback. |
-| **Momus** | `bailian-token-plan-personal/glm-5.2` | thinking enabled | 32768 | Plan review. Kimi K3-256k first fallback. |
+| **Oracle** | `bailian-token-plan-personal/qwen3.8-max` | `reasoning: max` | 32768 | Architecture analysis, debugging. Baseten DeepSeek V4 Pro 0813 first fallback, then Kimi K3-256k. |
+| **Metis** | `bailian-token-plan-personal/glm-5.2` | thinking enabled | 32768 | Plan consulting. Baseten DeepSeek V4 Pro 0813 first fallback, then Kimi K3-256k. |
+| **Momus** | `bailian-token-plan-personal/glm-5.2` | thinking enabled | 32768 | Plan review. Baseten DeepSeek V4 Pro 0813 first fallback, then Kimi K3-256k. |
 
 ### How to Use Agents
 
@@ -250,13 +261,13 @@ Sisyphus automatically categorizes your requests based on keywords:
 | **test** | test, spec, validate | MiniMax M2.7 HS, 8192 maxTokens | ~3-4s |
 | **writing** | write, document, describe | MiniMax M2.7 HS, 8192 maxTokens | ~2-3s |
 | **fix** | fix, correct, repair | MiniMax M2.7 HS, 4096 maxTokens | ~1-2s |
-| **refactor** | refactor, cleanup, optimize | GLM-5.2 thinking, 32768 maxTokens | ~8s (K3-256k fallback) |
-| **deep** | debug, investigate, analyze | Qwen3.8 Max reasoning, 32768 maxTokens | ~8s (Kimi K3 fallback) |
-| **ultrabrain** | architect, design, plan | Qwen3.8 Max reasoning, 32768 maxTokens | ~10s (Kimi K3-256k fallback) |
+| **refactor** | refactor, cleanup, optimize | GLM-5.2 thinking, 32768 maxTokens | ~8s (Baseten V4 Pro → K3-256k fallback) |
+| **deep** | debug, investigate, analyze | Qwen3.8 Max reasoning, 32768 maxTokens | ~8s (Baseten V4 Pro → Kimi K3 fallback) |
+| **ultrabrain** | architect, design, plan | Qwen3.8 Max reasoning, 32768 maxTokens | ~10s (Baseten V4 Pro → Kimi K3-256k fallback) |
 | **visual-engineering** | UI, frontend, screenshot, design | Qwen3.7 Plus reasoning, 32768 maxTokens | ~8s (Qwen3.8 Max / Kimi K3-256k fallback) |
-| **artistry** | creative, unconventional, novel | GLM-5.2 thinking, 32768 maxTokens | ~8s (K3-256k fallback) |
+| **artistry** | creative, unconventional, novel | GLM-5.2 thinking, 32768 maxTokens | ~8s (Baseten V4 Pro → K3-256k fallback) |
 | **unspecified-low** | lightweight, simple, small | MiniMax M2.7 HS, 4096 maxTokens | ~1-2s |
-| **unspecified-high** | complex, important, high stakes | GLM-5.2 reasoning, 32768 maxTokens | ~8s (K3-256k fallback) |
+| **unspecified-high** | complex, important, high stakes | GLM-5.2 reasoning, 32768 maxTokens | ~8s (Baseten V4 Pro → K3-256k fallback) |
 
 ### Examples
 
@@ -350,9 +361,9 @@ Your config uses bailian (Qwen3.8 Max / GLM-5.2) for quality-critical reasoning,
 | Quick fix | MiniMax M2.7 HS | Lower Kimi/bailian quota use | ~1-2s |
 | Code explanation | MiniMax M2.7 HS | Lower Kimi/bailian quota use | ~2-3s |
 | Test generation | MiniMax M2.7 HS | Lower Kimi/bailian quota use | ~3-4s |
-| Refactoring | GLM-5.2 (K3-256k fallback) | Token-plan cost | ~8s |
-| Deep analysis | Qwen3.8 Max (K3-256k fallback) | Token-plan cost | ~8s |
-| Architecture planning | Qwen3.8 Max (K3-256k / MiniMax M3 fallback) | Token-plan cost | ~8-10s |
+| Refactoring | GLM-5.2 (Baseten V4 Pro → K3-256k fallback) | Token-plan cost | ~8s |
+| Deep analysis | Qwen3.8 Max (Baseten V4 Pro → K3-256k fallback) | Token-plan cost | ~8s |
+| Architecture planning | Qwen3.8 Max (Baseten V4 Pro → K3-256k → MiniMax M3 fallback) | Token-plan cost | ~8-10s |
 
 ### Your Monthly Budget
 
@@ -367,10 +378,11 @@ Your config uses bailian (Qwen3.8 Max / GLM-5.2) for quality-critical reasoning,
 **Typical Monthly Usage:**
 - MiniMax M2.7 highspeed for search, quick fixes, explanations, tests, writing, and fast utility work
 - MiniMax M3 for orchestration (Sisyphus), continuation (Atlas), and cost-efficient everyday coding
-- Qwen3.8 Max for strategic planning, architecture, hard debugging, and long-horizon investigation (Kimi K3-256k first fallback)
+- Qwen3.8 Max for strategic planning, architecture, hard debugging, and long-horizon investigation (Baseten DeepSeek V4 Pro 0813 first fallback, then Kimi K3-256k)
 - Qwen3.7 Plus for vision tasks (multimodal-looker, visual-engineering) — Qwen3.8 Max fallback for harder visual work
-- GLM-5.2 for refactoring, plan consulting, plan review, critique, and creative tasks (Kimi K3-256k first fallback)
+- GLM-5.2 for refactoring, plan consulting, plan review, critique, and creative tasks (Baseten DeepSeek V4 Pro 0813 first fallback, then Kimi K3-256k)
 - DeepSeek V4 Flash 0731 for `@vulcan` long-horizon autonomous work and `sisyphus-junior` delegated task execution
+- Baseten DeepSeek V4 Pro 0813 as direct fallback for bailian primaries — cheaper than Kimi and still frontier-class; preserves Kimi quota for the deep-reasoning tasks that genuinely need it
 - Runtime fallback retries quota, timeout, and provider errors, and escalates stalled primary requests after 30 seconds
 
 ### Cost-Saving Tips
