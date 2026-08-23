@@ -288,6 +288,27 @@
             "output": 32768
           }
         },
+        "z-ai/glm-5.3": {
+          "name": "GLM-5.3 (OpenRouter)",
+          "family": "glm",
+          "attachment": false,
+          "reasoning": true,
+          "tool_call": true,
+          "temperature": true,
+          "release_date": "2026-08-15",
+          "modalities": {
+            "input": ["text"],
+            "output": ["text"]
+          },
+          "cost": {
+            "input": 0.0000014,
+            "output": 0.0000044
+          },
+          "limit": {
+            "context": 1048576,
+            "output": 131072
+          }
+        },
         "deepseek/deepseek-v4-flash-0731": {
           "name": "DeepSeek V4 Flash 0731 (OpenRouter)",
           "family": "deepseek",

@@ -133,7 +133,8 @@ opencode
 - MiniMax M3 is the default session model (orchestration is cheap delegation, not deep reasoning)
 - Qwen3.8 Max is the primary for deep reasoning (oracle, prometheus, ultrabrain, hephaestus, deep category); OpenRouter Qwen3.8 Max is the first fallback (same model, different provider), Kimi K3-256k kept as second fallback
 - Qwen3.7 Plus is the primary for vision tasks (multimodal-looker, visual-engineering); OpenRouter DeepSeek V4 Flash Vision Exp is the direct (1st) fallback, then Qwen3.8 Max for harder visual work
-- GLM-5.2 is the primary for deliberative work (metis, momus, refactor, artistry, unspecified-high); OpenRouter GLM-5.2 is the first fallback (same model, different provider), Kimi K3-256k kept as second fallback
+- Kimi K3-256k is the primary for deliberative work (`metis`, `momus`, `refactor`, `artistry`, `unspecified-high`) — leverages the Kimi Code sub the user is already paying for and reduces Bailian token-plan pressure; OpenRouter GLM-5.3 is the first fallback (preserves the deliberative-family behavior), MiniMax M3 is the second fallback
+- Bailian GLM-5.2 was removed from the deliberative chains but remains wired in the `bailian-token-plan-personal` provider for manual selection
 - DeepSeek V4 Flash 0731 powers `vulcan` (long-horizon autonomous, fallback: OpenRouter V4 Flash 0731 → MiniMax M3) and `sisyphus-junior` (delegated executor, fallback: MiniMax M3 → M2.7 HS)
 - OpenRouter acts as a same-model, second-provider failover for bailian — capability preserved across a bailian outage while Kimi quota stays in reserve for the deepest reasoning tasks
 - Baseten DeepSeek V4 Pro 0813 / V4 Flash 0731 are wired into the `baseten` provider for **manual** selection only; not in automatic fallback chains

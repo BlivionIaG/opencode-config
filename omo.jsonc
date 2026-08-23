@@ -75,18 +75,16 @@
         ]
       },
       "metis": {
-        "model": "bailian-token-plan-personal/glm-5.2",
+        "model": "kimi-for-coding/k3-256k",
         "fallback_models": [
-          "openrouter/z-ai/glm-5.2",
-          "kimi-for-coding/k3-256k",
+          "openrouter/z-ai/glm-5.3",
           "minimax/MiniMax-M3"
         ]
       },
       "momus": {
-        "model": "bailian-token-plan-personal/glm-5.2",
+        "model": "kimi-for-coding/k3-256k",
         "fallback_models": [
-          "openrouter/z-ai/glm-5.2",
-          "kimi-for-coding/k3-256k",
+          "openrouter/z-ai/glm-5.3",
           "minimax/MiniMax-M3"
         ]
       },
@@ -131,10 +129,9 @@
         "fallback_models": ["minimax/MiniMax-M3"]
       },
       "refactor": {
-        "model": "bailian-token-plan-personal/glm-5.2",
+        "model": "kimi-for-coding/k3-256k",
         "fallback_models": [
-          "openrouter/z-ai/glm-5.2",
-          "kimi-for-coding/k3-256k",
+          "openrouter/z-ai/glm-5.3",
           "minimax/MiniMax-M3"
         ]
       },
@@ -164,10 +161,9 @@
         ]
       },
       "artistry": {
-        "model": "bailian-token-plan-personal/glm-5.2",
+        "model": "kimi-for-coding/k3-256k",
         "fallback_models": [
-          "openrouter/z-ai/glm-5.2",
-          "kimi-for-coding/k3-256k",
+          "openrouter/z-ai/glm-5.3",
           "minimax/MiniMax-M3"
         ]
       },
@@ -176,10 +172,9 @@
         "fallback_models": ["minimax/MiniMax-M3"]
       },
       "unspecified-high": {
-        "model": "bailian-token-plan-personal/glm-5.2",
+        "model": "kimi-for-coding/k3-256k",
         "fallback_models": [
-          "openrouter/z-ai/glm-5.2",
-          "kimi-for-coding/k3-256k",
+          "openrouter/z-ai/glm-5.3",
           "minimax/MiniMax-M3"
         ]
       }
