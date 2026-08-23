@@ -386,8 +386,8 @@
       "mode": "all",
       "model": "bailian-token-plan-personal/deepseek-v4-flash-0731",
       "fallback_models": [
-        "minimax/MiniMax-M3",
-        "openrouter/deepseek/deepseek-v4-flash-0731"
+        "openrouter/deepseek/deepseek-v4-flash-0731",
+        "minimax/MiniMax-M3"
       ],
       "prompt": "{file:./agents/vulcan.md}"
     }
