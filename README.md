@@ -124,17 +124,17 @@ opencode
 | Delegated task execution | `sisyphus-junior` | DeepSeek V4 Flash 0731 | ~3-5s |
 | Deep analysis | `@oracle` | Qwen3.8 Max (OpenRouter Qwen3.8 Max → Kimi K3-256k fallback) | ~8s |
 | Architecture | `@prometheus` | Qwen3.8 Max (OpenRouter Qwen3.8 Max → Kimi K3-256k fallback) | ~8-10s |
-| Vision tasks | `@multimodal-looker` | Qwen3.7 Plus (Qwen3.8 Max fallback) | ~3-5s |
-| UI/frontend | `visual-engineering` category | Qwen3.7 Plus (Qwen3.8 Max fallback) | ~5-8s |
-| Long-horizon implementation | `@vulcan` | DeepSeek V4 Flash 0731 | varies |
+| Vision tasks | `@multimodal-looker` | Qwen3.7 Plus (OpenRouter V4 Flash Vision Exp → Qwen3.8 Max fallback) | ~3-5s |
+| UI/frontend | `visual-engineering` category | Qwen3.7 Plus (OpenRouter V4 Flash Vision Exp → Qwen3.8 Max fallback) | ~5-8s |
+| Long-horizon implementation | `@vulcan` | DeepSeek V4 Flash 0731 (MiniMax M3 → OpenRouter V4 Flash 0731 fallback) | varies |
 
 ### Cost Optimization
 
 - MiniMax M3 is the default session model (orchestration is cheap delegation, not deep reasoning)
 - Qwen3.8 Max is the primary for deep reasoning (oracle, prometheus, ultrabrain, hephaestus, deep category); OpenRouter Qwen3.8 Max is the first fallback (same model, different provider), Kimi K3-256k kept as second fallback
-- Qwen3.7 Plus is the primary for vision tasks (multimodal-looker, visual-engineering); Qwen3.8 Max as fallback for harder visual work
+- Qwen3.7 Plus is the primary for vision tasks (multimodal-looker, visual-engineering); OpenRouter DeepSeek V4 Flash Vision Exp is the direct (1st) fallback, then Qwen3.8 Max for harder visual work
 - GLM-5.2 is the primary for deliberative work (metis, momus, refactor, artistry, unspecified-high); OpenRouter GLM-5.2 is the first fallback (same model, different provider), Kimi K3-256k kept as second fallback
-- DeepSeek V4 Flash 0731 powers `vulcan` (long-horizon autonomous) and `sisyphus-junior` (delegated executor)
+- DeepSeek V4 Flash 0731 powers `vulcan` (long-horizon autonomous, fallback: MiniMax M3 → OpenRouter V4 Flash 0731) and `sisyphus-junior` (delegated executor, fallback: MiniMax M3 → M2.7 HS)
 - OpenRouter acts as a same-model, second-provider failover for bailian — capability preserved across a bailian outage while Kimi quota stays in reserve for the deepest reasoning tasks
 - Baseten DeepSeek V4 Pro 0813 / V4 Flash 0731 are wired into the `baseten` provider for **manual** selection only; not in automatic fallback chains
 - MiniMax M2.7 Highspeed uses the token-plan key and is configured as OpenCode's fast/small model

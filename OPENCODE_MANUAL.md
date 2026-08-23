@@ -63,7 +63,7 @@ opencode "Your task here"
 ### Enabled Providers
 
 1. **bailian-token-plan-personal** - Alibaba Cloud Model Studio (Singapore token-plan endpoint, Anthropic-compatible). Qwen3.8 Max, Qwen3.7 Max/Plus, Qwen3.6 Flash, GLM-5.2, DeepSeek V4 Pro/Flash. Default primary for deep-reasoning and image-input tasks.
-2. **openrouter** - OpenRouter (OpenAI-compatible). Hosts the same bailian models (Qwen3.8 Max, Qwen3.7 Plus, GLM-5.2, DeepSeek V4 Flash 0731) via a second provider. Acts as the **first automatic fallback** for bailian Qwen3.8 Max and GLM-5.2 — same model, different provider, so a bailian outage doesn't degrade capability.
+2. **openrouter** - OpenRouter (OpenAI-compatible). Hosts the same bailian models (Qwen3.8 Max, Qwen3.7 Plus, GLM-5.2, DeepSeek V4 Flash 0731) via a second provider, plus the vision-capable DeepSeek V4 Flash Vision Exp. Acts as the **first automatic fallback** for bailian Qwen3.8 Max and GLM-5.2 — same model, different provider, so a bailian outage doesn't degrade capability. The vision-exp model is the direct fallback for vision tasks (multimodal-looker, visual-engineering).
 3. **kimi-for-coding** - Kimi K3 and K3-256k (Kimi Code Plan; K3 up to 1M context on Allegro+, K3-256k fixed 256k context). Kept as second fallback for bailian-anchored slots (OpenRouter is first).
 4. **baseten** - Baseten Model APIs (OpenAI-compatible). Hosts DeepSeek V4 Flash 0731 and DeepSeek V4 Pro 0813. Used for **manual** selection (e.g., `baseten/deepseek-ai/DeepSeek-V4-Pro-0813` via `@vulcan` ad-hoc) — not in automatic fallback chains since the same role is covered by OpenRouter.
 5. **minimax** - MiniMax M3 and M2.7 Highspeed token plan (fast models, up to 1M context)
@@ -81,6 +81,8 @@ opencode "Your task here"
 | **DeepSeek V4 Flash 0731** | `bailian-token-plan-personal/deepseek-v4-flash-0731` | TBD | TBD | TBD | TBD | 5 | 5 | Best intelligence/speed balance for coding; powers `vulcan` (long-horizon autonomous) and `sisyphus-junior` (delegated executor) |
 | **DeepSeek V4 Pro 0813 (Baseten)** | `baseten/deepseek-ai/DeepSeek-V4-Pro-0813` | TBD | TBD | 1M | no | 3 | 4 | Manual use only. 1.6T MoE (49B active), 1M context, fp4. Pick explicitly when you want frontier-class DeepSeek via Baseten. |
 | **DeepSeek V4 Flash 0731 (Baseten)** | `baseten/deepseek-ai/DeepSeek-V4-Flash-0731` | TBD | TBD | 1M | no | 5 | 5 | Manual use only. Mirror of the bailian V4 Flash 0731; cheapest DeepSeek option on Baseten. |
+| **DeepSeek V4 Flash 0731 (OpenRouter)** | `openrouter/deepseek/deepseek-v4-flash-0731` | TBD | TBD | 1.3M | no | 5 | 5 | Mirror of bailian V4 Flash 0731 served via OpenRouter. **2nd fallback for `vulcan`** — keeps the DeepSeek family available if bailian DeepSeek fails. |
+| **DeepSeek V4 Flash Vision Exp (OpenRouter)** | `openrouter/deepseek/deepseek-v4-flash-vision-exp` | TBD | TBD | 1M | yes | 5 | 5 | Vision-capable DeepSeek V4 Flash variant. **Direct (1st) fallback for `multimodal-looker` and `visual-engineering`** — a vision-capable model at the front of the fallback chain before bailian Qwen3.8 Max. Experimental (-exp) upstream; $0.22/$0.66 per M tokens. |
 | **Kimi K3** | `kimi-for-coding/k3` | KCB v2 72.9% | Terminal-Bench 2.1 88.3% | 1M | 5 | 2 | 2 | Long-horizon work, video input (now second fallback for Qwen3.8 Max, behind OpenRouter) |
 | **Kimi K3-256k** | `kimi-for-coding/k3-256k` | same as K3 | same as K3 | 256K | 3 | 2 | 3 | Visual tasks (image only), architecture, hard debugging, strategic planning; half the quota of K3 |
 | **MiniMax M3** | `minimax/MiniMax-M3` | SWE-Bench Pro 59.0% | MCP Atlas 74.2% | 400K | 4 | 4 | 5 | Everyday coding, orchestration, continuation, cost-efficient deep work |
@@ -140,8 +142,17 @@ opencode "Your task here"
 - ✅ Best intelligence/speed balance for coding among the bailian lineup
 - ✅ Token-plan cost (per the user's evaluation: better than DeepSeek V4 Pro for agentic use)
 - ✅ Now powers `vulcan` (long-horizon autonomous) and `sisyphus-junior` (delegated executor)
+- ✅ `vulcan` fallback chain: MiniMax M3 → OpenRouter DeepSeek V4 Flash 0731 (same model, different provider) — keeps the DeepSeek family available across a bailian outage
 - ⚠️ Provider config has no reasoning/thinking options — agent-level `reasoning: "auto"` is what enables reasoning
 - Use for: agentic workhorse, delegated task execution, long-horizon autonomous work where v4-flash's speed advantage matters
+
+**DeepSeek V4 Flash Vision Exp (`openrouter/deepseek/deepseek-v4-flash-vision-exp`)**
+- ✅ Vision-capable variant of DeepSeek V4 Flash served via OpenRouter (text + image input)
+- ✅ Direct (1st) fallback for `multimodal-looker` and `visual-engineering` — keeps a vision-capable model in front of the bailian Qwen3.8 Max fallback for vision tasks
+- ✅ Cheap ($0.22/$0.66 per M tokens) and fast — 1M context
+- ⚠️ Experimental (-exp) upstream — pin it explicitly if you depend on it
+- ⚠️ Provider config has no reasoning/thinking options — relies on default reasoning
+- Use for: vision tasks when bailian Qwen3.7 Plus is rate-limited or down
 
 **DeepSeek V4 Pro 0813 (`baseten/deepseek-ai/DeepSeek-V4-Pro-0813`)**
 - ✅ Frontier-class 1.6T MoE (49B active) at fp4, 1M context
@@ -201,9 +212,10 @@ opencode "Your task here"
 | Model | Where it is used | Why it was chosen |
 |-------|------------------|-------------------|
 | **Qwen3.8 Max** | Agents: `hephaestus`, `oracle`, `prometheus`<br>Categories: `deep`, `ultrabrain` | Primary for the K3-slot. 256K thinking budget + 983K context + image input. OpenRouter Qwen3.8 Max is the first fallback (same model, different provider), Kimi K3-256k is the second fallback. Used for vision only as a fallback (Qwen3.7 Plus is the primary for vision tasks). |
-| **Qwen3.7 Plus** | Agents: `multimodal-looker`<br>Categories: `visual-engineering` | Primary for vision tasks. 8K thinking budget + vision input. Cheaper than Qwen3.8 Max for typical vision work; Qwen3.8 Max as fallback for harder visual reasoning. |
+| **Qwen3.7 Plus** | Agents: `multimodal-looker`<br>Categories: `visual-engineering` | Primary for vision tasks. 8K thinking budget + vision input. Cheaper than Qwen3.8 Max for typical vision work; OpenRouter DeepSeek V4 Flash Vision Exp is the direct (1st) fallback (vision-capable, fast), then Qwen3.8 Max for harder visual reasoning. |
 | **GLM-5.2** | Agents: `metis`, `momus`<br>Categories: `refactor`, `artistry`, `unspecified-high` | Primary for the deliberative/refactor/creative slot. Deliberative reasoning with 8K thinking budget; different model family for diversity. OpenRouter GLM-5.2 is the first fallback (same model, different provider), Kimi K3-256k is the second fallback. |
-| **DeepSeek V4 Flash 0731** | Agents: `vulcan` (`opencode.json`), `sisyphus-junior` | Agentic workhorse with best intelligence/speed balance per the user's evaluation. Powers `vulcan` (long-horizon autonomous) and `sisyphus-junior` (delegated executor). No reasoning/thinking config at provider level — agent-level `reasoning: "auto"` is mandatory. |
+| **DeepSeek V4 Flash 0731** | Agents: `vulcan` (`opencode.json`), `sisyphus-junior` | Agentic workhorse with best intelligence/speed balance per the user's evaluation. Powers `vulcan` (long-horizon autonomous) and `sisyphus-junior` (delegated executor). No reasoning/thinking config at provider level — agent-level `reasoning: "auto"` is mandatory. `vulcan` also has an OpenRouter V4 Flash 0731 fallback (MiniMax M3 first). |
+| **DeepSeek V4 Flash Vision Exp (OpenRouter)** | Direct fallback for `multimodal-looker`, `visual-engineering` | Vision-capable DeepSeek V4 Flash variant on OpenRouter. First automatic vision fallback — keeps a vision-capable model in front of the bailian Qwen3.8 Max fallback. |
 | **Qwen3.8 Max (OpenRouter)** | First fallback for `hephaestus`, `oracle`, `prometheus`, `deep`, `ultrabrain` | Same model as bailian Qwen3.8 Max, served via OpenRouter. First automatic failover when bailian is rate-limited or down — no capability loss. |
 | **GLM-5.2 (OpenRouter)** | First fallback for `metis`, `momus`, `refactor`, `artistry`, `unspecified-high` | Same model as bailian GLM-5.2, served via OpenRouter. First automatic failover for deliberative slots. |
 | **Kimi K3-256k** | Second fallback for `oracle`, `prometheus`, `ultrabrain`, `visual-engineering`, `metis`, `momus`, `refactor`, `artistry`, `unspecified-high`<br>Also fallback for `hephaestus`, `multimodal-looker`, `deep` (behind K3 1M) | Same K3 intelligence at fixed 256K context; half the quota of K3 1M. Best for architecture, hard debugging, strategic planning, image-based visual tasks. |
@@ -211,7 +223,7 @@ opencode "Your task here"
 | **MiniMax M3** | Agents: `sisyphus`, `atlas` | Best speed/intelligence/cost balance for orchestration, continuation, and everyday coding. Keeps the main loop and long-running handlers fast and cheap. |
 | **MiniMax M2.7 Highspeed** | Agents: `librarian`, `explore`<br>Categories: `quick`, `fix`, `search`, `test`, `explain`, `writing`, `unspecified-low` | Fastest, cheapest model for high-volume utility work: search, docs, quick fixes, tests, and writing. Configured as the OpenCode `small_model`. |
 
-**Fallback logic:** Bailian Qwen3.8 Max primary falls back to OpenRouter Qwen3.8 Max (same model, different provider) → Kimi K3-256k → MiniMax M3. Bailian Qwen3.7 Plus primary falls back to Qwen3.8 Max (vision) → Kimi K3 → MiniMax M3. Bailian GLM-5.2 primary falls back to OpenRouter GLM-5.2 (same model, different provider) → Kimi K3-256k → MiniMax M3. Bailian DeepSeek V4 Flash primary falls back to MiniMax M3 → MiniMax M2.7 HS. MiniMax M3 primary falls back to K3-256k. MiniMax M2.7 highspeed primary falls back to M3. The OpenRouter layer is the first automatic failover — same model means a bailian outage doesn't degrade capability, while Kimi K3 stays in reserve for the deepest reasoning tasks where its 1M context and image input are actually needed.
+**Fallback logic:** Bailian Qwen3.8 Max primary falls back to OpenRouter Qwen3.8 Max (same model, different provider) → Kimi K3-256k → MiniMax M3. Bailian Qwen3.7 Plus primary (vision) falls back to OpenRouter DeepSeek V4 Flash Vision Exp (vision-capable) → Qwen3.8 Max (vision) → Kimi K3 → MiniMax M3. Bailian GLM-5.2 primary falls back to OpenRouter GLM-5.2 (same model, different provider) → Kimi K3-256k → MiniMax M3. Bailian DeepSeek V4 Flash primary (vulcan) falls back to MiniMax M3 → OpenRouter DeepSeek V4 Flash 0731 (same model, different provider). Bailian DeepSeek V4 Flash primary (sisyphus-junior) falls back to MiniMax M3 → MiniMax M2.7 HS. MiniMax M3 primary falls back to K3-256k. MiniMax M2.7 highspeed primary falls back to M3. The OpenRouter layer is the first automatic failover — same model means a bailian outage doesn't degrade capability, while Kimi K3 stays in reserve for the deepest reasoning tasks where its 1M context and image input are actually needed.
 
 ## Agents Guide
 
@@ -222,7 +234,7 @@ opencode "Your task here"
 | **Sisyphus** | `minimax/MiniMax-M3` | thinking adaptive | 16384 | Main orchestrator, delegates tasks (no fallback — runtime retries only) |
 | **Atlas** | `minimax/MiniMax-M3` | thinking disabled / instant | 16384 | Plan orchestration, task coordination, continuation |
 | **Hephaestus** | `bailian-token-plan-personal/qwen3.8-max` | `reasoning: max` | 32768 | Deep autonomous work, long-horizon implementation. OpenRouter Qwen3.8 Max first fallback (same model), then Kimi K3. |
-| **Vulcan** | `bailian-token-plan-personal/deepseek-v4-flash-0731` | native agent (`agents/vulcan.md`) | 32768 | Deep autonomous work, long-horizon implementation. v4-flash tuned for fast intelligent agentic execution. |
+| **Vulcan** | `bailian-token-plan-personal/deepseek-v4-flash-0731` | native agent (`agents/vulcan.md`) | 32768 | Deep autonomous work, long-horizon implementation. v4-flash tuned for fast intelligent agentic execution. Fallback chain: MiniMax M3 → OpenRouter DeepSeek V4 Flash 0731. |
 | **Prometheus** | `bailian-token-plan-personal/qwen3.8-max` | `reasoning: max` | 32768 | Strategic planning. OpenRouter Qwen3.8 Max first fallback (same model), then Kimi K3-256k. |
 
 ### Utility Agents
@@ -231,7 +243,7 @@ opencode "Your task here"
 |-------|-------|----------------|------------|---------|
 | **Explore** | `minimax/MiniMax-M2.7-highspeed` | thinking disabled | 8192 | Fast codebase grep, search |
 | **Librarian** | `minimax/MiniMax-M2.7-highspeed` | thinking disabled | 16384 | Documentation and external reference search |
-| **Multimodal-Looker** | `bailian-token-plan-personal/qwen3.7-plus` | `reasoning: max` | 32768 | Vision tasks, screenshots, UI analysis. Qwen3.8 Max first fallback for harder visual reasoning. |
+| **Multimodal-Looker** | `bailian-token-plan-personal/qwen3.7-plus` | `reasoning: max` | 32768 | Vision tasks, screenshots, UI analysis. OpenRouter DeepSeek V4 Flash Vision Exp first fallback (vision-capable, fast), then Qwen3.8 Max for harder visual reasoning. |
 | **Sisyphus-Junior** | `bailian-token-plan-personal/deepseek-v4-flash-0731` | `reasoning: auto` | 4096-32768 | Focused delegated task execution. v4-flash as agentic workhorse; MiniMax M3 fallback. |
 
 ### Special Agents
@@ -278,7 +290,7 @@ Sisyphus automatically categorizes your requests based on keywords:
 | **refactor** | refactor, cleanup, optimize | GLM-5.2 thinking, 32768 maxTokens | ~8s (OpenRouter GLM-5.2 → K3-256k fallback) |
 | **deep** | debug, investigate, analyze | Qwen3.8 Max reasoning, 32768 maxTokens | ~8s (OpenRouter Qwen3.8 Max → Kimi K3 fallback) |
 | **ultrabrain** | architect, design, plan | Qwen3.8 Max reasoning, 32768 maxTokens | ~10s (OpenRouter Qwen3.8 Max → Kimi K3-256k fallback) |
-| **visual-engineering** | UI, frontend, screenshot, design | Qwen3.7 Plus reasoning, 32768 maxTokens | ~8s (Qwen3.8 Max / Kimi K3-256k fallback) |
+| **visual-engineering** | UI, frontend, screenshot, design | Qwen3.7 Plus reasoning, 32768 maxTokens | ~8s (OpenRouter V4 Flash Vision Exp → Qwen3.8 Max → Kimi K3-256k fallback) |
 | **artistry** | creative, unconventional, novel | GLM-5.2 thinking, 32768 maxTokens | ~8s (OpenRouter GLM-5.2 → K3-256k fallback) |
 | **unspecified-low** | lightweight, simple, small | MiniMax M2.7 HS, 4096 maxTokens | ~1-2s |
 | **unspecified-high** | complex, important, high stakes | GLM-5.2 reasoning, 32768 maxTokens | ~8s (OpenRouter GLM-5.2 → K3-256k fallback) |
@@ -378,6 +390,8 @@ Your config uses bailian (Qwen3.8 Max / GLM-5.2) for quality-critical reasoning,
 | Refactoring | GLM-5.2 (OpenRouter GLM-5.2 → K3-256k fallback) | Token-plan cost | ~8s |
 | Deep analysis | Qwen3.8 Max (OpenRouter Qwen3.8 Max → K3-256k fallback) | Token-plan cost | ~8s |
 | Architecture planning | Qwen3.8 Max (OpenRouter Qwen3.8 Max → K3-256k → MiniMax M3 fallback) | Token-plan cost | ~8-10s |
+| Vision task | Qwen3.7 Plus (OpenRouter V4 Flash Vision Exp → Qwen3.8 Max → K3 fallback) | Token-plan cost | ~3-5s |
+| Long-horizon work (`vulcan`) | DeepSeek V4 Flash 0731 (MiniMax M3 → OpenRouter V4 Flash 0731 fallback) | Token-plan cost | varies |
 
 ### Your Monthly Budget
 
@@ -393,9 +407,9 @@ Your config uses bailian (Qwen3.8 Max / GLM-5.2) for quality-critical reasoning,
 - MiniMax M2.7 highspeed for search, quick fixes, explanations, tests, writing, and fast utility work
 - MiniMax M3 for orchestration (Sisyphus), continuation (Atlas), and cost-efficient everyday coding
 - Qwen3.8 Max for strategic planning, architecture, hard debugging, and long-horizon investigation (OpenRouter Qwen3.8 Max first fallback, then Kimi K3-256k)
-- Qwen3.7 Plus for vision tasks (multimodal-looker, visual-engineering) — Qwen3.8 Max fallback for harder visual work
+- Qwen3.7 Plus for vision tasks (multimodal-looker, visual-engineering) — OpenRouter DeepSeek V4 Flash Vision Exp as the first fallback, then Qwen3.8 Max for harder visual work
 - GLM-5.2 for refactoring, plan consulting, plan review, critique, and creative tasks (OpenRouter GLM-5.2 first fallback, then Kimi K3-256k)
-- DeepSeek V4 Flash 0731 for `@vulcan` long-horizon autonomous work and `sisyphus-junior` delegated task execution
+- DeepSeek V4 Flash 0731 for `@vulcan` long-horizon autonomous work (MiniMax M3 → OpenRouter V4 Flash 0731 fallback) and `sisyphus-junior` delegated task execution (MiniMax M3 → M2.7 HS fallback)
 - OpenRouter Qwen3.8 Max and GLM-5.2 as the first automatic fallback for bailian primaries — same model, different provider, so a bailian outage doesn't degrade capability while Kimi K3 stays in reserve
 - Baseten DeepSeek V4 Pro 0813 and Baseten DeepSeek V4 Flash 0731 reserved for **manual** selection (e.g., `baseten/deepseek-ai/DeepSeek-V4-Pro-0813`) — not in automatic fallback chains
 - Runtime fallback retries quota, timeout, and provider errors, and escalates stalled primary requests after 30 seconds

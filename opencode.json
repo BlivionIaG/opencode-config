@@ -308,6 +308,27 @@
             "context": 1310720,
             "output": 32768
           }
+        },
+        "deepseek/deepseek-v4-flash-vision-exp": {
+          "name": "DeepSeek V4 Flash Vision (OpenRouter, experimental)",
+          "family": "deepseek",
+          "attachment": true,
+          "reasoning": true,
+          "tool_call": true,
+          "temperature": true,
+          "release_date": "2026-08-13",
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"]
+          },
+          "cost": {
+            "input": 0.00000022,
+            "output": 0.00000066
+          },
+          "limit": {
+            "context": 1048576,
+            "output": 32768
+          }
         }
       }
     }
@@ -364,6 +385,10 @@
       "description": "Deep autonomous worker (DeepSeek V4 Flash 0731) - long-horizon implementation, large refactors, multi-step goals. Prompt tuned for one task at a time, no premature scaling.",
       "mode": "all",
       "model": "bailian-token-plan-personal/deepseek-v4-flash-0731",
+      "fallback_models": [
+        "minimax/MiniMax-M3",
+        "openrouter/deepseek/deepseek-v4-flash-0731"
+      ],
       "prompt": "{file:./agents/vulcan.md}"
     }
   }

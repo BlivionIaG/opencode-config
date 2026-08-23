@@ -60,6 +60,7 @@
       "multimodal-looker": {
         "model": "bailian-token-plan-personal/qwen3.7-plus",
         "fallback_models": [
+          "openrouter/deepseek/deepseek-v4-flash-vision-exp",
           "bailian-token-plan-personal/qwen3.8-max",
           "kimi-for-coding/k3",
           "minimax/MiniMax-M3"
@@ -156,6 +157,7 @@
       "visual-engineering": {
         "model": "bailian-token-plan-personal/qwen3.7-plus",
         "fallback_models": [
+          "openrouter/deepseek/deepseek-v4-flash-vision-exp",
           "bailian-token-plan-personal/qwen3.8-max",
           "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
