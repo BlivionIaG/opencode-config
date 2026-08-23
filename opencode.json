@@ -216,6 +216,100 @@
           }
         }
       }
+    },
+    "openrouter": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "OpenRouter",
+      "options": {
+        "baseURL": "https://openrouter.ai/api/v1",
+        "apiKey": "{env:OPENROUTER_API_KEY}"
+      },
+      "models": {
+        "qwen/qwen3.8-max": {
+          "name": "Qwen3.8 Max (OpenRouter)",
+          "family": "qwen3",
+          "attachment": false,
+          "reasoning": true,
+          "tool_call": true,
+          "temperature": true,
+          "release_date": "2026-08-01",
+          "modalities": {
+            "input": ["text"],
+            "output": ["text"]
+          },
+          "cost": {
+            "input": 0.000002,
+            "output": 0.000006
+          },
+          "limit": {
+            "context": 1000000,
+            "output": 32768
+          }
+        },
+        "qwen/qwen3.7-plus": {
+          "name": "Qwen3.7 Plus (OpenRouter)",
+          "family": "qwen3",
+          "attachment": false,
+          "reasoning": true,
+          "tool_call": true,
+          "temperature": true,
+          "release_date": "2026-07-15",
+          "modalities": {
+            "input": ["text"],
+            "output": ["text"]
+          },
+          "cost": {
+            "input": 0.00000032,
+            "output": 0.00000128
+          },
+          "limit": {
+            "context": 1000000,
+            "output": 32768
+          }
+        },
+        "z-ai/glm-5.2": {
+          "name": "GLM-5.2 (OpenRouter)",
+          "family": "glm",
+          "attachment": false,
+          "reasoning": true,
+          "tool_call": true,
+          "temperature": true,
+          "release_date": "2026-07-20",
+          "modalities": {
+            "input": ["text"],
+            "output": ["text"]
+          },
+          "cost": {
+            "input": 0.000000966,
+            "output": 0.000003036
+          },
+          "limit": {
+            "context": 1048576,
+            "output": 32768
+          }
+        },
+        "deepseek/deepseek-v4-flash-0731": {
+          "name": "DeepSeek V4 Flash 0731 (OpenRouter)",
+          "family": "deepseek",
+          "attachment": false,
+          "reasoning": true,
+          "tool_call": true,
+          "temperature": true,
+          "release_date": "2026-07-31",
+          "modalities": {
+            "input": ["text"],
+            "output": ["text"]
+          },
+          "cost": {
+            "input": 0.00000008,
+            "output": 0.00000018
+          },
+          "limit": {
+            "context": 1310720,
+            "output": 32768
+          }
+        }
+      }
     }
   },
   "model": "minimax/MiniMax-M3",
@@ -226,7 +320,8 @@
     "kimi-for-coding",
     "sglang-test",
     "bailian-token-plan-personal",
-    "baseten"
+    "baseten",
+    "openrouter"
   ],
   "mcp": {
     "n8n-mcp": {

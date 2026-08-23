@@ -32,7 +32,7 @@
       "hephaestus": {
         "model": "bailian-token-plan-personal/qwen3.8-max",
         "fallback_models": [
-          "baseten/deepseek-ai/DeepSeek-V4-Pro-0813",
+          "openrouter/qwen/qwen3.8-max",
           "kimi-for-coding/k3",
           "minimax/MiniMax-M3"
         ]
@@ -40,7 +40,7 @@
       "oracle": {
         "model": "bailian-token-plan-personal/qwen3.8-max",
         "fallback_models": [
-          "baseten/deepseek-ai/DeepSeek-V4-Pro-0813",
+          "openrouter/qwen/qwen3.8-max",
           "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
         ]
@@ -68,7 +68,7 @@
       "prometheus": {
         "model": "bailian-token-plan-personal/qwen3.8-max",
         "fallback_models": [
-          "baseten/deepseek-ai/DeepSeek-V4-Pro-0813",
+          "openrouter/qwen/qwen3.8-max",
           "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
         ]
@@ -76,7 +76,7 @@
       "metis": {
         "model": "bailian-token-plan-personal/glm-5.2",
         "fallback_models": [
-          "baseten/deepseek-ai/DeepSeek-V4-Pro-0813",
+          "openrouter/z-ai/glm-5.2",
           "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
         ]
@@ -84,7 +84,7 @@
       "momus": {
         "model": "bailian-token-plan-personal/glm-5.2",
         "fallback_models": [
-          "baseten/deepseek-ai/DeepSeek-V4-Pro-0813",
+          "openrouter/z-ai/glm-5.2",
           "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
         ]
@@ -132,7 +132,7 @@
       "refactor": {
         "model": "bailian-token-plan-personal/glm-5.2",
         "fallback_models": [
-          "baseten/deepseek-ai/DeepSeek-V4-Pro-0813",
+          "openrouter/z-ai/glm-5.2",
           "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
         ]
@@ -140,7 +140,7 @@
       "deep": {
         "model": "bailian-token-plan-personal/qwen3.8-max",
         "fallback_models": [
-          "baseten/deepseek-ai/DeepSeek-V4-Pro-0813",
+          "openrouter/qwen/qwen3.8-max",
           "kimi-for-coding/k3",
           "minimax/MiniMax-M3"
         ]
@@ -148,7 +148,7 @@
       "ultrabrain": {
         "model": "bailian-token-plan-personal/qwen3.8-max",
         "fallback_models": [
-          "baseten/deepseek-ai/DeepSeek-V4-Pro-0813",
+          "openrouter/qwen/qwen3.8-max",
           "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
         ]
@@ -164,7 +164,7 @@
       "artistry": {
         "model": "bailian-token-plan-personal/glm-5.2",
         "fallback_models": [
-          "baseten/deepseek-ai/DeepSeek-V4-Pro-0813",
+          "openrouter/z-ai/glm-5.2",
           "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
         ]
@@ -176,7 +176,7 @@
       "unspecified-high": {
         "model": "bailian-token-plan-personal/glm-5.2",
         "fallback_models": [
-          "baseten/deepseek-ai/DeepSeek-V4-Pro-0813",
+          "openrouter/z-ai/glm-5.2",
           "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
         ]

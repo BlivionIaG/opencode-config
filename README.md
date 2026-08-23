@@ -80,6 +80,9 @@ export BAILIAN_TOKEN_PLAN_API_KEY="your_actual_key_here"
 # Baseten (Model APIs, OpenAI-compatible - direct DeepSeek V4 Flash 0731 + V4 Pro 0813 hosting)
 export BASETEN_API_KEY="your_actual_key_here"
 
+# OpenRouter (OpenAI-compatible - same bailian models via second provider, automatic fallback)
+export OPENROUTER_API_KEY="your_actual_key_here"
+
 # n8n-mcp (optional, only if you use the n8n MCP server)
 export N8N_API_URL="https://your-n8n-instance.example.com"
 export N8N_API_KEY="your_n8n_api_key_here"
@@ -119,8 +122,8 @@ opencode
 | Search/Grep | `@explore` | MiniMax M2.7 highspeed | ~1-2s |
 | Quick fixes | quick/fix category | MiniMax M2.7 highspeed | ~1-2s |
 | Delegated task execution | `sisyphus-junior` | DeepSeek V4 Flash 0731 | ~3-5s |
-| Deep analysis | `@oracle` | Qwen3.8 Max (Baseten V4 Pro → Kimi K3-256k fallback) | ~8s |
-| Architecture | `@prometheus` | Qwen3.8 Max (Baseten V4 Pro → Kimi K3-256k fallback) | ~8-10s |
+| Deep analysis | `@oracle` | Qwen3.8 Max (OpenRouter Qwen3.8 Max → Kimi K3-256k fallback) | ~8s |
+| Architecture | `@prometheus` | Qwen3.8 Max (OpenRouter Qwen3.8 Max → Kimi K3-256k fallback) | ~8-10s |
 | Vision tasks | `@multimodal-looker` | Qwen3.7 Plus (Qwen3.8 Max fallback) | ~3-5s |
 | UI/frontend | `visual-engineering` category | Qwen3.7 Plus (Qwen3.8 Max fallback) | ~5-8s |
 | Long-horizon implementation | `@vulcan` | DeepSeek V4 Flash 0731 | varies |
@@ -128,11 +131,12 @@ opencode
 ### Cost Optimization
 
 - MiniMax M3 is the default session model (orchestration is cheap delegation, not deep reasoning)
-- Qwen3.8 Max is the primary for deep reasoning (oracle, prometheus, ultrabrain, hephaestus, deep category); Baseten DeepSeek V4 Pro 0813 is the first fallback (cheaper than Kimi), Kimi K3-256k kept as second fallback
+- Qwen3.8 Max is the primary for deep reasoning (oracle, prometheus, ultrabrain, hephaestus, deep category); OpenRouter Qwen3.8 Max is the first fallback (same model, different provider), Kimi K3-256k kept as second fallback
 - Qwen3.7 Plus is the primary for vision tasks (multimodal-looker, visual-engineering); Qwen3.8 Max as fallback for harder visual work
-- GLM-5.2 is the primary for deliberative work (metis, momus, refactor, artistry, unspecified-high); Baseten DeepSeek V4 Pro 0813 is the first fallback, Kimi K3-256k kept as second fallback
+- GLM-5.2 is the primary for deliberative work (metis, momus, refactor, artistry, unspecified-high); OpenRouter GLM-5.2 is the first fallback (same model, different provider), Kimi K3-256k kept as second fallback
 - DeepSeek V4 Flash 0731 powers `vulcan` (long-horizon autonomous) and `sisyphus-junior` (delegated executor)
-- Baseten DeepSeek V4 Pro 0813 acts as the direct baseten-hosted fallback for bailian Qwen3.8 Max and GLM-5.2 — frontier-class at $1.32/M input vs Kimi K3's $3/M input
+- OpenRouter acts as a same-model, second-provider failover for bailian — capability preserved across a bailian outage while Kimi quota stays in reserve for the deepest reasoning tasks
+- Baseten DeepSeek V4 Pro 0813 / V4 Flash 0731 are wired into the `baseten` provider for **manual** selection only; not in automatic fallback chains
 - MiniMax M2.7 Highspeed uses the token-plan key and is configured as OpenCode's fast/small model
 - Runtime fallback escalates stalled or quota-limited requests after 30 seconds
 - Category routing sets per-task `variant`/`thinking` and `maxTokens` budgets
