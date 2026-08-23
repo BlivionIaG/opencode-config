@@ -121,24 +121,30 @@ opencode
 |-----------|-------|-------|-------|
 | Search/Grep | `@explore` | MiniMax M2.7 highspeed | ~1-2s |
 | Quick fixes | quick/fix category | MiniMax M2.7 highspeed | ~1-2s |
-| Delegated task execution | `sisyphus-junior` | DeepSeek V4 Flash 0731 | ~3-5s |
-| Deep analysis | `@oracle` | Qwen3.8 Max (OpenRouter Qwen3.8 Max → Kimi K3-256k fallback) | ~8s |
-| Architecture | `@prometheus` | Qwen3.8 Max (OpenRouter Qwen3.8 Max → Kimi K3-256k fallback) | ~8-10s |
-| Vision tasks | `@multimodal-looker` | Qwen3.7 Plus (OpenRouter V4 Flash Vision Exp → Qwen3.8 Max fallback) | ~3-5s |
-| UI/frontend | `visual-engineering` category | Qwen3.7 Plus (OpenRouter V4 Flash Vision Exp → Qwen3.8 Max fallback) | ~5-8s |
-| Long-horizon implementation | `@vulcan` | DeepSeek V4 Flash 0731 (OpenRouter V4 Flash 0731 → MiniMax M3 fallback) | varies |
+| Orchestration | `sisyphus` | OpenRouter DeepSeek V4 Flash 0731 (MiniMax M3 fallback) | varies |
+| Delegated task execution | `sisyphus-junior` | OpenRouter DeepSeek V4 Flash 0731 (MiniMax M3 → M2.7 HS fallback) | ~3-5s |
+| Continuation | `atlas` | OpenRouter Qwen3.8 Max (MiniMax M3 fallback) | varies |
+| Deep analysis | `@oracle` | Kimi K3-256k (OpenRouter V4 Pro 0813 → MiniMax M3 fallback) | ~8s |
+| Architecture | `@prometheus` | Kimi K3-256k (OpenRouter V4 Pro 0813 → MiniMax M3 fallback) | ~8-10s |
+| Deep autonomous | `@hephaestus` | OpenRouter GPT-5.6 Sol (Kimi K3 → OpenRouter V4 Pro 0813 → MiniMax M3 fallback) | ~10s |
+| Plan consulting | `@metis` / `@momus` | Kimi K3-256k (OpenRouter GLM-5.3 → MiniMax M3 fallback) | ~8s |
+| Vision tasks | `@multimodal-looker` | Kimi K3-256k (MiniMax M3 fallback) | ~3-5s |
+| UI/frontend | `visual-engineering` category | Kimi K3-256k (MiniMax M3 fallback) | ~5-8s |
+| Long-horizon implementation | `@vulcan` | Bailian DeepSeek V4 Flash 0731 (OpenRouter V4 Flash 0731 → MiniMax M3 fallback) | varies |
 
 ### Cost Optimization
 
-- MiniMax M3 is the default session model (orchestration is cheap delegation, not deep reasoning)
-- Qwen3.8 Max is the primary for deep reasoning (oracle, prometheus, ultrabrain, hephaestus, deep category); OpenRouter Qwen3.8 Max is the first fallback (same model, different provider), Kimi K3-256k kept as second fallback
-- Qwen3.7 Plus is the primary for vision tasks (multimodal-looker, visual-engineering); OpenRouter DeepSeek V4 Flash Vision Exp is the direct (1st) fallback, then Qwen3.8 Max for harder visual work
-- Kimi K3-256k is the primary for deliberative work (`metis`, `momus`, `refactor`, `artistry`, `unspecified-high`) — leverages the Kimi Code sub the user is already paying for and reduces Bailian token-plan pressure; OpenRouter GLM-5.3 is the first fallback (preserves the deliberative-family behavior), MiniMax M3 is the second fallback
-- Bailian GLM-5.2 was removed from the deliberative chains but remains wired in the `bailian-token-plan-personal` provider for manual selection
-- DeepSeek V4 Flash 0731 powers `vulcan` (long-horizon autonomous, fallback: OpenRouter V4 Flash 0731 → MiniMax M3) and `sisyphus-junior` (delegated executor, fallback: MiniMax M3 → M2.7 HS)
-- OpenRouter acts as a same-model, second-provider failover for bailian — capability preserved across a bailian outage while Kimi quota stays in reserve for the deepest reasoning tasks
+- `sisyphus` runs on OpenRouter DeepSeek V4 Flash 0731 (~$0.08/M input) — cheap, fast agentic workhorse; MiniMax M3 is the last-resort fallback
+- `sisyphus-junior` runs on OpenRouter DeepSeek V4 Flash 0731 (~$0.08/M input) — cheap, fast delegated execution; MiniMax M3 → M2.7 HS are the fallbacks
+- `atlas` runs on OpenRouter Qwen3.8 Max (~$2/M input) — front-tier reasoning for continuation
+- `hephaestus` runs on OpenRouter GPT-5.6 Sol (~$2/M input) — frontier OpenAI model for deep autonomous work; falls back to Kimi K3 → OpenRouter DeepSeek V4 Pro 0813 → MiniMax M3
+- Heavy-reasoning slots (`oracle`, `prometheus`, `deep`, `ultrabrain`) use Kimi K3 / K3-256k as primary — leverages the user's existing Kimi Code sub. OpenRouter DeepSeek V4 Pro 0813 (~$1.12/M) is the first fallback if Kimi is rate-limited, MiniMax M3 is the second
+- Deliberative slots (`metis`, `momus`, `refactor`, `artistry`, `unspecified-high`) use Kimi K3-256k as primary; OpenRouter GLM-5.3 (~$1.40/M) is the first fallback, MiniMax M3 is the second
+- Vision slots (`multimodal-looker`, `visual-engineering`) use Kimi K3-256k (image input supported) → MiniMax M3
+- Bailian Qwen3.8 Max, Qwen3.7 Plus, and GLM-5.2 are wired for **manual** selection only — the Bailian token-plan is being dropped next month (auto-routes migrated to OpenRouter + Kimi)
+- Bailian DeepSeek V4 Flash 0731 retained for `vulcan` (cheap token-plan primary for long-horizon work); OpenRouter V4 Flash 0731 → MiniMax M3 is the fallback
 - Baseten DeepSeek V4 Pro 0813 / V4 Flash 0731 are wired into the `baseten` provider for **manual** selection only; not in automatic fallback chains
-- MiniMax M2.7 Highspeed uses the token-plan key and is configured as OpenCode's fast/small model
+- MiniMax M2.7 Highspeed is configured as OpenCode's fast/small model; MiniMax M3 is the default session model and the last-resort fallback for every chain
 - Runtime fallback escalates stalled or quota-limited requests after 30 seconds
 - Category routing sets per-task `variant`/`thinking` and `maxTokens` budgets
 

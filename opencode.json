@@ -309,6 +309,48 @@
             "output": 131072
           }
         },
+        "openai/gpt-5.6-sol": {
+          "name": "GPT-5.6 Sol (OpenRouter)",
+          "family": "openai",
+          "attachment": true,
+          "reasoning": true,
+          "tool_call": true,
+          "temperature": true,
+          "release_date": "2026-08-15",
+          "modalities": {
+            "input": ["text", "image", "file"],
+            "output": ["text"]
+          },
+          "cost": {
+            "input": 0.000002,
+            "output": 0.00001
+          },
+          "limit": {
+            "context": 1050000,
+            "output": 128000
+          }
+        },
+        "deepseek/deepseek-v4-pro-0813": {
+          "name": "DeepSeek V4 Pro 0813 (OpenRouter)",
+          "family": "deepseek",
+          "attachment": false,
+          "reasoning": true,
+          "tool_call": true,
+          "temperature": true,
+          "release_date": "2026-08-13",
+          "modalities": {
+            "input": ["text"],
+            "output": ["text"]
+          },
+          "cost": {
+            "input": 0.000001122,
+            "output": 0.000003366
+          },
+          "limit": {
+            "context": 1048576,
+            "output": 32768
+          }
+        },
         "deepseek/deepseek-v4-flash-0731": {
           "name": "DeepSeek V4 Flash 0731 (OpenRouter)",
           "family": "deepseek",

@@ -25,23 +25,24 @@
       "sisyphus": {
         "mode": "primary",
         "displayName": "Sisyphus - ultraworker",
-        "model": "minimax/MiniMax-M3",
+        "model": "openrouter/deepseek/deepseek-v4-flash-0731",
         "reasoning": "auto",
-        "fallback_models": []
+        "fallback_models": [
+          "minimax/MiniMax-M3"
+        ]
       },
       "hephaestus": {
-        "model": "bailian-token-plan-personal/qwen3.8-max",
+        "model": "openrouter/openai/gpt-5.6-sol",
         "fallback_models": [
-          "openrouter/qwen/qwen3.8-max",
           "kimi-for-coding/k3",
+          "openrouter/deepseek/deepseek-v4-pro-0813",
           "minimax/MiniMax-M3"
         ]
       },
       "oracle": {
-        "model": "bailian-token-plan-personal/qwen3.8-max",
+        "model": "kimi-for-coding/k3-256k",
         "fallback_models": [
-          "openrouter/qwen/qwen3.8-max",
-          "kimi-for-coding/k3-256k",
+          "openrouter/deepseek/deepseek-v4-pro-0813",
           "minimax/MiniMax-M3"
         ]
       },
@@ -58,19 +59,15 @@
         ]
       },
       "multimodal-looker": {
-        "model": "bailian-token-plan-personal/qwen3.7-plus",
+        "model": "kimi-for-coding/k3-256k",
         "fallback_models": [
-          "openrouter/deepseek/deepseek-v4-flash-vision-exp",
-          "bailian-token-plan-personal/qwen3.8-max",
-          "kimi-for-coding/k3",
           "minimax/MiniMax-M3"
         ]
       },
       "prometheus": {
-        "model": "bailian-token-plan-personal/qwen3.8-max",
+        "model": "kimi-for-coding/k3-256k",
         "fallback_models": [
-          "openrouter/qwen/qwen3.8-max",
-          "kimi-for-coding/k3-256k",
+          "openrouter/deepseek/deepseek-v4-pro-0813",
           "minimax/MiniMax-M3"
         ]
       },
@@ -89,13 +86,13 @@
         ]
       },
       "atlas": {
-        "model": "minimax/MiniMax-M3",
+        "model": "openrouter/qwen/qwen3.8-max",
         "fallback_models": [
-          "kimi-for-coding/k3-256k"
+          "minimax/MiniMax-M3"
         ]
       },
       "sisyphus-junior": {
-        "model": "bailian-token-plan-personal/deepseek-v4-flash-0731",
+        "model": "openrouter/deepseek/deepseek-v4-flash-0731",
         "reasoning": "auto",
         "fallback_models": [
           "minimax/MiniMax-M3",
@@ -136,27 +133,22 @@
         ]
       },
       "deep": {
-        "model": "bailian-token-plan-personal/qwen3.8-max",
+        "model": "kimi-for-coding/k3",
         "fallback_models": [
-          "openrouter/qwen/qwen3.8-max",
-          "kimi-for-coding/k3",
+          "openrouter/deepseek/deepseek-v4-pro-0813",
           "minimax/MiniMax-M3"
         ]
       },
       "ultrabrain": {
-        "model": "bailian-token-plan-personal/qwen3.8-max",
+        "model": "kimi-for-coding/k3-256k",
         "fallback_models": [
-          "openrouter/qwen/qwen3.8-max",
-          "kimi-for-coding/k3-256k",
+          "openrouter/deepseek/deepseek-v4-pro-0813",
           "minimax/MiniMax-M3"
         ]
       },
       "visual-engineering": {
-        "model": "bailian-token-plan-personal/qwen3.7-plus",
+        "model": "kimi-for-coding/k3-256k",
         "fallback_models": [
-          "openrouter/deepseek/deepseek-v4-flash-vision-exp",
-          "bailian-token-plan-personal/qwen3.8-max",
-          "kimi-for-coding/k3-256k",
           "minimax/MiniMax-M3"
         ]
       },
