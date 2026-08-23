@@ -318,7 +318,7 @@
           "temperature": true,
           "release_date": "2026-08-15",
           "modalities": {
-            "input": ["text", "image", "file"],
+            "input": ["text", "image", "pdf"],
             "output": ["text"]
           },
           "cost": {
