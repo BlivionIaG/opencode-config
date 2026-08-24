@@ -124,8 +124,8 @@ opencode
 | Orchestration | `sisyphus` | OpenRouter DeepSeek V4 Flash 0731 (MiniMax M3 fallback) | varies |
 | Delegated task execution | `sisyphus-junior` | OpenRouter DeepSeek V4 Flash 0731 (MiniMax M3 → M2.7 HS fallback) | ~3-5s |
 | Continuation | `atlas` | OpenRouter Qwen3.8 Max (MiniMax M3 fallback) | varies |
-| Deep analysis | `@oracle` | Kimi K3-256k (OpenRouter V4 Pro 0813 → MiniMax M3 fallback) | ~8s |
-| Architecture | `@prometheus` | Kimi K3-256k (OpenRouter V4 Pro 0813 → MiniMax M3 fallback) | ~8-10s |
+| Deep analysis | `@oracle` | Kimi K3 1M (OpenRouter V4 Pro 0813 → MiniMax M3 fallback) | ~8s |
+| Architecture | `@prometheus` | Kimi K3 1M (OpenRouter V4 Pro 0813 → MiniMax M3 fallback) | ~8-10s |
 | Deep autonomous | `@hephaestus` | OpenRouter GPT-5.6 Sol (Kimi K3 → OpenRouter V4 Pro 0813 → MiniMax M3 fallback) | ~10s |
 | Plan consulting | `@metis` / `@momus` | Kimi K3-256k (OpenRouter GLM-5.3 → MiniMax M3 fallback) | ~8s |
 | Vision tasks | `@multimodal-looker` | Kimi K3-256k (MiniMax M3 fallback) | ~3-5s |
@@ -138,7 +138,7 @@ opencode
 - `sisyphus-junior` runs on OpenRouter DeepSeek V4 Flash 0731 (~$0.08/M input) — cheap, fast delegated execution; MiniMax M3 → M2.7 HS are the fallbacks
 - `atlas` runs on OpenRouter Qwen3.8 Max (~$2/M input) — front-tier reasoning for continuation
 - `hephaestus` runs on OpenRouter GPT-5.6 Sol (~$2/M input) — frontier OpenAI model for deep autonomous work; falls back to Kimi K3 → OpenRouter DeepSeek V4 Pro 0813 → MiniMax M3
-- Heavy-reasoning slots (`oracle`, `prometheus`, `deep`, `ultrabrain`) use Kimi K3 / K3-256k as primary — leverages the user's existing Kimi Code sub. OpenRouter DeepSeek V4 Pro 0813 (~$1.12/M) is the first fallback if Kimi is rate-limited, MiniMax M3 is the second
+- Heavy-reasoning slots (`oracle`, `prometheus`, `deep`, `ultrabrain`) use Kimi K3 (1M context) as primary — leverages the user's existing Kimi Code sub. OpenRouter DeepSeek V4 Pro 0813 (~$1.12/M) is the first fallback if Kimi is rate-limited, MiniMax M3 is the second
 - Deliberative slots (`metis`, `momus`, `refactor`, `artistry`, `unspecified-high`) use Kimi K3-256k as primary; OpenRouter GLM-5.3 (~$1.40/M) is the first fallback, MiniMax M3 is the second
 - Vision slots (`multimodal-looker`, `visual-engineering`) use Kimi K3-256k (image input supported) → MiniMax M3
 - Bailian Qwen3.8 Max, Qwen3.7 Plus, and GLM-5.2 are wired for **manual** selection only — the Bailian token-plan is being dropped next month (auto-routes migrated to OpenRouter + Kimi)

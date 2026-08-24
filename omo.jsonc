@@ -40,7 +40,7 @@
         ]
       },
       "oracle": {
-        "model": "kimi-for-coding/k3-256k",
+        "model": "kimi-for-coding/k3",
         "fallback_models": [
           "openrouter/deepseek/deepseek-v4-pro-0813",
           "minimax/MiniMax-M3"
@@ -65,7 +65,7 @@
         ]
       },
       "prometheus": {
-        "model": "kimi-for-coding/k3-256k",
+        "model": "kimi-for-coding/k3",
         "fallback_models": [
           "openrouter/deepseek/deepseek-v4-pro-0813",
           "minimax/MiniMax-M3"
@@ -140,7 +140,7 @@
         ]
       },
       "ultrabrain": {
-        "model": "kimi-for-coding/k3-256k",
+        "model": "kimi-for-coding/k3",
         "fallback_models": [
           "openrouter/deepseek/deepseek-v4-pro-0813",
           "minimax/MiniMax-M3"
