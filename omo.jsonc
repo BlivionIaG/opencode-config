@@ -28,6 +28,7 @@
         "model": "openrouter/minimax/minimax-m3",
         "reasoning": "auto",
         "fallback_models": [
+          "openrouter/minimax/minimax-m3",
           "minimax/MiniMax-M3",
           "openrouter/deepseek/deepseek-v4-flash-0731"
         ]
@@ -37,6 +38,7 @@
         "fallback_models": [
           "kimi-for-coding/k3",
           "openrouter/deepseek/deepseek-v4-pro-0813",
+          "openrouter/minimax/minimax-m3",
           "minimax/MiniMax-M3"
         ]
       },
@@ -44,24 +46,28 @@
         "model": "kimi-for-coding/k3",
         "fallback_models": [
           "openrouter/deepseek/deepseek-v4-pro-0813",
+          "openrouter/minimax/minimax-m3",
           "minimax/MiniMax-M3"
         ]
       },
       "librarian": {
         "model": "minimax/MiniMax-M2.7-highspeed",
         "fallback_models": [
+          "openrouter/minimax/minimax-m3",
           "minimax/MiniMax-M3"
         ]
       },
       "explore": {
         "model": "minimax/MiniMax-M2.7-highspeed",
         "fallback_models": [
+          "openrouter/minimax/minimax-m3",
           "minimax/MiniMax-M3"
         ]
       },
       "multimodal-looker": {
         "model": "kimi-for-coding/k3-256k",
         "fallback_models": [
+          "openrouter/minimax/minimax-m3",
           "minimax/MiniMax-M3"
         ]
       },
@@ -69,6 +75,7 @@
         "model": "kimi-for-coding/k3",
         "fallback_models": [
           "openrouter/deepseek/deepseek-v4-pro-0813",
+          "openrouter/minimax/minimax-m3",
           "minimax/MiniMax-M3"
         ]
       },
@@ -76,6 +83,7 @@
         "model": "kimi-for-coding/k3-256k",
         "fallback_models": [
           "openrouter/z-ai/glm-5.3",
+          "openrouter/minimax/minimax-m3",
           "minimax/MiniMax-M3"
         ]
       },
@@ -83,12 +91,14 @@
         "model": "kimi-for-coding/k3-256k",
         "fallback_models": [
           "openrouter/z-ai/glm-5.3",
+          "openrouter/minimax/minimax-m3",
           "minimax/MiniMax-M3"
         ]
       },
       "atlas": {
         "model": "openrouter/qwen/qwen3.8-max",
         "fallback_models": [
+          "openrouter/minimax/minimax-m3",
           "minimax/MiniMax-M3"
         ]
       },
@@ -96,6 +106,7 @@
         "model": "openrouter/deepseek/deepseek-v4-flash-0731",
         "reasoning": "auto",
         "fallback_models": [
+          "openrouter/minimax/minimax-m3",
           "minimax/MiniMax-M3",
           "minimax/MiniMax-M2.7-highspeed"
         ]
@@ -104,32 +115,33 @@
     "categories": {
       "quick": {
         "model": "minimax/MiniMax-M2.7-highspeed",
-        "fallback_models": ["minimax/MiniMax-M3"]
+        "fallback_models": ["openrouter/minimax/minimax-m3", "minimax/MiniMax-M3"]
       },
       "fix": {
         "model": "minimax/MiniMax-M2.7-highspeed",
-        "fallback_models": ["minimax/MiniMax-M3"]
+        "fallback_models": ["openrouter/minimax/minimax-m3", "minimax/MiniMax-M3"]
       },
       "search": {
         "model": "minimax/MiniMax-M2.7-highspeed",
-        "fallback_models": ["minimax/MiniMax-M3"]
+        "fallback_models": ["openrouter/minimax/minimax-m3", "minimax/MiniMax-M3"]
       },
       "test": {
         "model": "minimax/MiniMax-M2.7-highspeed",
-        "fallback_models": ["minimax/MiniMax-M3"]
+        "fallback_models": ["openrouter/minimax/minimax-m3", "minimax/MiniMax-M3"]
       },
       "writing": {
         "model": "minimax/MiniMax-M2.7-highspeed",
-        "fallback_models": ["minimax/MiniMax-M3"]
+        "fallback_models": ["openrouter/minimax/minimax-m3", "minimax/MiniMax-M3"]
       },
       "explain": {
         "model": "minimax/MiniMax-M2.7-highspeed",
-        "fallback_models": ["minimax/MiniMax-M3"]
+        "fallback_models": ["openrouter/minimax/minimax-m3", "minimax/MiniMax-M3"]
       },
       "refactor": {
         "model": "kimi-for-coding/k3-256k",
         "fallback_models": [
           "openrouter/z-ai/glm-5.3",
+          "openrouter/minimax/minimax-m3",
           "minimax/MiniMax-M3"
         ]
       },
@@ -137,6 +149,7 @@
         "model": "kimi-for-coding/k3",
         "fallback_models": [
           "openrouter/deepseek/deepseek-v4-pro-0813",
+          "openrouter/minimax/minimax-m3",
           "minimax/MiniMax-M3"
         ]
       },
@@ -144,12 +157,14 @@
         "model": "kimi-for-coding/k3",
         "fallback_models": [
           "openrouter/deepseek/deepseek-v4-pro-0813",
+          "openrouter/minimax/minimax-m3",
           "minimax/MiniMax-M3"
         ]
       },
       "visual-engineering": {
         "model": "kimi-for-coding/k3-256k",
         "fallback_models": [
+          "openrouter/minimax/minimax-m3",
           "minimax/MiniMax-M3"
         ]
       },
@@ -157,17 +172,19 @@
         "model": "kimi-for-coding/k3-256k",
         "fallback_models": [
           "openrouter/z-ai/glm-5.3",
+          "openrouter/minimax/minimax-m3",
           "minimax/MiniMax-M3"
         ]
       },
       "unspecified-low": {
         "model": "minimax/MiniMax-M2.7-highspeed",
-        "fallback_models": ["minimax/MiniMax-M3"]
+        "fallback_models": ["openrouter/minimax/minimax-m3", "minimax/MiniMax-M3"]
       },
       "unspecified-high": {
         "model": "kimi-for-coding/k3-256k",
         "fallback_models": [
           "openrouter/z-ai/glm-5.3",
+          "openrouter/minimax/minimax-m3",
           "minimax/MiniMax-M3"
         ]
       }
