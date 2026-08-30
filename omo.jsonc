@@ -28,7 +28,7 @@
         "model": "openrouter/minimax/minimax-m3",
         "reasoning": "auto",
         "fallback_models": [
-          "minimax/MiniMax-M3"
+          "openrouter/deepseek/deepseek-v4-flash-0731"
         ]
       },
       "hephaestus": {

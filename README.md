@@ -121,7 +121,7 @@ opencode
 |-----------|-------|-------|-------|
 | Search/Grep | `@explore` | MiniMax M2.7 highspeed | ~1-2s |
 | Quick fixes | quick/fix category | MiniMax M2.7 highspeed | ~1-2s |
-| Orchestration | `sisyphus` | OpenRouter MiniMax M3 (MiniMax M3 fallback) | varies |
+| Orchestration | `sisyphus` | OpenRouter MiniMax M3 (OpenRouter V4 Flash 0731 fallback) | varies |
 | Delegated task execution | `sisyphus-junior` | OpenRouter DeepSeek V4 Flash 0731 (MiniMax M3 → M2.7 HS fallback) | ~3-5s |
 | Continuation | `atlas` | OpenRouter Qwen3.8 Max (MiniMax M3 fallback) | varies |
 | Deep analysis | `@oracle` | Kimi K3 1M (OpenRouter V4 Pro 0813 → MiniMax M3 fallback) | ~8s |
@@ -134,7 +134,7 @@ opencode
 
 ### Cost Optimization
 
-- `sisyphus` runs on OpenRouter MiniMax M3 — primary orchestration model; MiniMax M3 is the last-resort fallback
+- `sisyphus` runs on OpenRouter MiniMax M3 — primary orchestration model; OpenRouter DeepSeek V4 Flash 0731 is the last-resort fallback
 - `sisyphus-junior` runs on OpenRouter DeepSeek V4 Flash 0731 (~$0.08/M input) — cheap, fast delegated execution; MiniMax M3 → M2.7 HS are the fallbacks
 - `atlas` runs on OpenRouter Qwen3.8 Max (~$2/M input) — front-tier reasoning for continuation
 - `hephaestus` runs on OpenRouter GPT-5.6 Sol (~$2/M input) — frontier OpenAI model for deep autonomous work; falls back to Kimi K3 → OpenRouter DeepSeek V4 Pro 0813 → MiniMax M3
