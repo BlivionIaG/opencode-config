@@ -27,7 +27,7 @@ scripts/sync-omo.sh push
 
 echo "==> Checking API keys"
 missing=()
-for k in KIMI_API_KEY MINIMAX_API_KEY CHENCO_API_KEY BAILIAN_TOKEN_PLAN_API_KEY; do
+for k in KIMI_API_KEY MINIMAX_API_KEY CHENCO_API_KEY; do
   if [ -z "${!k:-}" ]; then missing+=("$k"); fi
 done
 if [ "${#missing[@]}" -eq 0 ]; then

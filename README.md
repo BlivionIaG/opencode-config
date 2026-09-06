@@ -8,8 +8,7 @@ This repository contains OpenCode AI agent configurations optimized for speed, r
 |------|---------|
 | `omo.jsonc` | Main agent configuration (agents, categories, routing) - unified OMO schema, synced to `~/.omo/omo.jsonc` |
 | `scripts/sync-omo.sh` | Syncs repo `omo.jsonc` with the live plugin config (push/pull/check/doctor) |
-| `opencode.json` | Core provider settings, default MiniMax M3 model, Chenco Qwen3.6 models, MiniMax models, native agents (`vulcan`) |
-| `agents/vulcan.md` | System prompt for the Vulcan deep-worker agent (Kimi K3, 1M context) |
+| `opencode.json` | Core provider settings, default MiniMax M3 model, Chenco Qwen3.6 models, MiniMax models |
 | `OPENCODE_MANUAL.md` | Complete usage guide |
 
 ## Setup
@@ -74,13 +73,10 @@ export MINIMAX_API_KEY="your_actual_key_here"
 # Chenco OpenAI-compatible endpoint
 export CHENCO_API_KEY="your_actual_key_here"
 
-# Alibaba Cloud Model Studio (bailian token plan, Anthropic-compatible)
-export BAILIAN_TOKEN_PLAN_API_KEY="your_actual_key_here"
-
 # Baseten (Model APIs, OpenAI-compatible - direct DeepSeek V4 Flash 0731 + V4 Pro 0813 hosting)
 export BASETEN_API_KEY="your_actual_key_here"
 
-# OpenRouter (OpenAI-compatible - same bailian models via second provider, automatic fallback)
+# OpenRouter (OpenAI-compatible - broad model catalogue, automatic fallback)
 export OPENROUTER_API_KEY="your_actual_key_here"
 
 # n8n-mcp (optional, only if you use the n8n MCP server)
@@ -130,7 +126,6 @@ opencode
 | Plan consulting | `@metis` / `@momus` | Kimi K3-256k (OpenRouter GLM-5.3 → MiniMax M3 fallback) | ~8s |
 | Vision tasks | `@multimodal-looker` | Kimi K3-256k (MiniMax M3 fallback) | ~3-5s |
 | UI/frontend | `visual-engineering` category | Kimi K3-256k (MiniMax M3 fallback) | ~5-8s |
-| Long-horizon implementation | `@vulcan` | Bailian DeepSeek V4 Flash 0731 (OpenRouter V4 Flash 0731 → MiniMax M3 fallback) | varies |
 
 ### Cost Optimization
 
@@ -141,8 +136,6 @@ opencode
 - Heavy-reasoning slots (`oracle`, `prometheus`, `deep`, `ultrabrain`) use Kimi K3 (1M context) as primary — leverages the user's existing Kimi Code sub. OpenRouter DeepSeek V4 Pro 0813 (~$1.12/M) is the first fallback if Kimi is rate-limited, MiniMax M3 is the second
 - Deliberative slots (`metis`, `momus`, `refactor`, `artistry`, `unspecified-high`) use Kimi K3-256k as primary; OpenRouter GLM-5.3 (~$1.40/M) is the first fallback, MiniMax M3 is the second
 - Vision slots (`multimodal-looker`, `visual-engineering`) use Kimi K3-256k (image input supported) → MiniMax M3
-- Bailian Qwen3.8 Max, Qwen3.7 Plus, and GLM-5.2 are wired for **manual** selection only — the Bailian token-plan is being dropped next month (auto-routes migrated to OpenRouter + Kimi)
-- Bailian DeepSeek V4 Flash 0731 retained for `vulcan` (cheap token-plan primary for long-horizon work); OpenRouter V4 Flash 0731 → MiniMax M3 is the fallback
 - Baseten DeepSeek V4 Pro 0813 / V4 Flash 0731 are wired into the `baseten` provider for **manual** selection only; not in automatic fallback chains
 - MiniMax M2.7 Highspeed is configured as OpenCode's fast/small model; MiniMax M3 is the default session model and the last-resort fallback for every chain
 - Runtime fallback escalates stalled or quota-limited requests after 30 seconds

@@ -112,57 +112,6 @@
         }
       }
     },
-    "bailian-token-plan-personal": {
-      "npm": "@ai-sdk/anthropic",
-      "name": "Alibaba Cloud Model Studio",
-      "options": {
-        "baseURL": "https://token-plan.ap-southeast-1.maas.aliyuncs.com/apps/anthropic/v1",
-        "apiKey": "{env:BAILIAN_TOKEN_PLAN_API_KEY}"
-      },
-      "models": {
-        "qwen3.8-max": {
-          "name": "Qwen3.8 Max",
-          "contextWindow": 983616,
-          "maxOutputTokens": 131072,
-          "modalities": {
-            "input": ["text", "image"],
-            "output": ["text"]
-          },
-          "options": {
-            "thinking": {
-              "type": "enabled",
-              "budgetTokens": 262144
-            },
-            "reasoning": true
-          }
-        },
-        "qwen3.7-plus": {
-          "name": "Qwen3.7 Plus",
-          "modalities": {
-            "input": ["text", "image"],
-            "output": ["text"]
-          },
-          "options": {
-            "thinking": {
-              "type": "enabled",
-              "budgetTokens": 8192
-            }
-          }
-        },
-        "glm-5.2": {
-          "name": "GLM-5.2",
-          "options": {
-            "thinking": {
-              "type": "enabled",
-              "budgetTokens": 8192
-            }
-          }
-        },
-        "deepseek-v4-flash-0731": {
-          "name": "DeepSeek V4 Flash 0731"
-        }
-      }
-    },
     "baseten": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "Baseten",
@@ -426,7 +375,6 @@
     "minimax",
     "kimi-for-coding",
     "sglang-test",
-    "bailian-token-plan-personal",
     "baseten",
     "openrouter"
   ],
@@ -494,18 +442,5 @@
   },
   "plugin": [
     "oh-my-openagent@4.19.4"
-  ],
-  "agent": {
-    "vulcan": {
-      "description": "Deep autonomous worker (DeepSeek V4 Flash 0731) - long-horizon implementation, large refactors, multi-step goals. Prompt tuned for one task at a time, no premature scaling.",
-      "mode": "all",
-      "model": "bailian-token-plan-personal/deepseek-v4-flash-0731",
-      "fallback_models": [
-        "openrouter/deepseek/deepseek-v4-flash-0731",
-        "openrouter/minimax/minimax-m3",
-        "minimax/MiniMax-M3"
-      ],
-      "prompt": "{file:./agents/vulcan.md}"
-    }
-  }
+  ]
 }
