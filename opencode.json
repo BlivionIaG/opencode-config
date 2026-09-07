@@ -382,6 +382,12 @@
     "openrouter"
   ],
   "mcp": {
+    "discord": {
+      "type": "local",
+      "command": ["/Users/kletorch/Projects/Infra/discord-mcp/scripts/run-mcp.sh"],
+      "enabled": true,
+      "timeout": 45000
+    },
     "n8n-mcp": {
       "type": "local",
       "command": ["npx", "-y", "n8n-mcp"],
