@@ -124,8 +124,8 @@ opencode
 | Architecture | `@prometheus` | Kimi K3 1M (OpenRouter V4 Pro 0813 → MiniMax M3 fallback) | ~8-10s |
 | Deep autonomous | `@hephaestus` | OpenRouter GPT-5.6 Sol (Kimi K3 → OpenRouter V4 Pro 0813 → MiniMax M3 fallback) | ~10s |
 | Plan consulting | `@metis` / `@momus` | Kimi K3-256k (OpenRouter GLM-5.3 → MiniMax M3 fallback) | ~8s |
-| Vision tasks | `@multimodal-looker` | Kimi K3-256k (MiniMax M3 fallback) | ~3-5s |
-| UI/frontend | `visual-engineering` category | Kimi K3-256k (MiniMax M3 fallback) | ~5-8s |
+| Vision tasks | `@multimodal-looker` | Kimi K3-256k (OpenRouter GLM-5.3 → MiniMax M3 fallback) | ~3-5s |
+| UI/frontend | `visual-engineering` category | Kimi K3-256k (OpenRouter GLM-5.3 → MiniMax M3 fallback) | ~5-8s |
 
 ### Cost Optimization
 
@@ -135,7 +135,7 @@ opencode
 - `hephaestus` runs on OpenRouter GPT-5.6 Sol (~$2/M input) — frontier OpenAI model for deep autonomous work; falls back to Kimi K3 → OpenRouter DeepSeek V4 Pro 0813 → MiniMax M3
 - Heavy-reasoning slots (`oracle`, `prometheus`, `deep`, `ultrabrain`) use Kimi K3 (1M context) as primary — leverages the user's existing Kimi Code sub. OpenRouter DeepSeek V4 Pro 0813 (~$1.12/M) is the first fallback if Kimi is rate-limited, MiniMax M3 is the second
 - Deliberative slots (`metis`, `momus`, `refactor`, `artistry`, `unspecified-high`) use Kimi K3-256k as primary; OpenRouter GLM-5.3 (~$1.40/M) is the first fallback, MiniMax M3 is the second
-- Vision slots (`multimodal-looker`, `visual-engineering`) use Kimi K3-256k (image input supported) → MiniMax M3
+- Vision slots (`multimodal-looker`, `visual-engineering`) use Kimi K3-256k (image input supported); OpenRouter GLM-5.3 is the first fallback when Kimi is at capacity, MiniMax M3 is the second
 - Baseten DeepSeek V4 Pro 0813 / V4 Flash 0731 are wired into the `baseten` provider for **manual** selection only; not in automatic fallback chains
 - MiniMax M2.7 Highspeed is configured as OpenCode's fast/small model; MiniMax M3 is the default session model and the last-resort fallback for every chain
 - Runtime fallback escalates stalled or quota-limited requests after 30 seconds

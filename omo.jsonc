@@ -66,6 +66,7 @@
       "multimodal-looker": {
         "model": "kimi-for-coding/k3-256k",
         "fallback_models": [
+          "openrouter/z-ai/glm-5.3",
           "openrouter/minimax/minimax-m3",
           "minimax/MiniMax-M3"
         ]
@@ -163,6 +164,7 @@
       "visual-engineering": {
         "model": "kimi-for-coding/k3-256k",
         "fallback_models": [
+          "openrouter/z-ai/glm-5.3",
           "openrouter/minimax/minimax-m3",
           "minimax/MiniMax-M3"
         ]
