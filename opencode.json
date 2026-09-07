@@ -88,33 +88,6 @@
         }
       }
     },
-    "sglang-test": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "sglang-kt test instance (RTX PRO 2000, 192.168.1.121)",
-      "options": {
-        "baseURL": "http://192.168.1.121:30004/v1",
-        "apiKey": "not-required"
-      },
-      "models": {
-        "qwen3.6-35b-a3b": {
-          "name": "Qwen3.6-35B-A3B-FP8",
-          "family": "qwen3",
-          "attachment": false,
-          "reasoning": true,
-          "tool_call": true,
-          "temperature": true,
-          "release_date": "2026-07-19",
-          "modalities": {
-            "input": ["text"],
-            "output": ["text"]
-          },
-          "limit": {
-            "context": 49152,
-            "output": 8192
-          }
-        }
-      }
-    },
     "baseten": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "Baseten",
@@ -377,7 +350,6 @@
     "chenco",
     "minimax",
     "kimi-for-coding",
-    "sglang-test",
     "baseten",
     "openrouter"
   ],
