@@ -28,7 +28,6 @@
         "model": "openrouter/minimax/minimax-m3",
         "reasoning": "auto",
         "fallback_models": [
-          "minimax/MiniMax-M3",
           "openrouter/deepseek/deepseek-v4-flash-0731"
         ]
       },
@@ -37,156 +36,135 @@
         "fallback_models": [
           "kimi-for-coding/k3",
           "openrouter/deepseek/deepseek-v4-pro-0813",
-          "openrouter/minimax/minimax-m3",
-          "minimax/MiniMax-M3"
+          "openrouter/minimax/minimax-m3"
         ]
       },
       "oracle": {
         "model": "kimi-for-coding/k3",
         "fallback_models": [
           "openrouter/deepseek/deepseek-v4-pro-0813",
-          "openrouter/minimax/minimax-m3",
-          "minimax/MiniMax-M3"
+          "openrouter/minimax/minimax-m3"
         ]
       },
       "librarian": {
-        "model": "minimax/MiniMax-M2.7-highspeed",
-        "fallback_models": [
-          "openrouter/minimax/minimax-m3",
-          "minimax/MiniMax-M3"
-        ]
+        "model": "openrouter/minimax/minimax-m3",
+        "fallback_models": []
       },
       "explore": {
-        "model": "minimax/MiniMax-M2.7-highspeed",
-        "fallback_models": [
-          "openrouter/minimax/minimax-m3",
-          "minimax/MiniMax-M3"
-        ]
+        "model": "openrouter/minimax/minimax-m3",
+        "fallback_models": []
       },
       "multimodal-looker": {
         "model": "kimi-for-coding/k3-256k",
         "fallback_models": [
           "openrouter/z-ai/glm-5.3",
-          "openrouter/minimax/minimax-m3",
-          "minimax/MiniMax-M3"
+          "openrouter/minimax/minimax-m3"
         ]
       },
       "prometheus": {
         "model": "kimi-for-coding/k3",
         "fallback_models": [
           "openrouter/deepseek/deepseek-v4-pro-0813",
-          "openrouter/minimax/minimax-m3",
-          "minimax/MiniMax-M3"
+          "openrouter/minimax/minimax-m3"
         ]
       },
       "metis": {
         "model": "kimi-for-coding/k3-256k",
         "fallback_models": [
           "openrouter/z-ai/glm-5.3",
-          "openrouter/minimax/minimax-m3",
-          "minimax/MiniMax-M3"
+          "openrouter/minimax/minimax-m3"
         ]
       },
       "momus": {
         "model": "kimi-for-coding/k3-256k",
         "fallback_models": [
           "openrouter/z-ai/glm-5.3",
-          "openrouter/minimax/minimax-m3",
-          "minimax/MiniMax-M3"
+          "openrouter/minimax/minimax-m3"
         ]
       },
       "atlas": {
         "model": "openrouter/qwen/qwen3.8-max",
         "fallback_models": [
-          "openrouter/minimax/minimax-m3",
-          "minimax/MiniMax-M3"
+          "openrouter/minimax/minimax-m3"
         ]
       },
       "sisyphus-junior": {
         "model": "openrouter/deepseek/deepseek-v4-flash-0731",
         "reasoning": "auto",
         "fallback_models": [
-          "openrouter/minimax/minimax-m3",
-          "minimax/MiniMax-M3",
-          "minimax/MiniMax-M2.7-highspeed"
+          "openrouter/minimax/minimax-m3"
         ]
       }
     },
     "categories": {
       "quick": {
-        "model": "minimax/MiniMax-M2.7-highspeed",
-        "fallback_models": ["openrouter/minimax/minimax-m3", "minimax/MiniMax-M3"]
+        "model": "openrouter/minimax/minimax-m3",
+        "fallback_models": []
       },
       "fix": {
-        "model": "minimax/MiniMax-M2.7-highspeed",
-        "fallback_models": ["openrouter/minimax/minimax-m3", "minimax/MiniMax-M3"]
+        "model": "openrouter/minimax/minimax-m3",
+        "fallback_models": []
       },
       "search": {
-        "model": "minimax/MiniMax-M2.7-highspeed",
-        "fallback_models": ["openrouter/minimax/minimax-m3", "minimax/MiniMax-M3"]
+        "model": "openrouter/minimax/minimax-m3",
+        "fallback_models": []
       },
       "test": {
-        "model": "minimax/MiniMax-M2.7-highspeed",
-        "fallback_models": ["openrouter/minimax/minimax-m3", "minimax/MiniMax-M3"]
+        "model": "openrouter/minimax/minimax-m3",
+        "fallback_models": []
       },
       "writing": {
-        "model": "minimax/MiniMax-M2.7-highspeed",
-        "fallback_models": ["openrouter/minimax/minimax-m3", "minimax/MiniMax-M3"]
+        "model": "openrouter/minimax/minimax-m3",
+        "fallback_models": []
       },
       "explain": {
-        "model": "minimax/MiniMax-M2.7-highspeed",
-        "fallback_models": ["openrouter/minimax/minimax-m3", "minimax/MiniMax-M3"]
+        "model": "openrouter/minimax/minimax-m3",
+        "fallback_models": []
       },
       "refactor": {
         "model": "kimi-for-coding/k3-256k",
         "fallback_models": [
           "openrouter/z-ai/glm-5.3",
-          "openrouter/minimax/minimax-m3",
-          "minimax/MiniMax-M3"
+          "openrouter/minimax/minimax-m3"
         ]
       },
       "deep": {
         "model": "kimi-for-coding/k3",
         "fallback_models": [
           "openrouter/deepseek/deepseek-v4-pro-0813",
-          "openrouter/minimax/minimax-m3",
-          "minimax/MiniMax-M3"
+          "openrouter/minimax/minimax-m3"
         ]
       },
       "ultrabrain": {
         "model": "kimi-for-coding/k3",
         "fallback_models": [
           "openrouter/deepseek/deepseek-v4-pro-0813",
-          "openrouter/minimax/minimax-m3",
-          "minimax/MiniMax-M3"
+          "openrouter/minimax/minimax-m3"
         ]
       },
       "visual-engineering": {
         "model": "kimi-for-coding/k3-256k",
         "fallback_models": [
           "openrouter/z-ai/glm-5.3",
-          "openrouter/minimax/minimax-m3",
-          "minimax/MiniMax-M3"
+          "openrouter/minimax/minimax-m3"
         ]
       },
       "artistry": {
         "model": "kimi-for-coding/k3-256k",
         "fallback_models": [
           "openrouter/z-ai/glm-5.3",
-          "openrouter/minimax/minimax-m3",
-          "minimax/MiniMax-M3"
+          "openrouter/minimax/minimax-m3"
         ]
       },
       "unspecified-low": {
-        "model": "minimax/MiniMax-M2.7-highspeed",
-        "fallback_models": ["openrouter/minimax/minimax-m3", "minimax/MiniMax-M3"]
+        "model": "openrouter/minimax/minimax-m3",
+        "fallback_models": []
       },
       "unspecified-high": {
         "model": "kimi-for-coding/k3-256k",
         "fallback_models": [
           "openrouter/z-ai/glm-5.3",
-          "openrouter/minimax/minimax-m3",
-          "minimax/MiniMax-M3"
+          "openrouter/minimax/minimax-m3"
         ]
       }
     }

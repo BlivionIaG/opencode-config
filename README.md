@@ -8,7 +8,7 @@ This repository contains OpenCode AI agent configurations optimized for speed, r
 |------|---------|
 | `omo.jsonc` | Main agent configuration (agents, categories, routing) - unified OMO schema, synced to `~/.omo/omo.jsonc` |
 | `scripts/sync-omo.sh` | Syncs repo `omo.jsonc` with the live plugin config (push/pull/check/doctor) |
-| `opencode.json` | Core provider settings, default MiniMax M3 model, Chenco Qwen3.6 models, MiniMax models |
+| `opencode.json` | Core provider settings, default OpenRouter MiniMax M3 model, Chenco Qwen3.6 models, MiniMax models |
 | `OPENCODE_MANUAL.md` | Complete usage guide |
 
 ## Setup
@@ -67,7 +67,7 @@ Add the keys to your shell config so every process inherits them. Pick the file 
 # Kimi (if needed)
 export KIMI_API_KEY="your_actual_key_here"
 
-# MiniMax token plan
+# MiniMax key (onboarded in OpenRouter — OpenRouter access only; no direct provider)
 export MINIMAX_API_KEY="your_actual_key_here"
 
 # Chenco OpenAI-compatible endpoint
@@ -115,29 +115,29 @@ opencode
 
 | Task Type | Agent | Model | Speed |
 |-----------|-------|-------|-------|
-| Search/Grep | `@explore` | MiniMax M2.7 highspeed | ~1-2s |
-| Quick fixes | quick/fix category | MiniMax M2.7 highspeed | ~1-2s |
-| Orchestration | `sisyphus` | OpenRouter MiniMax M3 (MiniMax M3 → OpenRouter V4 Flash 0731 fallback) | varies |
-| Delegated task execution | `sisyphus-junior` | OpenRouter DeepSeek V4 Flash 0731 (MiniMax M3 → M2.7 HS fallback) | ~3-5s |
-| Continuation | `atlas` | OpenRouter Qwen3.8 Max (MiniMax M3 fallback) | varies |
-| Deep analysis | `@oracle` | Kimi K3 1M (OpenRouter V4 Pro 0813 → MiniMax M3 fallback) | ~8s |
-| Architecture | `@prometheus` | Kimi K3 1M (OpenRouter V4 Pro 0813 → MiniMax M3 fallback) | ~8-10s |
-| Deep autonomous | `@hephaestus` | OpenRouter GPT-5.6 Sol (Kimi K3 → OpenRouter V4 Pro 0813 → MiniMax M3 fallback) | ~10s |
-| Plan consulting | `@metis` / `@momus` | Kimi K3-256k (OpenRouter GLM-5.3 → MiniMax M3 fallback) | ~8s |
-| Vision tasks | `@multimodal-looker` | Kimi K3-256k (OpenRouter GLM-5.3 → MiniMax M3 fallback) | ~3-5s |
-| UI/frontend | `visual-engineering` category | Kimi K3-256k (OpenRouter GLM-5.3 → MiniMax M3 fallback) | ~5-8s |
+| Search/Grep | `@explore` | OpenRouter MiniMax M3 | ~2-3s |
+| Quick fixes | quick/fix category | OpenRouter MiniMax M3 | ~2-3s |
+| Orchestration | `sisyphus` | OpenRouter MiniMax M3 (OpenRouter V4 Flash 0731 fallback) | varies |
+| Delegated task execution | `sisyphus-junior` | OpenRouter DeepSeek V4 Flash 0731 (OpenRouter MiniMax M3 fallback) | ~3-5s |
+| Continuation | `atlas` | OpenRouter Qwen3.8 Max (OpenRouter MiniMax M3 fallback) | varies |
+| Deep analysis | `@oracle` | Kimi K3 1M (OpenRouter V4 Pro 0813 → OpenRouter MiniMax M3 fallback) | ~8s |
+| Architecture | `@prometheus` | Kimi K3 1M (OpenRouter V4 Pro 0813 → OpenRouter MiniMax M3 fallback) | ~8-10s |
+| Deep autonomous | `@hephaestus` | OpenRouter GPT-5.6 Sol (Kimi K3 → OpenRouter V4 Pro 0813 → OpenRouter MiniMax M3 fallback) | ~10s |
+| Plan consulting | `@metis` / `@momus` | Kimi K3-256k (OpenRouter GLM-5.3 → OpenRouter MiniMax M3 fallback) | ~8s |
+| Vision tasks | `@multimodal-looker` | Kimi K3-256k (OpenRouter MiniMax M3 fallback) | ~3-5s |
+| UI/frontend | `visual-engineering` category | Kimi K3-256k (OpenRouter MiniMax M3 fallback) | ~5-8s |
 
 ### Cost Optimization
 
-- `sisyphus` runs on OpenRouter MiniMax M3 — primary orchestration model; MiniMax M3 is the first fallback, OpenRouter DeepSeek V4 Flash 0731 is the last-resort fallback
-- `sisyphus-junior` runs on OpenRouter DeepSeek V4 Flash 0731 (~$0.08/M input) — cheap, fast delegated execution; MiniMax M3 → M2.7 HS are the fallbacks
+- `sisyphus` runs on OpenRouter MiniMax M3 — primary orchestration model; OpenRouter DeepSeek V4 Flash 0731 is the last-resort fallback
+- `sisyphus-junior` runs on OpenRouter DeepSeek V4 Flash 0731 (~$0.08/M input) — cheap, fast delegated execution; OpenRouter MiniMax M3 is the fallback
 - `atlas` runs on OpenRouter Qwen3.8 Max (~$2/M input) — front-tier reasoning for continuation
-- `hephaestus` runs on OpenRouter GPT-5.6 Sol (~$2/M input) — frontier OpenAI model for deep autonomous work; falls back to Kimi K3 → OpenRouter DeepSeek V4 Pro 0813 → MiniMax M3
-- Heavy-reasoning slots (`oracle`, `prometheus`, `deep`, `ultrabrain`) use Kimi K3 (1M context) as primary — leverages the user's existing Kimi Code sub. OpenRouter DeepSeek V4 Pro 0813 (~$1.12/M) is the first fallback if Kimi is rate-limited, MiniMax M3 is the second
-- Deliberative slots (`metis`, `momus`, `refactor`, `artistry`, `unspecified-high`) use Kimi K3-256k as primary; OpenRouter GLM-5.3 (~$1.40/M) is the first fallback, MiniMax M3 is the second
-- Vision slots (`multimodal-looker`, `visual-engineering`) use Kimi K3-256k (image input supported); OpenRouter GLM-5.3 is the first fallback when Kimi is at capacity, MiniMax M3 is the second
+- `hephaestus` runs on OpenRouter GPT-5.6 Sol (~$2/M input) — frontier OpenAI model for deep autonomous work; falls back to Kimi K3 → OpenRouter DeepSeek V4 Pro 0813 → OpenRouter MiniMax M3
+- Heavy-reasoning slots (`oracle`, `prometheus`, `deep`, `ultrabrain`) use Kimi K3 (1M context) as primary — leverages the user's existing Kimi Code sub. OpenRouter DeepSeek V4 Pro 0813 (~$1.12/M) is the first fallback if Kimi is rate-limited, OpenRouter MiniMax M3 is the second
+- Deliberative slots (`metis`, `momus`, `refactor`, `artistry`, `unspecified-high`) use Kimi K3-256k as primary; OpenRouter GLM-5.3 (~$1.40/M) is the first fallback, OpenRouter MiniMax M3 is the second
+- Vision slots (`multimodal-looker`, `visual-engineering`) use Kimi K3-256k (image input supported); OpenRouter MiniMax M3 is the fallback
 - Baseten DeepSeek V4 Pro 0813 / V4 Flash 0731 are wired into the `baseten` provider for **manual** selection only; not in automatic fallback chains
-- MiniMax M2.7 Highspeed is configured as OpenCode's fast/small model; MiniMax M3 is the default session model and the last-resort fallback for every chain
+- OpenRouter MiniMax M3 is the default session model, the fast/small `small_model`, and the last-resort fallback for every chain — paid through your onboarded MiniMax key
 - Runtime fallback escalates stalled or quota-limited requests after 30 seconds
 - Category routing sets per-task `variant`/`thinking` and `maxTokens` budgets
 
