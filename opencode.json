@@ -64,20 +64,21 @@
         "flash-next": {
           "name": "Qwen3.8 Flash-Next AWQ (gfx1030 TP=4)",
           "family": "qwen3",
-          "attachment": false,
+          "attachment": true,
           "reasoning": true,
           "tool_call": true,
           "temperature": true,
           "modalities": {
             "input": [
-              "text"
+              "text",
+              "image"
             ],
             "output": [
               "text"
             ]
           },
           "limit": {
-            "context": 32768,
+            "context": 262144,
             "output": 8192
           }
         }
