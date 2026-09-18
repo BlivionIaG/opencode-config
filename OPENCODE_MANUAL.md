@@ -61,7 +61,7 @@ opencode "Your task here"
 
 ### Enabled Providers
 
-1. **openrouter** - OpenRouter (OpenAI-compatible). Hosts Qwen3.8 Max, Qwen3.7 Plus, GLM-5.2, GLM-5.3, DeepSeek V4 Flash 0731, DeepSeek V4 Flash Vision Exp, DeepSeek V4 Pro 0813, and GPT-5.6 Sol. OpenRouter is now the **primary** for `hephaestus` (GPT-5.6 Sol), `atlas` (Qwen3.8 Max), `sisyphus-junior` (V4 Flash 0731); the first fallback for `oracle`/`prometheus`/`deep`/`ultrabrain` via the Kimi chain (DeepSeek V4 Pro 0813); and the first fallback for the deliberative slots (`metis`/`momus`/`refactor`/`artistry`/`unspecified-high`) after Kimi K3-256k (GLM-5.3).
+1. **openrouter** - OpenRouter (OpenAI-compatible). Hosts Qwen3.8 Max, Qwen3.7 Plus, GLM-5.2, GLM-5.3, DeepSeek V4 Flash Vision Exp, DeepSeek V4 Pro 0813, and GPT-5.6 Sol. OpenRouter is now the **primary** for `hephaestus` (GPT-5.6 Sol), `atlas` (Qwen3.8 Max), `sisyphus` (V4 Flash Vision Exp), `sisyphus-junior` (V4 Flash Vision Exp); the first fallback for `oracle`/`prometheus`/`deep`/`ultrabrain` via the Kimi chain (DeepSeek V4 Pro 0813); and the first fallback for the deliberative slots (`metis`/`momus`/`refactor`/`artistry`/`unspecified-high`) after Kimi K3-256k (GLM-5.3).
 2. **kimi-for-coding** - Kimi K3 and K3-256k (Kimi Code Plan; K3 up to 1M context on Allegro+, K3-256k fixed 256k context). Now the **primary** for the deliberative slots (`metis`/`momus`/`refactor`/`artistry`/`unspecified-high`), the heavy-reasoning slots (`oracle`/`prometheus`/`deep`/`ultrabrain`), and the vision slots (`multimodal-looker`/`visual-engineering`). Leverages the Kimi Code sub the user already pays for.
 3. **baseten** - Baseten Model APIs (OpenAI-compatible). Hosts DeepSeek V4 Flash 0731 and DeepSeek V4 Pro 0813. Used for **manual** selection only — not in any automatic fallback chain.
 4. ~~**minimax**~~ - removed. MiniMax M3 is now served exclusively through OpenRouter (your onboarded MiniMax key covers OpenRouter access; one provider, one key, one bill).
@@ -79,8 +79,7 @@ opencode "Your task here"
 | **DeepSeek V4 Pro 0813 (OpenRouter)** | `openrouter/deepseek/deepseek-v4-pro-0813` | TBD | TBD | 1M | no | 3 | 4 | OpenRouter-hosted V4 Pro 0813 (1.6T MoE, 49B active, fp4). **1st fallback for `hephaestus` / `oracle` / `prometheus` / `deep` / `ultrabrain`** — the heavy-reasoning slots now use Kimi as primary and route through this model before falling to MiniMax. $1.12/$3.37 per M tokens. |
 | **DeepSeek V4 Pro 0813 (Baseten)** | `baseten/deepseek-ai/DeepSeek-V4-Pro-0813` | TBD | TBD | 1M | no | 3 | 4 | Manual use only. 1.6T MoE (49B active), 1M context, fp4. Pick explicitly when you want frontier-class DeepSeek via Baseten. |
 | **DeepSeek V4 Flash 0731 (Baseten)** | `baseten/deepseek-ai/DeepSeek-V4-Flash-0731` | TBD | TBD | 1M | no | 5 | 5 | Manual use only. Cheapest DeepSeek option on Baseten. |
-| **DeepSeek V4 Flash 0731 (OpenRouter)** | `openrouter/deepseek/deepseek-v4-flash-0731` | TBD | TBD | 1.3M | no | 5 | 5 | **Primary for `sisyphus` (orchestration), `sisyphus-junior` (delegated executor)**. Cheapest serious coding model on the stack ($0.08/$0.18 per M tokens). |
-| **DeepSeek V4 Flash Vision Exp (OpenRouter)** | `openrouter/deepseek/deepseek-v4-flash-vision-exp` | TBD | TBD | 1M | yes | 5 | 5 | Vision-capable DeepSeek V4 Flash variant. **No longer in auto-routes** (vision slots moved to Kimi K3-256k primary). Available for manual selection when a vision-specialized model is needed. Experimental (-exp) upstream; $0.22/$0.66 per M tokens. |
+| **DeepSeek V4 Flash Vision Exp (OpenRouter)** | `openrouter/deepseek/deepseek-v4-flash-vision-exp` | TBD | TBD | 1M | yes | 5 | 5 | Vision-capable DeepSeek V4 Flash variant. **Primary for `sisyphus` (orchestration) and `sisyphus-junior` (delegated executor)** — replaces the OpenRouter-hosted 0731 in those slots. Cheap ($0.22/$0.66 per M tokens) and fast. Experimental (-exp) upstream — pin it explicitly if you depend on it. |
 | **Kimi K3** | `kimi-for-coding/k3` | KCB v2 72.9% | Terminal-Bench 2.1 88.3% | 1M | 5 | 2 | 2 | Long-horizon work, video input (now second fallback for Qwen3.8 Max, behind OpenRouter) |
 | **Kimi K3-256k** | `kimi-for-coding/k3-256k` | same as K3 | same as K3 | 256K | 3 | 2 | 3 | Visual tasks (image only), architecture, hard debugging, strategic planning; half the quota of K3 |
 | **MiniMax M3** | `openrouter/minimax/minimax-m3` | SWE-Bench Pro 59.0% | MCP Atlas 74.2% | 524K | 4 | 4 | 5 | Default session model; utility, search, docs, quick fixes, tests, writing; last-resort fallback for every chain |
@@ -118,11 +117,11 @@ opencode "Your task here"
 
 **DeepSeek V4 Flash Vision Exp (`openrouter/deepseek/deepseek-v4-flash-vision-exp`)**
 - ✅ Vision-capable variant of DeepSeek V4 Flash served via OpenRouter (text + image input)
-- ✅ Was the direct (1st) fallback for `multimodal-looker` and `visual-engineering` — no longer in those chains (vision slots simplified to Kimi K3-256k → OpenRouter MiniMax M3). Available for manual selection.
+- ✅ **Primary for `sisyphus` (orchestration) and `sisyphus-junior` (delegated executor)** — replaces the OpenRouter-hosted 0731 in those slots. Falls back to OpenRouter MiniMax M3.
 - ✅ Cheap ($0.22/$0.66 per M tokens) and fast — 1M context
 - ⚠️ Experimental (-exp) upstream — pin it explicitly if you depend on it
 - ⚠️ Provider config has no reasoning/thinking options — relies on default reasoning
-- Use for: vision tasks via OpenRouter when Kimi K3-256k is rate-limited or down
+- Use for: primary orchestration/delegation workhorse when vision-capable DeepSeek V4 Flash is preferred; vision tasks via OpenRouter when Kimi K3-256k is rate-limited or down
 
 **DeepSeek V4 Pro 0813 (`baseten/deepseek-ai/DeepSeek-V4-Pro-0813`)**
 - ✅ Frontier-class 1.6T MoE (49B active) at fp4, 1M context
@@ -159,7 +158,7 @@ opencode "Your task here"
 | Model | OpenCode setting | Why |
 |-------|------------------|-----|
 | **Kimi K3 / K3-256k** | `"variant": "max"` | K3 uses the top-level `reasoning_effort` field; at launch only `max` is supported and it is the default. Setting `variant: max` makes the intent explicit. |
-| **DeepSeek V4 Flash 0731** | `"reasoning": "auto"` (agent) | Provider has no reasoning config. The agent's `reasoning: auto` is what enables reasoning. No budget controls exposed. |
+| **DeepSeek V4 Flash Vision Exp** | `"reasoning": "auto"` (agent) | Provider has no reasoning config. The agent's `reasoning: auto` is what enables reasoning. No budget controls exposed. |
 | **MiniMax M3** | `"thinking": { "type": "adaptive" }` (or `disabled`) | M3 uses `adaptive` to enable thinking; it does **not** support `budgetTokens`. `disabled` skips thinking for faster responses. |
 
 **Runtime control:**
@@ -172,15 +171,14 @@ opencode "Your task here"
 | Model | Where it is used | Why it was chosen |
 |-------|------------------|-------------------|
 | **Qwen3.8 Max (OpenRouter)** | Primary for `atlas`; available as manual selection for the rest | OpenRouter-hosted Qwen3.8 Max. Primary for `atlas` (continuation); the heavy-reasoning slots (`hephaestus`, `oracle`, `prometheus`, `deep`, `ultrabrain`) route through Kimi first, so this model is no longer in those automatic chains. Available for manual selection. |
-| **Qwen3.7 Plus** | Agents: `multimodal-looker`<br>Categories: `visual-engineering` | Primary for vision tasks. 8K thinking budget + vision input. Cheaper than Qwen3.8 Max for typical vision work; OpenRouter DeepSeek V4 Flash Vision Exp is the direct (1st) fallback (vision-capable, fast), then Qwen3.8 Max for harder visual reasoning. |
+| **Qwen3.7 Plus** | Agents: `multimodal-looker`<br>Categories: `visual-engineering` | Primary for vision tasks. 8K thinking budget + vision input. Cheaper than Qwen3.8 Max for typical vision work; Qwen3.8 Max is the fallback for harder visual reasoning. |
 | **GLM-5.3 (OpenRouter)** | 1st fallback for `metis`, `momus`, `refactor`, `artistry`, `unspecified-high` | Newer GLM family member serving as the OpenRouter-side fallback for the deliberative slots. Visited when Kimi K3-256k is rate-limited or unavailable; preserves the deliberative-family behavior. |
-| **DeepSeek V4 Flash 0731 (OpenRouter)** | Primary for `sisyphus` (orchestration) and `sisyphus-junior` (delegated executor) | Agentic workhorse with best intelligence/speed balance per the user's evaluation. No reasoning/thinking config at provider level — agent-level `reasoning: "auto"` is mandatory. Cheapest serious coding model on the stack ($0.08/$0.18 per M tokens). |
-| **DeepSeek V4 Flash Vision Exp (OpenRouter)** | Direct fallback for `multimodal-looker`, `visual-engineering` | Vision-capable DeepSeek V4 Flash variant on OpenRouter. First automatic vision fallback — keeps a vision-capable model in front of OpenRouter MiniMax M3 in the vision chain. |
+| **DeepSeek V4 Flash Vision Exp (OpenRouter)** | Primary for `sisyphus` (orchestration) and `sisyphus-junior` (delegated executor) | Vision-capable DeepSeek V4 Flash variant on OpenRouter — supersedes the OpenRouter-hosted 0731 in those slots. Agent-level `reasoning: "auto"` is mandatory (provider has no reasoning/thinking options). Cheap ($0.22/$0.66 per M tokens), fast, 1M context. |
 | **Kimi K3-256k** | Primary for deliberative slots (`metis`, `momus`, `refactor`, `artistry`, `unspecified-high`) and vision slots (`multimodal-looker`, `visual-engineering`) | Same K3 intelligence at fixed 256K context; half the quota of K3 1M. Best for plan consulting, plan review, refactoring, creative, high-stakes, and image-based visual tasks. |
 | **Kimi K3** | Second fallback for `hephaestus`, `multimodal-looker`, `deep` | Highest intelligence in the stack; native visual and video understanding; best for long-horizon coding, video input. Up to 1M context on Allegro+ plans. |
 | **MiniMax M3** | Default session model + last-resort fallback for every chain; primary for `explore`, `librarian`; primary for categories `quick`, `fix`, `search`, `test`, `explain`, `writing`, `unspecified-low`; `sisyphus-junior` and all other agents fall back to OpenRouter MiniMax M3 | Best speed/intelligence/cost balance for everyday coding. Keeps the main loop and long-running handlers fast and cheap. Single provider (OpenRouter) through your onboarded MiniMax key. |
 
-**Fallback logic:** All non-utility chains end with OpenRouter MiniMax M3 as the last-resort fallback. `sisyphus` (orchestration) uses OpenRouter DeepSeek V4 Flash 0731 as primary → OpenRouter MiniMax M3. `hephaestus` (deep autonomous work) uses OpenRouter GPT-5.6 Sol as primary → Kimi K3 → OpenRouter DeepSeek V4 Pro 0813 → OpenRouter MiniMax M3. `oracle`, `prometheus`, `ultrabrain` use Kimi K3 (1M context) as primary → OpenRouter DeepSeek V4 Pro 0813 → OpenRouter MiniMax M3. `deep` uses Kimi K3 as primary → OpenRouter DeepSeek V4 Pro 0813 → OpenRouter MiniMax M3. `atlas` (continuation) uses OpenRouter Qwen3.8 Max as primary → OpenRouter MiniMax M3. Vision slots (`multimodal-looker`, `visual-engineering`) use Kimi K3-256k → OpenRouter MiniMax M3. Deliberative slots (`metis`, `momus`, `refactor`, `artistry`, `unspecified-high`) use Kimi K3-256k → OpenRouter GLM-5.3 → OpenRouter MiniMax M3. `sisyphus-junior` (delegated executor) uses OpenRouter DeepSeek V4 Flash 0731 as primary → OpenRouter MiniMax M3. Utility agents (`explore`, `librarian`) and utility categories (`quick`, `fix`, `search`, `test`, `explain`, `writing`, `unspecified-low`) use OpenRouter MiniMax M3 as their sole model (no chain).
+**Fallback logic:** All non-utility chains end with OpenRouter MiniMax M3 as the last-resort fallback. `sisyphus` (orchestration) uses OpenRouter DeepSeek V4 Flash Vision Exp as primary → OpenRouter MiniMax M3. `hephaestus` (deep autonomous work) uses OpenRouter GPT-5.6 Sol as primary → Kimi K3 → OpenRouter DeepSeek V4 Pro 0813 → OpenRouter MiniMax M3. `oracle`, `prometheus`, `ultrabrain` use Kimi K3 (1M context) as primary → OpenRouter DeepSeek V4 Pro 0813 → OpenRouter MiniMax M3. `deep` uses Kimi K3 as primary → OpenRouter DeepSeek V4 Pro 0813 → OpenRouter MiniMax M3. `atlas` (continuation) uses OpenRouter Qwen3.8 Max as primary → OpenRouter MiniMax M3. Vision slots (`multimodal-looker`, `visual-engineering`) use Kimi K3-256k → OpenRouter MiniMax M3. Deliberative slots (`metis`, `momus`, `refactor`, `artistry`, `unspecified-high`) use Kimi K3-256k → OpenRouter GLM-5.3 → OpenRouter MiniMax M3. `sisyphus-junior` (delegated executor) uses OpenRouter DeepSeek V4 Flash Vision Exp as primary → OpenRouter MiniMax M3. Utility agents (`explore`, `librarian`) and utility categories (`quick`, `fix`, `search`, `test`, `explain`, `writing`, `unspecified-low`) use OpenRouter MiniMax M3 as their sole model (no chain).
 
 ## Agents Guide
 
@@ -188,7 +186,7 @@ opencode "Your task here"
 
 | Agent | Model | Mode / Variant | Max Tokens | Use For |
 |-------|-------|----------------|------------|---------|
-| **Sisyphus** | `openrouter/deepseek/deepseek-v4-flash-0731` | thinking adaptive | 16384 | Main orchestrator, delegates tasks. OpenRouter V4 Flash 0731 primary (cheap, fast, agentic workhorse); OpenRouter MiniMax M3 as the single last-resort fallback. |
+| **Sisyphus** | `openrouter/deepseek/deepseek-v4-flash-vision-exp` | thinking adaptive | 16384 | Main orchestrator, delegates tasks. OpenRouter V4 Flash Vision Exp primary (cheap, fast, vision-capable agentic workhorse); OpenRouter MiniMax M3 as the single last-resort fallback. |
 | **Atlas** | `openrouter/qwen/qwen3.8-max` | thinking disabled / instant | 16384 | Plan orchestration, task coordination, continuation. OpenRouter qwen3.8-max primary; falls back to OpenRouter MiniMax M3. |
 | **Hephaestus** | `openrouter/openai/gpt-5.6-sol` | `reasoning: max` | 32768 | Deep autonomous work, long-horizon implementation. GPT-5.6 Sol primary (frontier OpenAI); falls back to Kimi K3 → OpenRouter DeepSeek V4 Pro 0813 → OpenRouter MiniMax M3. |
 | **Prometheus** | `kimi-for-coding/k3` (1M context) | `reasoning: max` | 32768 | Strategic planning. Upgraded to Kimi K3 1M for planning over large codebases. OpenRouter DeepSeek V4 Pro 0813 first fallback, then OpenRouter MiniMax M3. |
@@ -200,7 +198,7 @@ opencode "Your task here"
 | **Explore** | `openrouter/minimax/minimax-m3` | thinking disabled | 8192 | Fast codebase grep, search |
 | **Librarian** | `openrouter/minimax/minimax-m3` | thinking disabled | 16384 | Documentation and external reference search |
 | **Multimodal-Looker** | `kimi-for-coding/k3-256k` | `reasoning: max` | 32768 | Vision tasks, screenshots, UI analysis. Kimi K3-256k primary (Kimi Code sub, image input supported); falls back to OpenRouter MiniMax M3. |
-| **Sisyphus-Junior** | `openrouter/deepseek/deepseek-v4-flash-0731` | `reasoning: auto` | 4096-32768 | Focused delegated task execution. OpenRouter V4 Flash as agentic workhorse; falls back to OpenRouter MiniMax M3. |
+| **Sisyphus-Junior** | `openrouter/deepseek/deepseek-v4-flash-vision-exp` | `reasoning: auto` | 4096-32768 | Focused delegated task execution. OpenRouter V4 Flash Vision Exp as agentic workhorse; falls back to OpenRouter MiniMax M3. |
 
 ### Special Agents
 
@@ -347,8 +345,8 @@ Your config uses Kimi for quality-critical reasoning and OpenRouter for everythi
 | Architecture planning | Kimi K3-256k (OpenRouter V4 Pro 0813 → OpenRouter MiniMax M3 fallback) | Kimi Code sub | ~8-10s |
 | Deep autonomous (`hephaestus`) | OpenRouter GPT-5.6 Sol (Kimi K3 → OpenRouter V4 Pro 0813 → OpenRouter MiniMax M3 fallback) | OpenRouter $2/$10 per M | ~10s |
 | Vision task | Kimi K3-256k (OpenRouter MiniMax M3 fallback) | Kimi Code sub | ~3-5s |
-| Orchestration (`sisyphus`) | OpenRouter DeepSeek V4 Flash 0731 (OpenRouter MiniMax M3 fallback) | OpenRouter $0.08/$0.18 per M | varies |
-| Delegated execution (`sisyphus-junior`) | OpenRouter DeepSeek V4 Flash 0731 (OpenRouter MiniMax M3 fallback) | OpenRouter $0.08/$0.18 per M | ~3-5s |
+| Orchestration (`sisyphus`) | OpenRouter DeepSeek V4 Flash Vision Exp (OpenRouter MiniMax M3 fallback) | OpenRouter $0.22/$0.66 per M | varies |
+| Delegated execution (`sisyphus-junior`) | OpenRouter DeepSeek V4 Flash Vision Exp (OpenRouter MiniMax M3 fallback) | OpenRouter $0.22/$0.66 per M | ~3-5s |
 | Continuation (`atlas`) | OpenRouter Qwen3.8 Max (OpenRouter MiniMax M3 fallback) | OpenRouter $2/$6 per M | varies |
 
 ### Your Monthly Budget
@@ -358,11 +356,11 @@ Your config uses Kimi for quality-critical reasoning and OpenRouter for everythi
 - Rate limit: 40 req/min (handled by the OpenRouter fallback chains)
 
 **OpenRouter (pay-as-you-go):**
-- Now the **primary** for `sisyphus` (V4 Flash 0731, ~$0.08/M), `sisyphus-junior` (V4 Flash 0731), `atlas` (Qwen3.8 Max, ~$2/M), and `hephaestus` (GPT-5.6 Sol, ~$2/M); also the first fallback for the deliberative slots (GLM-5.3, ~$1.40/M) and for the heavy-reasoning slots via the Kimi chain (DeepSeek V4 Pro 0813, ~$1.12/M)
+- Now the **primary** for `sisyphus` (V4 Flash Vision Exp, ~$0.22/M), `sisyphus-junior` (V4 Flash Vision Exp), `atlas` (Qwen3.8 Max, ~$2/M), and `hephaestus` (GPT-5.6 Sol, ~$2/M); also the first fallback for the deliberative slots (GLM-5.3, ~$1.40/M) and for the heavy-reasoning slots via the Kimi chain (DeepSeek V4 Pro 0813, ~$1.12/M)
 
 **Typical Monthly Usage:**
 - OpenRouter MiniMax M3 ($0.28/$1.10 per M tokens) — default session model, all utility work, and the last-resort fallback in every chain. Paid through your onboarded MiniMax key.
-- OpenRouter DeepSeek V4 Flash 0731 for orchestration (`sisyphus` main agent) and delegated task execution (`sisyphus-junior`) — cheap ($0.08/$0.18 per M tokens) and fast
+- OpenRouter DeepSeek V4 Flash Vision Exp for orchestration (`sisyphus` main agent) and delegated task execution (`sisyphus-junior`) — cheap ($0.22/$0.66 per M tokens) and fast
 - OpenRouter GPT-5.6 Sol for `hephaestus` deep autonomous work — frontier OpenAI model at $2/$10 per M tokens
 - Kimi K3 / K3-256k for the heavy-reasoning slots (`oracle`, `prometheus`, `deep`, `ultrabrain` — via Kimi K3 / K3-256k) and deliberative slots (`metis`, `momus`, `refactor`, `artistry`, `unspecified-high` — via Kimi K3-256k) — leverages the Kimi Code sub the user is already paying for; OpenRouter DeepSeek V4 Pro 0813 is the first fallback, OpenRouter MiniMax M3 is the second
 - Kimi K3-256k for vision slots (`multimodal-looker`, `visual-engineering`) — image input supported; falls back to OpenRouter MiniMax M3

@@ -28,7 +28,7 @@
         "model": "openrouter/minimax/minimax-m3",
         "reasoning": "auto",
         "fallback_models": [
-          "openrouter/deepseek/deepseek-v4-flash-0731"
+          "openrouter/deepseek/deepseek-v4-flash-vision-exp"
         ]
       },
       "hephaestus": {
@@ -89,7 +89,7 @@
         ]
       },
       "sisyphus-junior": {
-        "model": "openrouter/deepseek/deepseek-v4-flash-0731",
+        "model": "openrouter/deepseek/deepseek-v4-flash-vision-exp",
         "reasoning": "auto",
         "fallback_models": [
           "openrouter/minimax/minimax-m3"
