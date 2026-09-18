@@ -376,7 +376,7 @@
       "command": [
         "/Users/kletorch/Projects/Infra/discord-mcp/scripts/run-mcp.sh"
       ],
-      "enabled": true,
+      "enabled": false,
       "timeout": 45000
     },
     "n8n-mcp": {
