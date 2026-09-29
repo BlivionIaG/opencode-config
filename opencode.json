@@ -441,6 +441,6 @@
     }
   },
   "plugin": [
-    "oh-my-openagent@4.19.4"
+    "oh-my-openagent@5.1.1"
   ]
 }
