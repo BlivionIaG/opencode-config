@@ -117,8 +117,8 @@ opencode
 |-----------|-------|-------|-------|
 | Search/Grep | `@explore` | OpenRouter MiniMax M3 | ~2-3s |
 | Quick fixes | quick/fix category | OpenRouter MiniMax M3 | ~2-3s |
-| Orchestration | `sisyphus` | OpenRouter MiniMax M3 (OpenRouter V4 Flash Vision Exp fallback) | varies |
-| Delegated task execution | `sisyphus-junior` | OpenRouter DeepSeek V4 Flash Vision Exp (OpenRouter MiniMax M3 fallback) | ~3-5s |
+| Orchestration | `sisyphus` | OpenRouter MiniMax M3 (OpenRouter V4.1 Flash fallback) | varies |
+| Delegated task execution | `sisyphus-junior` | OpenRouter MiniMax M3 (OpenRouter DeepSeek V4.1 Flash fallback) | ~3-5s |
 | Continuation | `atlas` | OpenRouter Qwen3.8 Max (OpenRouter MiniMax M3 fallback) | varies |
 | Deep analysis | `@oracle` | Kimi K3 1M (OpenRouter V4 Pro 0813 → OpenRouter MiniMax M3 fallback) | ~8s |
 | Architecture | `@prometheus` | Kimi K3 1M (OpenRouter V4 Pro 0813 → OpenRouter MiniMax M3 fallback) | ~8-10s |
@@ -129,8 +129,8 @@ opencode
 
 ### Cost Optimization
 
-- `sisyphus` runs on OpenRouter MiniMax M3 — primary orchestration model; OpenRouter DeepSeek V4 Flash Vision Exp is the last-resort fallback
-- `sisyphus-junior` runs on OpenRouter DeepSeek V4 Flash Vision Exp (~$0.22/M input) — cheap, fast delegated execution; OpenRouter MiniMax M3 is the fallback
+- `sisyphus` runs on OpenRouter MiniMax M3 — primary orchestration model; OpenRouter DeepSeek V4.1 Flash is the last-resort fallback
+- `sisyphus-junior` runs on OpenRouter MiniMax M3 — cheap, fast delegated execution; OpenRouter DeepSeek V4.1 Flash is the last-resort fallback
 - `atlas` runs on OpenRouter Qwen3.8 Max (~$2/M input) — front-tier reasoning for continuation
 - `hephaestus` runs on OpenRouter GPT-5.6 Sol (~$2/M input) — frontier OpenAI model for deep autonomous work; falls back to Kimi K3 → OpenRouter DeepSeek V4 Pro 0813 → OpenRouter MiniMax M3
 - Heavy-reasoning slots (`oracle`, `prometheus`, `deep`, `ultrabrain`) use Kimi K3 (1M context) as primary — leverages the user's existing Kimi Code sub. OpenRouter DeepSeek V4 Pro 0813 (~$1.12/M) is the first fallback if Kimi is rate-limited, OpenRouter MiniMax M3 is the second
